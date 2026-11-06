@@ -1,0 +1,4524 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>電腦常識測驗 · 互動題庫練習（116 九升十）</title>
+<style>
+:root{
+  --navy:#1a3a5c; --navy2:#24507a; --red:#c53030; --gold:#c9a227;
+  --green:#2f855a; --cream:#faf7f2; --card:#ffffff; --line:#e3dccf;
+  --ink:#22303c; --muted:#6b7684;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Microsoft JhengHei","PingFang TC","Heiti TC",system-ui,sans-serif;
+  background:var(--cream); color:var(--ink); font-size:16.5px; line-height:1.7;
+  -webkit-text-size-adjust:100%;
+}
+header{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff; padding:22px 20px 18px; position:sticky; top:0; z-index:40;
+  box-shadow:0 2px 10px rgba(0,0,0,.18);
+}
+.h-wrap{max-width:920px;margin:0 auto}
+.badge{display:inline-block;background:var(--gold);color:#3a2c00;font-weight:700;
+  font-size:12.5px;letter-spacing:1px;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+h1{margin:0;font-size:23px;font-weight:800;letter-spacing:.5px}
+.sub{margin:4px 0 0;font-size:13.5px;color:#d9e4f0;opacity:.95}
+.stats{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;padding:6px 12px;font-size:13px;min-width:76px}
+.stat b{display:block;font-size:19px;font-weight:800;line-height:1.2}
+.stat.correct b{color:#9be6bd} .stat.wrong b{color:#ffb4b0} .stat.rate b{color:var(--gold)}
+
+main{max-width:920px;margin:0 auto;padding:16px 16px 60px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 16px 14px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.panel h2{margin:0 0 10px;font-size:15px;color:var(--navy);font-weight:800;
+  border-left:4px solid var(--gold);padding-left:9px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;align-items:center}
+.row .lbl{font-size:13px;color:var(--muted);min-width:56px}
+.chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);
+  padding:5px 12px;border-radius:20px;font-size:13.5px;cursor:pointer;user-select:none;
+  transition:.12s}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.sm{padding:4px 10px;font-size:12.5px}
+select,.btn{font-family:inherit}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:10px;
+  padding:9px 16px;font-size:14.5px;font-weight:700;cursor:pointer;transition:.12s}
+.btn:hover{background:var(--navy2)}
+.btn.gold{background:var(--gold);color:#3a2c00}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.red{background:var(--red)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.startbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+
+/* progress */
+.progress{height:8px;background:#eee4d4;border-radius:6px;overflow:hidden;margin:2px 0 14px}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#e0be47);width:0;transition:.3s}
+
+/* question card */
+.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.qmeta{font-size:12.5px;color:var(--muted)}
+.qtag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:12px;margin-right:6px}
+.qtag.single{background:#e7eff7;color:var(--navy)}
+.qtag.multi{background:#fbeaea;color:var(--red)}
+.qtag.sec{background:#f3ecd8;color:#7a5c00}
+.star{cursor:pointer;font-size:20px;color:#cfc6b3;line-height:1;user-select:none}
+.star.on{color:var(--gold)}
+.qstem{font-size:18px;font-weight:700;color:var(--navy);margin:6px 0 14px;line-height:1.6}
+.qstem .num{color:var(--gold);font-weight:800;margin-right:6px}
+
+.opt{display:flex;gap:11px;align-items:flex-start;border:1.6px solid var(--line);
+  background:#fff;border-radius:11px;padding:11px 13px;margin-bottom:9px;cursor:pointer;transition:.12s}
+.opt:hover{border-color:var(--gold);background:#fffdf6}
+.opt .mk{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid #c7bfae;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13.5px;color:var(--navy)}
+.opt.multi .mk{border-radius:7px}
+.opt.sel{border-color:var(--navy);background:#f2f7fc}
+.opt.sel .mk{background:var(--navy);color:#fff;border-color:var(--navy)}
+.opt .ot{flex:1;font-size:15.5px;line-height:1.6}
+.opt.correct{border-color:var(--green);background:#eefaf2}
+.opt.correct .mk{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.wrong{border-color:var(--red);background:#fdecec}
+.opt.wrong .mk{background:var(--red);color:#fff;border-color:var(--red)}
+.opt.locked{cursor:default}
+.opt.locked:hover{background:inherit}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.nav-spacer{flex:1}
+
+/* explanation */
+.explain{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--line);display:none}
+.explain.show{display:block}
+.explain .bar{padding:8px 14px;font-weight:800;font-size:14.5px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.explain.ok .bar{background:var(--green)}
+.explain.no .bar{background:var(--red)}
+.explain .body{background:#fbf8f1;padding:13px 15px;font-size:15px;line-height:1.75}
+.explain .ans{font-weight:800;color:var(--navy)}
+.explain .body .lead{display:inline-block;background:var(--navy);color:#fff;font-size:12px;
+  padding:1px 8px;border-radius:10px;margin-right:8px;font-weight:700}
+
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.done{text-align:center;padding:30px 12px}
+.done h3{color:var(--navy);font-size:22px;margin:.2em 0}
+.done .big{font-size:44px;font-weight:800;color:var(--gold)}
+.footnote{font-size:12px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.7}
+.kbd{background:#efe9dc;border:1px solid #ddd3bf;border-radius:5px;padding:0 6px;font-size:12px;font-family:monospace}
+@media (max-width:720px){
+  body{font-size:16px}
+  h1{font-size:19px}
+  .qstem{font-size:16.5px}
+  .opt .ot{font-size:15px}
+  .stat{min-width:64px;padding:5px 9px}
+  .hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-wrap">
+    <span class="badge">116 · 九升十職等 · 電腦常識</span>
+    <h1>電腦常識測驗 — 互動題庫練習</h1>
+    <p class="sub">共 340 題（資訊卷 240＋資安卷 100）　·　單選 215／複選 125　·　選項自動打亂，附解說</p>
+    <div class="stats">
+      <div class="stat"><b id="st-done">0</b>已作答</div>
+      <div class="stat correct"><b id="st-ok">0</b>答對</div>
+      <div class="stat wrong"><b id="st-no">0</b>答錯</div>
+      <div class="stat rate"><b id="st-rate">—</b>正確率</div>
+      <div class="stat"><b id="st-pos">0/0</b>進度</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Setup panel -->
+  <div class="panel" id="setup">
+    <h2>練習設定</h2>
+    <div class="row">
+      <span class="lbl">題型</span>
+      <span class="chip on" data-type="all">全部</span>
+      <span class="chip" data-type="single">單選</span>
+      <span class="chip" data-type="multi">複選</span>
+    </div>
+    <div class="row">
+      <span class="lbl">範圍</span>
+      <span class="chip on" data-scope="all">全部題目</span>
+      <span class="chip" data-scope="wrong">只練錯題</span>
+      <span class="chip" data-scope="star">只練標記</span>
+    </div>
+    <div class="row">
+      <span class="lbl">出題</span>
+      <span class="chip on" data-order="shuffle">隨機洗題</span>
+      <span class="chip" data-order="seq">依序</span>
+      <span class="chip on" data-optshuffle="1" id="optShufChip">選項打亂：開</span>
+    </div>
+    <div class="row" id="secRow">
+      <span class="lbl">主題</span>
+      <span class="chip sm on" data-sec="__all">全部主題</span>
+    </div>
+    <div class="startbar">
+      <button class="btn gold" id="btnStart">開始練習 ▶</button>
+      <button class="btn ghost" id="btnResetStats">清除作答紀錄</button>
+    </div>
+    <div class="footnote" style="text-align:left;margin-top:12px">
+      快捷鍵：<span class="kbd">1</span>~<span class="kbd">5</span> 選項　<span class="kbd">Enter</span> 送出／下一題　<span class="kbd">←</span> <span class="kbd">→</span> 上下題　<span class="kbd">S</span> 標記
+    </div>
+  </div>
+
+  <!-- Quiz area -->
+  <div id="quiz" style="display:none">
+    <div class="progress"><i id="pbar"></i></div>
+    <div class="panel" id="qcard"></div>
+  </div>
+</main>
+
+<script>
+// 116年度九職等人員晉升十職等人員題庫 —「電腦常識」
+// 本檔含兩卷：卷一(資訊) 單選 S1-S155 + 複選 M1-M85；卷二(資訊安全) 單選 SB1-SB60 + 複選 MB1-MB40
+const QUESTIONS = [
+{
+  id:"S1", type:"single", sec:"企業資訊系統",
+  q:"企業購買「個人電腦」的準則包括：",
+  opts:[
+    {k:"A", t:"作業系統的考量。"},
+    {k:"B", t:"連結性。"},
+    {k:"C", t:"物超所值的績效表現。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"採購 PC 須同時考量軟體相容(作業系統)、能否連上網路與周邊(連結性)、以及價格與效能比，三者缺一不可，故以上皆是。單選整卷凡出現「以上皆是」且各選項彼此不衝突時，多為正解。"
+},
+{
+  id:"S2", type:"single", sec:"企業資訊系統",
+  q:"下列何者是「跨功能」企業系統？",
+  opts:[
+    {k:"A", t:"許多公司使用資訊系統開發整合式的「跨功能」企業系統，以打破傳統企業功能疆界、進行流程再造並改善關鍵企業程序。"},
+    {k:"B", t:"公司將「跨功能」企業系統視為策略應用，用以分享資訊資源、提升企業流程的效率與效能。"},
+    {k:"C", t:"公司將「跨功能」企業系統視為策略應用，用以在客戶、供應商與夥伴間發展策略合作關係。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"跨功能(cross-functional)系統的目的就是跨越部門疆界、整合流程並支援對內對外的策略協作，三種描述都是其面向，故選以上皆是。重點：跨功能系統＝打破部門本位、串起端到端流程。"
+},
+{
+  id:"S3", type:"single", sec:"企業資訊系統",
+  q:"實施新的「企業資源規劃(ERP)系統」，以下哪項是所需成本的最大部分？",
+  opts:[
+    {k:"A", t:"硬體成本。"},
+    {k:"B", t:"軟體費用。"},
+    {k:"C", t:"流程再造與培訓。"},
+    {k:"D", t:"從老舊系統資料轉換。"},
+  ],
+  ans:["C"],
+  exp:"ERP 導入最貴的往往不是軟硬體，而是配合系統重整組織流程(流程再造)與大量人員教育訓練所耗的時間與人力。好記：ERP 導入「人與流程」比「機器」更燒錢。"
+},
+{
+  id:"S4", type:"single", sec:"網路與通訊",
+  q:"在電信通訊架構中，何謂「通訊協定(protocol)」？",
+  opts:[
+    {k:"A", t:"在區域網路上，處理與交換語音及資料的設備。"},
+    {k:"B", t:"在電信通訊網路上，最主要的電腦。"},
+    {k:"C", t:"為微電腦使用者提供的通訊服務。"},
+    {k:"D", t:"控制網路通訊的一套標準規則與程序。"},
+  ],
+  ans:["D"],
+  exp:"通訊協定是雙方溝通所遵循的一套標準規則與程序(如 TCP/IP、HTTP)，A、B 講的是設備或主機而非規則。好記：protocol＝通訊的「交通規則」。"
+},
+{
+  id:"S5", type:"single", sec:"雲端與新興科技",
+  q:"下列哪項不是雲端運算的特點？",
+  opts:[
+    {k:"A", t:"快速擴展。"},
+    {k:"B", t:"可靠性。"},
+    {k:"C", t:"高成本。"},
+    {k:"D", t:"資源共享。"},
+  ],
+  ans:["C"],
+  exp:"雲端強調彈性擴展、資源共享與依用量付費，反而是「降低」自建機房的高固定成本，故「高成本」不是其特點。好記：雲端賣點是彈性與省成本。"
+},
+{
+  id:"S6", type:"single", sec:"金融科技與數位金融",
+  q:"關於晶片金融卡，下列敘述何者正確？",
+  opts:[
+    {k:"A", t:"晶片卡密碼交易時經由特殊管道傳送至銀行確認即足以確認本人交易。"},
+    {k:"B", t:"晶片金融卡正面或反面插入一般讀卡機皆可使用。"},
+    {k:"C", t:"客戶變更密碼後的密碼儲存於晶片內，銀行無法得知。"},
+    {k:"D", t:"整張卡具備複雜電路，即使晶片或保護膜些微刮損整張卡即無法使用，需妥善保護。"},
+  ],
+  ans:["C"],
+  exp:"晶片卡採卡內驗證，變更後的密碼儲存於晶片而不回傳銀行，故銀行無法得知(C 正確)。B 錯在晶片有方向性、須正確插入；D 過度誇大，輕微刮損未必報廢。好記：晶片卡密碼「藏在卡裡」。"
+},
+{
+  id:"S7", type:"single", sec:"金融科技與數位金融",
+  q:"「電子商務」包括？",
+  opts:[
+    {k:"A", t:"利用企業外部網路(Extranet)存取客戶與供應商型錄資料庫的電子商務流程。"},
+    {k:"B", t:"業務與客服人員利用企業內部網路(Intranet)存取「顧客關係管理」系統。"},
+    {k:"C", t:"透過電子郵件交流，讓客戶共同參與產品開發。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"電子商務涵蓋對供應商/客戶(B2B、B2C)、內部作業支援與客戶協同開發等各種以網路進行的商業活動，三者皆屬之。好記：凡以網路完成商業交易或協作，皆算電子商務。"
+},
+{
+  id:"S8", type:"single", sec:"金融科技與數位金融",
+  q:"「舊客戶獎勵，如折價券、折扣、個別優惠或其他網路服務」屬於電子商務成功要素中何者的敘述？",
+  opts:[
+    {k:"A", t:"效能與服務。"},
+    {k:"B", t:"選擇與價值。"},
+    {k:"C", t:"廣告與誘因。"},
+    {k:"D", t:"網站外觀與感覺。"},
+  ],
+  ans:["C"],
+  exp:"折價券、折扣、優惠都是吸引與留住顧客的「誘因(incentive)」，搭配廣告曝光，屬「廣告與誘因」要素。好記：給好康＝誘因。"
+},
+{
+  id:"S9", type:"single", sec:"企業資訊系統",
+  q:"「人機互動」之所以困難重重，主要原因在於？",
+  opts:[
+    {k:"A", t:"面對電腦機器的陌生感。"},
+    {k:"B", t:"以人為中心。"},
+    {k:"C", t:"使用者能在學習後很快熟悉其他系統的操作。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["A"],
+  exp:"人機互動困難主因在使用者對機器介面的陌生與學習門檻，B、C 反而是有利因素或設計目標，故選 A。好記：介面難用＝使用者感到陌生、不直覺。"
+},
+{
+  id:"S10", type:"single", sec:"企業資訊系統",
+  q:"「整合性」報表在 MIS(管理資訊系統)上，可分成哪些報表？",
+  opts:[
+    {k:"A", t:"彙報分析。"},
+    {k:"B", t:"作業程序。"},
+    {k:"C", t:"決策分析。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["B"],
+  exp:"本題依原卷答案為 B(作業程序)。MIS 報表用以支援日常作業程序的執行與控管。※原卷此題選項與答案對應較不直觀，照原卷作答。"
+},
+{
+  id:"S11", type:"single", sec:"企業資訊系統",
+  q:"下列何者是「資訊(information)」的特性重點？",
+  opts:[
+    {k:"A", t:"未經整理。"},
+    {k:"B", t:"有用的。"},
+    {k:"C", t:"原始的。"},
+    {k:"D", t:"以上皆非。", pin:true}
+  ],
+  ans:["B"],
+  exp:"「資料(data)」是未經整理的原始素材，經處理後對決策「有用」才稱為「資訊」，故 B 正確、A、C 描述的是資料。好記：資料→加工→有用的資訊。"
+},
+{
+  id:"S12", type:"single", sec:"資料庫",
+  q:"下列何者是「資料庫系統」的評估「效益」項目？",
+  opts:[
+    {k:"A", t:"資料流程圖。"},
+    {k:"B", t:"資料的來源無法做到一致性。"},
+    {k:"C", t:"程式編碼。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["B"],
+  exp:"本題依原卷答案為 B。資料庫系統的重要效益之一即在改善資料一致性問題，故以此為評估切入點。※原卷選項敘述略為突兀，照原卷作答。"
+},
+{
+  id:"S13", type:"single", sec:"企業資訊系統",
+  q:"一般「資訊整合」平台包含哪些？",
+  opts:[
+    {k:"A", t:"應用程式整合。"},
+    {k:"B", t:"商業流程整合。"},
+    {k:"C", t:"社群平台整合。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"資訊整合平台須串接應用程式(AP)、商業流程(BPM)與外部社群等多種資源，三者皆屬整合範疇。好記：整合平台＝把散落的系統與流程接起來。"
+},
+{
+  id:"S14", type:"single", sec:"企業資訊系統",
+  q:"「資訊策略」和「企業策略」的關係是什麼？",
+  opts:[
+    {k:"A", t:"沒有關係。"},
+    {k:"B", t:"結合對應關係。"},
+    {k:"C", t:"上下關係。"},
+    {k:"D", t:"以上皆非。", pin:true}
+  ],
+  ans:["C"],
+  exp:"資訊策略須支援並服從企業整體策略，屬於由上(企業策略)而下(資訊策略)的層級對應，故為上下關係。好記：IT 策略要「跟著」企業策略走。"
+},
+{
+  id:"S15", type:"single", sec:"網路與通訊",
+  q:"「網際網路」環境主要包含哪些？",
+  opts:[
+    {k:"A", t:"伺服器主機。"},
+    {k:"B", t:"網頁軟體平台。"},
+    {k:"C", t:"二者皆是。", pin:true},
+    {k:"D", t:"以上皆非。", pin:true}
+  ],
+  ans:["C"],
+  exp:"網際網路服務需要伺服器主機(硬體)與網頁軟體平台(軟體)共同運作，兩者皆為必要組成，故選二者皆是。好記：網站＝主機＋網頁平台。"
+},
+{
+  id:"S16", type:"single", sec:"企業資訊系統",
+  q:"就資訊人員而言，下列何者不是「資訊環境」的挑戰？",
+  opts:[
+    {k:"A", t:"作業習慣的改變。"},
+    {k:"B", t:"費用成本高。"},
+    {k:"C", t:"技術改變太慢。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["C"],
+  exp:"資訊環境的挑戰來自技術「變化太快」而非太慢，故 C 不是挑戰。作業習慣改變與成本壓力才是真正困擾。好記：IT 的痛點是技術跑太快、要一直追。"
+},
+{
+  id:"S17", type:"single", sec:"雲端與新興科技",
+  q:"所謂「商機發現」是指：",
+  opts:[
+    {k:"A", t:"商業智慧(BI)。"},
+    {k:"B", t:"知識發現。"},
+    {k:"C", t:"Knowledge Discovery。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"從大量資料中挖出可用的商業洞見，同時涉及商業智慧(BI)與知識發現(Knowledge Discovery)，三者是同一件事的不同說法，故以上皆是。好記：從資料裡「挖」出商機。"
+},
+{
+  id:"S18", type:"single", sec:"企業資訊系統",
+  q:"資訊系統在以往企業商務的應用，主要是扮演什麼角色？",
+  opts:[
+    {k:"A", t:"改善企業流程。"},
+    {k:"B", t:"輔助決策分析。"},
+    {k:"C", t:"強化競爭優勢。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"資訊系統對企業的價值涵蓋提升流程效率、支援決策與建立競爭優勢，三者皆是其核心角色。好記：IT 對企業＝效率、決策、競爭力三合一。"
+},
+{
+  id:"S19", type:"single", sec:"資訊安全",
+  q:"下列何者是相對比較安全的密碼？",
+  opts:[
+    {k:"A", t:"123456。"},
+    {k:"B", t:"1qaz2wsx。"},
+    {k:"C", t:"qwerasdf。"},
+    {k:"D", t:"Th!s1$n0tPazz。"},
+  ],
+  ans:["D"],
+  exp:"D 混用大小寫字母、數字與特殊符號且無規律，最難被破解；A 為連號、B、C 為鍵盤相鄰規律組合，都極易被字典攻擊猜出。好記：好密碼要長、亂、混四類字元。"
+},
+{
+  id:"S20", type:"single", sec:"企業資訊系統",
+  q:"一般的資訊系統導入，應考量哪些？",
+  opts:[
+    {k:"A", t:"功能上的需求。"},
+    {k:"B", t:"條件性的成熟。"},
+    {k:"C", t:"資源的需求。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"導入系統須評估功能是否符合需求、技術與環境是否成熟、以及人力預算等資源是否足夠，三者皆須衡量。好記：導系統前先問「要什麼、成不成熟、有沒有資源」。"
+},
+{
+  id:"S21", type:"single", sec:"程式與資料表示",
+  q:"「軟體專案管理」包含哪些階段？",
+  opts:[
+    {k:"A", t:"執行階段。"},
+    {k:"B", t:"測試階段。"},
+    {k:"C", t:"結案階段。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"軟體專案生命週期涵蓋執行、測試到結案等階段，三者都屬專案管理範疇。好記：專案＝規劃→執行→測試→結案。"
+},
+{
+  id:"S22", type:"single", sec:"硬體與週邊",
+  q:"CPU 的執行速度，通常用下列何種「單位」表示？",
+  opts:[
+    {k:"A", t:"PPM"},
+    {k:"B", t:"BPS"},
+    {k:"C", t:"CPS"},
+    {k:"D", t:"MHZ(MHz)"},
+  ],
+  ans:["D"],
+  exp:"CPU 時脈速度以赫茲(Hz)家族單位表示，如 MHz、GHz。PPM 是印表機每分鐘頁數、BPS 是傳輸速率、CPS 是每秒字元。好記：CPU 講「時脈」用 Hz。"
+},
+{
+  id:"S23", type:"single", sec:"作業系統",
+  q:"下列何者不是應用軟體？",
+  opts:[
+    {k:"A", t:"作業系統"},
+    {k:"B", t:"庫存管理系統"},
+    {k:"C", t:"成績處理系統"},
+    {k:"D", t:"套裝軟體"},
+  ],
+  ans:["A"],
+  exp:"作業系統屬「系統軟體」，負責管理硬體資源並提供應用程式執行環境，不是應用軟體；庫存、成績處理、套裝軟體都是為特定用途而寫的應用軟體。好記：OS 是幕後管家，不是給使用者辦事的 AP。"
+},
+{
+  id:"S24", type:"single", sec:"作業系統",
+  q:"下列何者是一個開放原始碼的作業系統？",
+  opts:[
+    {k:"A", t:"Windows。"},
+    {k:"B", t:"macOS。"},
+    {k:"C", t:"Ubuntu。"},
+    {k:"D", t:"iOS。"},
+  ],
+  ans:["C"],
+  exp:"Ubuntu 是以 Linux 為核心的開放原始碼作業系統；Windows、macOS、iOS 皆為封閉的商業授權系統。好記：Linux 家族(Ubuntu)＝開源。"
+},
+{
+  id:"S25", type:"single", sec:"硬體與週邊",
+  q:"下列的記憶體中，何者「存取」資料之速度最快？",
+  opts:[
+    {k:"A", t:"快取記憶體(Cache)"},
+    {k:"B", t:"唯讀記憶體(ROM)"},
+    {k:"C", t:"隨機記憶體(RAM)"},
+    {k:"D", t:"虛擬記憶體"},
+  ],
+  ans:["A"],
+  exp:"快取記憶體(Cache)最靠近 CPU、速度最快，用來暫存最常用的資料；RAM 次之，虛擬記憶體借用硬碟空間最慢。好記：記憶體越靠近 CPU 越快，Cache 第一。"
+},
+{
+  id:"S26", type:"single", sec:"程式與資料表示",
+  q:"下列何種電腦語言具有「易寫易懂」之特性？",
+  opts:[
+    {k:"A", t:"機器語言"},
+    {k:"B", t:"組合語言"},
+    {k:"C", t:"高階語言"},
+    {k:"D", t:"低階語言"},
+  ],
+  ans:["C"],
+  exp:"高階語言(如 C、Python)語法接近人類自然語言與數學式，易寫易懂；機器語言、組合語言屬低階，貼近硬體、難讀難寫。好記：越「高階」越像人話。"
+},
+{
+  id:"S27", type:"single", sec:"資訊安全",
+  q:"家中買了新電腦，首先要做什麼？",
+  opts:[
+    {k:"A", t:"立即連上網際網路確認效能"},
+    {k:"B", t:"立即插上隨身硬碟把備份資料複製到電腦"},
+    {k:"C", t:"立即 PO 開箱文"},
+    {k:"D", t:"立即安裝防毒軟體並啟用"},
+  ],
+  ans:["D"],
+  exp:"新機在連網或存放資料前，應先裝好並啟用防毒軟體，避免一上網就中毒。好記：先築防線(防毒)再上路(連網)。"
+},
+{
+  id:"S28", type:"single", sec:"硬體與週邊",
+  q:"下列「輔助記憶體」何者不能作隨機存取？",
+  opts:[
+    {k:"A", t:"磁碟"},
+    {k:"B", t:"磁帶"},
+    {k:"C", t:"光碟"},
+    {k:"D", t:"磁碟組"},
+  ],
+  ans:["B"],
+  exp:"磁帶必須循序前後捲動才能讀到資料，屬「循序存取」；磁碟、光碟可直接定位到任一位置，屬隨機存取。好記：磁帶像錄音帶，只能一路捲。"
+},
+{
+  id:"S29", type:"single", sec:"資訊安全",
+  q:"避免手機上的個人隱私外洩，下列措施何者為是？",
+  opts:[
+    {k:"A", t:"啟動密碼鎖定功能"},
+    {k:"B", t:"僅使用螢幕滑動鎖功能"},
+    {k:"C", t:"將個人資料上傳雲端分享空間"},
+    {k:"D", t:"手機遺失要找有店面的商家"},
+  ],
+  ans:["A"],
+  exp:"設定密碼(或生物辨識)鎖定可在手機遺失時阻擋他人存取資料；滑動鎖沒有驗證、上傳分享空間更增外洩風險。好記：手機一定要上「有驗證」的鎖。"
+},
+{
+  id:"S30", type:"single", sec:"程式與資料表示",
+  q:"Java 程式語言，是下列何種「語言」？",
+  opts:[
+    {k:"A", t:"函數語言 Functional Language"},
+    {k:"B", t:"邏輯語言 Logical Language"},
+    {k:"C", t:"物件導向語言 Object-Oriented Language"},
+    {k:"D", t:"機器語言 Machine Language"},
+  ],
+  ans:["C"],
+  exp:"Java 以類別(class)與物件(object)為核心，是典型的物件導向語言，具封裝、繼承、多型特性。好記：Java、C++、Python 皆為物件導向語言。"
+},
+{
+  id:"S31", type:"single", sec:"資訊安全",
+  q:"「人工檢查」資料輸入是否正確，是屬於下列何種安全管理？",
+  opts:[
+    {k:"A", t:"資料安全"},
+    {k:"B", t:"程式安全"},
+    {k:"C", t:"行政安全"},
+    {k:"D", t:"通訊安全"},
+  ],
+  ans:["A"],
+  exp:"檢查輸入資料的正確性，目的在維護資料本身的正確與完整，屬「資料安全」範疇。好記：管的是「資料對不對」＝資料安全。"
+},
+{
+  id:"S32", type:"single", sec:"硬體與週邊",
+  q:"由 CPU 到主記憶或磁碟、磁鼓等 I/O 設備，「讀或寫」一筆資料所需要的時間，一般稱為？",
+  opts:[
+    {k:"A", t:"搜尋時間 Search Time"},
+    {k:"B", t:"迴轉時間 Rotation Time"},
+    {k:"C", t:"存取時間 Access Time"},
+    {k:"D", t:"轉換時間 Transfer Time"},
+  ],
+  ans:["C"],
+  exp:"完成一次讀或寫所需的整體時間稱為「存取時間(Access Time)」；搜尋時間、迴轉時間只是磁碟存取的其中組成環節。好記：讀+寫的總時間＝存取時間。"
+},
+{
+  id:"S33", type:"single", sec:"網路與通訊",
+  q:"下列何種「通訊協定」規範 WWW 的通訊？",
+  opts:[
+    {k:"A", t:"HTTP — Hyper Text Transfer Protocol"},
+    {k:"B", t:"SMTP — Simple Mail Transfer Protocol"},
+    {k:"C", t:"FTP — File Transfer Protocol"},
+    {k:"D", t:"PPP — Point to Point Protocol"},
+  ],
+  ans:["A"],
+  exp:"全球資訊網(WWW)網頁傳輸使用 HTTP；SMTP 送郵件、FTP 傳檔案、PPP 是點對點連線協定。好記：看網頁＝HTTP。"
+},
+{
+  id:"S34", type:"single", sec:"資料庫",
+  q:"如果需要儲存大量資料、執行快速分類、更新與查詢，則下列何者為最佳選擇？",
+  opts:[
+    {k:"A", t:"密碼及認證系統"},
+    {k:"B", t:"資料庫管理系統"},
+    {k:"C", t:"電子郵件系統"},
+    {k:"D", t:"檔案管理系統"},
+  ],
+  ans:["B"],
+  exp:"資料庫管理系統(DBMS)專為大量資料的儲存、索引、查詢與更新而設計，效率遠勝一般檔案管理。好記：大量資料要快查快改＝用 DBMS。"
+},
+{
+  id:"S35", type:"single", sec:"網路與通訊",
+  q:"下列哪一個「網域名稱(Domain Name)」是屬於「學校/學術單位」所擁有/使用？",
+  opts:[
+    {k:"A", t:"www.trtc.com.tw"},
+    {k:"B", t:"www.president.gov.tw"},
+    {k:"C", t:"www.ntu.edu.tw"},
+    {k:"D", t:"www.twnic.net.tw"},
+  ],
+  ans:["C"],
+  exp:"edu 代表教育/學術單位，ntu.edu.tw 即臺灣大學；com 為公司、gov 為政府、net 為網路服務機構。好記：edu＝學校。"
+},
+{
+  id:"S36", type:"single", sec:"資訊安全",
+  q:"駭客利用偽裝的電子郵件或網頁，騙取使用者的密碼或信用卡卡號，其使用的手法是？",
+  opts:[
+    {k:"A", t:"解密程式。"},
+    {k:"B", t:"欺騙。"},
+    {k:"C", t:"監聽。"},
+    {k:"D", t:"惡意小程式。"},
+  ],
+  ans:["B"],
+  exp:"以假冒信件或網站誘騙使用者交出帳密，屬「欺騙」手法，即網路釣魚(phishing)。監聽是竊聽流量、解密程式是破密碼，皆非此類。好記：假網站騙帳密＝欺騙/釣魚。"
+},
+{
+  id:"S37", type:"single", sec:"金融科技與數位金融",
+  q:"行動商務(MC)在「B2C(Business to Consumer)」的主要應用為：",
+  opts:[
+    {k:"A", t:"行動行銷。"},
+    {k:"B", t:"行動購物及行動銀行。"},
+    {k:"C", t:"行動交易及行動入口網站。"},
+    {k:"D", t:"以上皆是。", pin:true},
+    {k:"E", t:"以上皆非。", pin:true}
+  ],
+  ans:["D"],
+  exp:"行動商務對消費者(B2C)的應用涵蓋行動行銷、行動購物/銀行、行動交易與入口網站等，皆屬之。好記：手機能做的商業服務都算行動商務。"
+},
+{
+  id:"S38", type:"single", sec:"企業資訊系統",
+  q:"以知識管理(KM)的說法分類，資訊可分為：",
+  opts:[
+    {k:"A", t:"結構性資訊。"},
+    {k:"B", t:"非結構性資訊。"},
+    {k:"C", t:"半結構性資訊。"},
+    {k:"D", t:"以上皆是。", pin:true},
+    {k:"E", t:"以上皆非。", pin:true}
+  ],
+  ans:["D"],
+  exp:"依結構化程度，資訊分為結構性(如資料庫表格)、半結構性(如表單、郵件)與非結構性(如文件、影音)三類，皆屬之。好記：資訊依「好不好排進表格」分三種。"
+},
+{
+  id:"S39", type:"single", sec:"資訊安全",
+  q:"為了讓郵件在傳送過程中不被駭客破壞，可藉由電子郵件系統的哪一項功能達成？",
+  opts:[
+    {k:"A", t:"壓縮"},
+    {k:"B", t:"反駭客"},
+    {k:"C", t:"密件副本"},
+    {k:"D", t:"加密"},
+  ],
+  ans:["D"],
+  exp:"加密可保護郵件內容在傳輸中的機密與完整，即使被攔截也難以讀取或竄改；壓縮只縮小體積、密件副本只是隱藏收件人。好記：要保護內容＝加密。"
+},
+{
+  id:"S40", type:"single", sec:"作業系統",
+  q:"下列哪一項「動作」進行時，「重新開機」會造成檔案被破壞的可能性？",
+  opts:[
+    {k:"A", t:"程式正在計算"},
+    {k:"B", t:"程式等待使用者輸入資料"},
+    {k:"C", t:"程式從磁碟讀取資料"},
+    {k:"D", t:"程式正在對磁碟寫資料"},
+  ],
+  ans:["D"],
+  exp:"寫入磁碟時若突然重開，資料可能只寫到一半而造成檔案毀損；讀取或計算不改變磁碟內容，較不受影響。好記：正在「寫檔」時斷電最危險。"
+},
+{
+  id:"S41", type:"single", sec:"辦公室軟體",
+  q:"多人編輯同一 WORD 文件時，可以啟動哪一個機制以了解誰做了哪些異動？",
+  opts:[
+    {k:"A", t:"交互參照"},
+    {k:"B", t:"密碼保護"},
+    {k:"C", t:"追蹤修訂"},
+    {k:"D", t:"浮水印"},
+  ],
+  ans:["C"],
+  exp:"「追蹤修訂(Track Changes)」會記錄每位編輯者的增刪與批註，方便檢視誰改了什麼。好記：協作看誰改了什麼＝追蹤修訂。"
+},
+{
+  id:"S42", type:"single", sec:"作業系統",
+  q:"在 Windows 中，要切換顯示已被開啟的應用程式視窗，應按下列哪一個快速鍵？",
+  opts:[
+    {k:"A", t:"[Ctrl+Shift]"},
+    {k:"B", t:"[Alt+Tab]"},
+    {k:"C", t:"[Alt+Shift]"},
+    {k:"D", t:"[Tab+Ctrl]"},
+  ],
+  ans:["B"],
+  exp:"Alt+Tab 是 Windows 切換各應用程式視窗的標準快速鍵。好記：Alt+Tab 換視窗。"
+},
+{
+  id:"S43", type:"single", sec:"資安治理與內規",
+  q:"個人資料保護法所保護之「客體」為？",
+  opts:[
+    {k:"A", t:"限經電腦處理之個人資料"},
+    {k:"B", t:"限紙本保存之個人資料"},
+    {k:"C", t:"任何形式之個人資料"},
+    {k:"D", t:"以上皆非。", pin:true}
+  ],
+  ans:["C"],
+  exp:"個資法保護不限媒介，無論電腦處理或紙本、任何形式的個人資料皆在保護範圍。好記：個資法「不分形式」都保護。"
+},
+{
+  id:"S44", type:"single", sec:"資安治理與內規",
+  q:"本行資訊安全政策為規範員工保密其所經營及使用的資訊，應要求員工？",
+  opts:[
+    {k:"A", t:"簽訂保密合約"},
+    {k:"B", t:"提撥淺密保證金"},
+    {k:"C", t:"簽訂賠款合約"},
+    {k:"D", t:"簽訂連帶保證人契約"},
+  ],
+  ans:["A"],
+  exp:"以簽訂保密合約(NDA)課予員工保密義務，是最常見且正確的作法。好記：保密＝簽保密合約。"
+},
+{
+  id:"S45", type:"single", sec:"資訊安全",
+  q:"為保護客戶個人資料，以電子郵件方式交付客戶時，應？",
+  opts:[
+    {k:"A", t:"將資料檔案壓縮後再寄送"},
+    {k:"B", t:"將資料檔案加密後再寄送"},
+    {k:"C", t:"將資料檔案當附件直接寄送"},
+    {k:"D", t:"將資料直接貼在郵件內文寄送"},
+  ],
+  ans:["B"],
+  exp:"寄送個資須加密(可加設開檔密碼)，即使誤寄或被攔截也難以讀取；壓縮不等於加密，直接寄送更會外洩。好記：寄個資一定要「加密」不是「壓縮」。參見單39。"
+},
+{
+  id:"S46", type:"single", sec:"資訊安全",
+  q:"列印錯誤的報表（含個資）紙張，應如何正確處理？",
+  opts:[
+    {k:"A", t:"為節能減碳仍應盡量重覆使用"},
+    {k:"B", t:"留下來做計算紙"},
+    {k:"C", t:"集中起來送資源回收"},
+    {k:"D", t:"立即用碎紙機攪碎"},
+  ],
+  ans:["D"],
+  exp:"含個資的紙張須立即碎紙銷毀，避免被撿拾外洩；重覆使用、當計算紙或直接回收都可能洩漏。好記：含個資廢紙＝碎紙機處理。"
+},
+{
+  id:"S47", type:"single", sec:"資訊安全",
+  q:"「社交工程(social engineering)」是一種利用下列何種「特性」所發展出來的攻擊手法？",
+  opts:[
+    {k:"A", t:"人性的弱點"},
+    {k:"B", t:"網路的弱點"},
+    {k:"C", t:"作業系統的漏洞"},
+    {k:"D", t:"人與人握手感染的"},
+  ],
+  ans:["A"],
+  exp:"社交工程鎖定的是人的信任、恐懼、好奇等心理弱點(如假冒主管、釣魚)，而非技術漏洞。好記：社交工程駭的是「人」不是機器。"
+},
+{
+  id:"S48", type:"single", sec:"資安治理與內規",
+  q:"本行「自動櫃員機作業處理須知」：為建立自助式銀行服務、便利客戶提領現鈔等，特設置何類設備？",
+  opts:[
+    {k:"A", t:"印表機設備。"},
+    {k:"B", t:"購物設備。"},
+    {k:"C", t:"個人電腦設備。"},
+    {k:"D", t:"自動櫃員機。"},
+  ],
+  ans:["D"],
+  exp:"提供自助存提款服務的設備即自動櫃員機(ATM)。好記：自助提款＝ATM。"
+},
+{
+  id:"S49", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：金庫密碼及鑰匙之控管暨庫存現金，應列入內部自行查核，多久至少辦理一次？",
+  opts:[
+    {k:"A", t:"每年。"},
+    {k:"B", t:"每季。"},
+    {k:"C", t:"每月。"},
+    {k:"D", t:"每旬。"},
+  ],
+  ans:["C"],
+  exp:"依須知規定，ATM 金庫密碼、鑰匙與庫存現金之自行查核至少每月辦理一次。好記：ATM 現金與金鑰查核＝每月。"
+},
+{
+  id:"S50", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：自動櫃員機應裝設何類之報警、警報系統，並與警察機關或保全公司連線？",
+  opts:[
+    {k:"A", t:"自動。"},
+    {k:"B", t:"手動。"},
+    {k:"C", t:"火災。"},
+    {k:"D", t:"水災。"},
+  ],
+  ans:["A"],
+  exp:"ATM 須裝設「自動」報警系統並連線警方或保全，以即時通報異常。好記：防搶要「自動」報警。"
+},
+{
+  id:"S51", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：ATM 閉路電視錄影監視系統，錄影鏡頭原則上應盡量涵蓋使用人何部以上？",
+  opts:[
+    {k:"A", t:"頭部。"},
+    {k:"B", t:"手部。"},
+    {k:"C", t:"腰部。"},
+    {k:"D", t:"腳部。"},
+  ],
+  ans:["C"],
+  exp:"監視鏡頭原則上涵蓋使用人「腰部」以上，並須能清晰拍到取鈔、點鈔、存款及補鈔維修等動作。好記：ATM 監視＝腰部以上。"
+},
+{
+  id:"S52", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：ATM 之錄影電子檔至少應保留多久？",
+  opts:[
+    {k:"A", t:"一個月。"},
+    {k:"B", t:"三個月。"},
+    {k:"C", t:"六個月。"},
+    {k:"D", t:"九個月。"},
+  ],
+  ans:["C"],
+  exp:"ATM 錄影電子檔至少保留六個月，以備事後調閱。好記：ATM 錄影留存＝六個月。"
+},
+{
+  id:"S53", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：純以電子檔案保存序時資料之 ATM，其硬碟規格需提昇為何種類？",
+  opts:[
+    {k:"A", t:"單硬碟。"},
+    {k:"B", t:"雙硬碟。"},
+    {k:"C", t:"三硬碟。"},
+    {k:"D", t:"四硬碟。"},
+  ],
+  ans:["B"],
+  exp:"純電子檔保存者須提昇為「雙硬碟」，以冗餘備援避免單一硬碟故障造成資料遺失。好記：怕一顆壞＝配雙硬碟。"
+},
+{
+  id:"S54", type:"single", sec:"作業系統",
+  q:"在 Windows 中，若應用程式當掉，要如何用鍵盤叫出「工作管理員」以結束當掉的程式？",
+  opts:[
+    {k:"A", t:"[CTRL]+[ESC]"},
+    {k:"B", t:"[ALT]+[SHIFT]"},
+    {k:"C", t:"[CTRL]+[ALT]+[DEL]"},
+    {k:"D", t:"[CTRL]+[SPACE]"},
+  ],
+  ans:["C"],
+  exp:"Ctrl+Alt+Del 可叫出選單進入工作管理員，強制結束無回應的程式。好記：三指神功 Ctrl+Alt+Del 救當機。"
+},
+{
+  id:"S55", type:"single", sec:"作業系統",
+  q:"要將 Windows 系統關機時，應採取何種正確操作方式？",
+  opts:[
+    {k:"A", t:"按 PC 上的「開關」鍵。"},
+    {k:"B", t:"直接拔掉 PC 電源插頭。"},
+    {k:"C", t:"直接關閉 PC 上的電源。"},
+    {k:"D", t:"使用「開始」功能表的「關機」。"},
+  ],
+  ans:["D"],
+  exp:"應透過「開始→關機」讓系統正常結束程序、寫回資料再斷電，直接斷電易造成資料毀損。好記：軟體關機才安全。參見單40。"
+},
+{
+  id:"S56", type:"single", sec:"作業系統",
+  q:"在 Windows 中，若想找一個「檔案」，採取何種方式可較快找到？",
+  opts:[
+    {k:"A", t:"使用開始功能中的「搜尋程式及檔案」。"},
+    {k:"B", t:"使用桌面的「電腦」。"},
+    {k:"C", t:"直接到「C 碟」找。"},
+    {k:"D", t:"使用桌面的「Windows 檔案總管」。"},
+  ],
+  ans:["A"],
+  exp:"用「開始」的搜尋功能輸入關鍵字可全機快速定位檔案，比逐層瀏覽資料夾更有效率。好記：找檔案用「搜尋」最快。"
+},
+{
+  id:"S57", type:"single", sec:"作業系統",
+  q:"在 Windows 中，若想取得「線上輔助說明」，應採取何種方式？",
+  opts:[
+    {k:"A", t:"按 [F12]"},
+    {k:"B", t:"按 [F11]"},
+    {k:"C", t:"按 [F10]"},
+    {k:"D", t:"按 [F1]"},
+  ],
+  ans:["D"],
+  exp:"F1 是多數 Windows 程式呼叫說明(Help)的通用快速鍵。好記：F1＝求救(Help)。"
+},
+{
+  id:"S58", type:"single", sec:"硬體與週邊",
+  q:"操作電腦時，眼睛位置應採取何種方式比較恰當？",
+  opts:[
+    {k:"A", t:"和「螢幕」平行。"},
+    {k:"B", t:"稍高於「螢幕」。"},
+    {k:"C", t:"稍低於「螢幕」。"},
+    {k:"D", t:"看得清楚就好。"},
+  ],
+  ans:["B"],
+  exp:"人體工學建議眼睛略高於螢幕、視線微向下看，可減少頸部與眼睛疲勞。好記：視線「微微往下」看螢幕最舒服。"
+},
+{
+  id:"S59", type:"single", sec:"硬體與週邊",
+  q:"操作時要讓鍵盤右邊的數字鍵順利輸出數字，應採取何種方式？",
+  opts:[
+    {k:"A", t:"按 [Shift]"},
+    {k:"B", t:"按 [Num Lock]"},
+    {k:"C", t:"按 [Caps Lock]"},
+    {k:"D", t:"按 [Scroll Lock]"},
+  ],
+  ans:["B"],
+  exp:"開啟 Num Lock 才能讓右側數字鍵區輸出數字，否則會變成方向鍵。好記：右側數字鍵要先開 Num Lock。"
+},
+{
+  id:"S60", type:"single", sec:"作業系統",
+  q:"操作 Windows 時，透過何項操作會出現包含該項目常用指令的「快顯功能表」？",
+  opts:[
+    {k:"A", t:"按一下滑鼠左鍵。"},
+    {k:"B", t:"按一下滑鼠右鍵。"},
+    {k:"C", t:"連續按二下滑鼠左鍵。"},
+    {k:"D", t:"連續按二下滑鼠右鍵。"},
+  ],
+  ans:["B"],
+  exp:"按滑鼠右鍵會跳出快顯(右鍵)功能表，列出該物件可用的指令。好記：右鍵＝叫出選單。"
+},
+{
+  id:"S61", type:"single", sec:"作業系統",
+  q:"在視窗的「標題欄」上連續按二下滑鼠左鍵，可完成下列哪一個操作？",
+  opts:[
+    {k:"A", t:"將視窗最小化。"},
+    {k:"B", t:"關閉視窗。"},
+    {k:"C", t:"將視窗最大化或還原成原來大小。"},
+    {k:"D", t:"移動視窗位置。"},
+  ],
+  ans:["C"],
+  exp:"雙擊標題列可在「最大化」與「還原原尺寸」間切換。好記：雙擊標題列＝放大/還原。"
+},
+{
+  id:"S62", type:"single", sec:"硬體與週邊",
+  q:"下列哪一個不是電腦的優點？",
+  opts:[
+    {k:"A", t:"電腦沒有情緒。"},
+    {k:"B", t:"電腦可以大量運算及處理資料。"},
+    {k:"C", t:"電腦可以長時間運作。"},
+    {k:"D", t:"電腦比人腦有智慧。"},
+  ],
+  ans:["D"],
+  exp:"電腦擅長高速、大量、穩定的運算，但缺乏人腦的創造、判斷與真正的智慧，故 D 不是電腦的優點。好記：電腦算得快，但沒有人腦的「智慧」。"
+},
+{
+  id:"S63", type:"single", sec:"資訊安全",
+  q:"為避免「電腦病毒」的散播，應採取下列何項有效的方法？",
+  opts:[
+    {k:"A", t:"不上網。"},
+    {k:"B", t:"封閉「USB」隨身碟。"},
+    {k:"C", t:"定時備份。"},
+    {k:"D", t:"安裝防毒軟體。"},
+  ],
+  ans:["D"],
+  exp:"安裝並更新防毒軟體是最有效且不影響使用的防範方式；不上網、封 USB 過度限制，備份是災後復原而非預防。好記：防病毒的正解＝裝防毒軟體。"
+},
+{
+  id:"S64", type:"single", sec:"資訊安全",
+  q:"下列何項描述，不是有關「電腦病毒」的特性？",
+  opts:[
+    {k:"A", t:"在潛伏期間仍會作複製動作。"},
+    {k:"B", t:"嚴重時會造成電腦資料的毀損。"},
+    {k:"C", t:"會感染給人類。"},
+    {k:"D", t:"可執行的程式。"},
+  ],
+  ans:["C"],
+  exp:"電腦病毒是一種會自我複製、破壞資料的程式，只感染電腦與檔案，不會傳染給人類。好記：電腦病毒不會傳染給「人」。"
+},
+{
+  id:"S65", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：何單位應隨時全盤監控 ATM 運作，如發現異常應立即通知營業單位處理？",
+  opts:[
+    {k:"A", t:"業務管理處。"},
+    {k:"B", t:"總務暨安全衛生處。"},
+    {k:"C", t:"資訊處。"},
+    {k:"D", t:"稽核處。"},
+  ],
+  ans:["C"],
+  exp:"ATM 屬資訊系統設備，由資訊處負責全盤監控運作並通報異常。好記：系統運作監控＝資訊處。"
+},
+{
+  id:"S66", type:"single", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：裝設 ATM 之營業單位應設置何類登記簿，記載保管人職級姓名、保管項目及使用起迄？",
+  opts:[
+    {k:"A", t:"自動櫃員機金庫密碼或鑰匙保管人員登記簿。"},
+    {k:"B", t:"庫存空白本行支票登記簿。"},
+    {k:"C", t:"金融債券存領備售登記簿。"},
+    {k:"D", t:"金融債券掛失止付登記簿。"},
+  ],
+  ans:["A"],
+  exp:"針對 ATM 金庫密碼、鑰匙的保管，須以「金庫密碼或鑰匙保管人員登記簿」記載並經主管覆核。好記：管金鑰就用「金鑰保管登記簿」。"
+},
+{
+  id:"S67", type:"single", sec:"硬體與週邊",
+  q:"下列何項是屬於電腦軟體？",
+  opts:[
+    {k:"A", t:"程式。"},
+    {k:"B", t:"螢幕。"},
+    {k:"C", t:"印表機。"},
+    {k:"D", t:"記憶體。"},
+  ],
+  ans:["A"],
+  exp:"程式(指令的集合)屬軟體；螢幕、印表機、記憶體都是看得到摸得到的硬體。好記：軟體＝程式/指令，硬體＝實體零件。"
+},
+{
+  id:"S68", type:"single", sec:"程式與資料表示",
+  q:"電腦的 CPU 於處理資料時，會採用哪一種進位之演算法？",
+  opts:[
+    {k:"A", t:"2 進位。"},
+    {k:"B", t:"8 進位。"},
+    {k:"C", t:"10 進位。"},
+    {k:"D", t:"16 進位。"},
+  ],
+  ans:["A"],
+  exp:"電腦內部以電子開關的通/斷表示 0 與 1，故一切運算以二進位(binary)進行。好記：電腦的底層語言只有 0 和 1。"
+},
+{
+  id:"S69", type:"single", sec:"硬體與週邊",
+  q:"兩部電腦中，其中一部畫面顯示總是比另一部慢，可能的原因為哪一項？",
+  opts:[
+    {k:"A", t:"CPU（微處理器）比較慢。"},
+    {k:"B", t:"記憶體比較少。"},
+    {k:"C", t:"顯示卡比較差。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"畫面顯示速度受 CPU 運算、記憶體容量與顯示卡效能共同影響，任一較弱都可能變慢，故以上皆是。好記：顯示卡頓＝CPU/RAM/顯卡任一拖後腿。"
+},
+{
+  id:"S70", type:"single", sec:"硬體與週邊",
+  q:"下列哪一種檔案格式，不是屬於電腦之圖形檔？",
+  opts:[
+    {k:"A", t:"WAV。"},
+    {k:"B", t:"BMP。"},
+    {k:"C", t:"JPG。"},
+    {k:"D", t:"GIF。"},
+  ],
+  ans:["A"],
+  exp:"WAV 是聲音(音訊)檔格式；BMP、JPG、GIF 都是影像/圖形檔。好記：WAV＝聲音，其餘是圖。"
+},
+{
+  id:"S71", type:"single", sec:"硬體與週邊",
+  q:"下列哪一種設備，不是電腦之「輸入」設備？",
+  opts:[
+    {k:"A", t:"鍵盤。"},
+    {k:"B", t:"滑鼠。"},
+    {k:"C", t:"印表機。"},
+    {k:"D", t:"掃描器。"},
+  ],
+  ans:["C"],
+  exp:"印表機把資料印出，屬「輸出」設備；鍵盤、滑鼠、掃描器都是把資料送進電腦的輸入設備。好記：印表機＝輸出。"
+},
+{
+  id:"S72", type:"single", sec:"網路與通訊",
+  q:"下列哪一項「網路社群服務」限制留言或發文字數不得超過 140 個字？",
+  opts:[
+    {k:"A", t:"Facebook。"},
+    {k:"B", t:"X(原 Twitter)。"},
+    {k:"C", t:"IG。"},
+    {k:"D", t:"Threads。"},
+  ],
+  ans:["B"],
+  exp:"X(原 Twitter)以短文著稱，早期單則限制 140 字。好記：140 字短訊＝Twitter/X。"
+},
+{
+  id:"S73", type:"single", sec:"網路與通訊",
+  q:"哪個記號被使用於電子郵件位址，並用於分隔用戶名稱及主電腦名稱？",
+  opts:[
+    {k:"A", t:"*"},
+    {k:"B", t:"@"},
+    {k:"C", t:"#"},
+    {k:"D", t:"$"},
+  ],
+  ans:["B"],
+  exp:"Email 以「@」分隔帳號與郵件伺服器(主機)名稱，例如 user@example.com。好記：Email 一定有 @。參見單97。"
+},
+{
+  id:"S74", type:"single", sec:"辦公室軟體",
+  q:"接收郵件時，若郵件上出現迴紋針符號，表示此封郵件：",
+  opts:[
+    {k:"A", t:"為「急件」"},
+    {k:"B", t:"為「已刪除」郵件"},
+    {k:"C", t:"含有「附加檔案」的郵件"},
+    {k:"D", t:"帶有病毒的郵件"},
+  ],
+  ans:["C"],
+  exp:"迴紋針(夾子)圖示代表這封信「夾帶」了附加檔案。好記：夾子＝夾了附件。"
+},
+{
+  id:"S75", type:"single", sec:"辦公室軟體",
+  q:"接收郵件時，若郵件上出現紅色「!」符號，表示此封郵件：",
+  opts:[
+    {k:"A", t:"為「急件」"},
+    {k:"B", t:"帶有病毒的郵件"},
+    {k:"C", t:"含有「附加檔案」的郵件"},
+    {k:"D", t:"為「已刪除」郵件"},
+  ],
+  ans:["A"],
+  exp:"紅色驚嘆號代表寄件者標記為高重要性的「急件」。好記：紅色「!」＝重要/急件。"
+},
+{
+  id:"S76", type:"single", sec:"網路與通訊",
+  q:"電子郵件地址主要是由下列哪兩個部分所組成的？",
+  opts:[
+    {k:"A", t:"使用者帳號、使用者密碼"},
+    {k:"B", t:"使用者帳號、郵件伺服器位址"},
+    {k:"C", t:"內收、外寄郵件伺服器位址"},
+    {k:"D", t:"郵件伺服器位址、主機名稱"},
+  ],
+  ans:["B"],
+  exp:"Email 位址＝使用者帳號 + @ + 郵件伺服器位址，例如 name@mail.com。好記：帳號@伺服器。"
+},
+{
+  id:"S77", type:"single", sec:"辦公室軟體",
+  q:"在 Excel 中，將 A1 儲存格格式自訂為「####.#」，輸入「1234.59」時，A1 會顯示？",
+  opts:[
+    {k:"A", t:"1234.59"},
+    {k:"B", t:"1234.60"},
+    {k:"C", t:"1234.5"},
+    {k:"D", t:"1234.6"},
+  ],
+  ans:["D"],
+  exp:"格式「####.#」小數只保留一位，會四捨五入：1234.59→1234.6。好記：#.# 只留一位小數且會進位。"
+},
+{
+  id:"S78", type:"single", sec:"辦公室軟體",
+  q:"若只要列印 Excel 工作表中局部的資料，可適用何項設定？",
+  opts:[
+    {k:"A", t:"「檔案/預覽列印」工作表"},
+    {k:"B", t:"「檔案/列印」活頁簿"},
+    {k:"C", t:"「檔案/列印」儲存格"},
+    {k:"D", t:"「檔案/列印範圍」"},
+  ],
+  ans:["D"],
+  exp:"先選取範圍再設定「列印範圍」，即可只印出指定的局部資料。好記：只印一部分＝設列印範圍。"
+},
+{
+  id:"S79", type:"single", sec:"辦公室軟體",
+  q:"在 Word 中，下列哪一個選項可設定強迫資料分頁？",
+  opts:[
+    {k:"A", t:"「檔案/版面設定」"},
+    {k:"B", t:"「插入/分隔設定」"},
+    {k:"C", t:"「檢視/頁首/頁尾」"},
+    {k:"D", t:"「插入/頁碼」"},
+  ],
+  ans:["B"],
+  exp:"插入「分頁符號(分隔設定)」可強迫其後內容跳到下一頁。好記：強迫換頁＝插入分頁符號。"
+},
+{
+  id:"S80", type:"single", sec:"辦公室軟體",
+  q:"在 Word 中，若要在文件內建立列印日期，並在每次列印時自動更新為今天日期，應使用：",
+  opts:[
+    {k:"A", t:"自動圖文集"},
+    {k:"B", t:"書籤"},
+    {k:"C", t:"表單欄位"},
+    {k:"D", t:"功能變數"},
+  ],
+  ans:["D"],
+  exp:"插入日期「功能變數(Field)」可讓日期隨列印/開啟自動更新。好記：會自動更新的資訊＝功能變數。"
+},
+{
+  id:"S81", type:"single", sec:"金融科技與數位金融",
+  q:"民眾採用網路訂票系統訂購返鄉車票，若依交易對象區分，應屬電子商務的哪種交易模式？",
+  opts:[
+    {k:"A", t:"企業對企業(B2B)"},
+    {k:"B", t:"客戶對客戶(C2C)"},
+    {k:"C", t:"企業對客戶(B2C)"},
+    {k:"D", t:"客戶對企業(C2B)"},
+  ],
+  ans:["C"],
+  exp:"售票公司(企業)對一般民眾(消費者)提供服務，屬 B2C。好記：企業賣給消費者＝B2C。"
+},
+{
+  id:"S82", type:"single", sec:"作業系統",
+  q:"在 Windows 中，刪除的檔案會被送到何處？",
+  opts:[
+    {k:"A", t:"我的公事包"},
+    {k:"B", t:"資源回收筒"},
+    {k:"C", t:"網路上的芳鄰"},
+    {k:"D", t:"我的最愛"},
+  ],
+  ans:["B"],
+  exp:"一般刪除的檔案會先進「資源回收筒」，尚可還原。好記：刪除先進回收筒。參見複45。"
+},
+{
+  id:"S83", type:"single", sec:"作業系統",
+  q:"在 Windows 中，安裝新硬體後，作業系統可自動偵測並安裝適當的驅動程式，稱為：",
+  opts:[
+    {k:"A", t:"隨插即用"},
+    {k:"B", t:"自動安裝"},
+    {k:"C", t:"自動偵測"},
+    {k:"D", t:"自動啟動"},
+  ],
+  ans:["A"],
+  exp:"插上裝置即被偵測並自動載入驅動、可立即使用，稱「隨插即用(Plug and Play)」。好記：插上就能用＝隨插即用。"
+},
+{
+  id:"S84", type:"single", sec:"硬體與週邊",
+  q:"在 Windows 中，若想使螢幕顯示更多物件但物件會變小，應設定？",
+  opts:[
+    {k:"A", t:"螢幕視窗外觀"},
+    {k:"B", t:"螢幕畫面解析度"},
+    {k:"C", t:"螢幕色彩解析度"},
+    {k:"D", t:"螢幕保護"},
+  ],
+  ans:["B"],
+  exp:"提高畫面解析度可容納更多像素、顯示更多內容，但每個物件會相對變小。好記：解析度越高，畫面能塞越多、字越小。"
+},
+{
+  id:"S85", type:"single", sec:"作業系統",
+  q:"在檔案總管中，要選取「不連續」的檔案，應按著哪一個按鍵？",
+  opts:[
+    {k:"A", t:"[Ctrl]"},
+    {k:"B", t:"[Shift]"},
+    {k:"C", t:"[Alt]"},
+    {k:"D", t:"[Tab]"},
+  ],
+  ans:["A"],
+  exp:"按住 Ctrl 逐一點選可挑選不連續的多個檔案；Shift 則用於選取連續範圍。好記：Ctrl 點跳著選、Shift 選一整段。"
+},
+{
+  id:"S86", type:"single", sec:"硬體與週邊",
+  q:"下列何者不是「電腦硬體系統」的「輸出」裝置？",
+  opts:[
+    {k:"A", t:"滑鼠"},
+    {k:"B", t:"數據機"},
+    {k:"C", t:"硬式磁碟機"},
+    {k:"D", t:"顯示器"},
+  ],
+  ans:["A"],
+  exp:"滑鼠是輸入裝置。※原卷此題答案為 A；惟嚴格而言數據機、硬碟屬輸入/輸出雙向裝置，僅顯示器為單純輸出，題意應在挑出「純輸入」的滑鼠，照原卷作答。"
+},
+{
+  id:"S87", type:"single", sec:"硬體與週邊",
+  q:"下列何種「單位」可代表電腦硬體系統的執行效率？",
+  opts:[
+    {k:"A", t:"百萬位元組 MB"},
+    {k:"B", t:"每秒百萬指令 MIPS"},
+    {k:"C", t:"記憶體 ROM"},
+    {k:"D", t:"每秒位元數 BPS"},
+  ],
+  ans:["B"],
+  exp:"MIPS(每秒百萬指令)衡量 CPU 每秒能執行的指令數，代表運算效率；MB 是容量、BPS 是傳輸速率。好記：算得快慢看 MIPS。"
+},
+{
+  id:"S88", type:"single", sec:"硬體與週邊",
+  q:"下列各種印表機中，何種最適合用來列印「一式多聯」之單據？",
+  opts:[
+    {k:"A", t:"噴墨印表機"},
+    {k:"B", t:"撞擊式點陣印表機"},
+    {k:"C", t:"熱感式印表機"},
+    {k:"D", t:"雷射印表機"},
+  ],
+  ans:["B"],
+  exp:"點陣式(撞擊式)印表機靠撞針打擊色帶，力道可穿透複寫聯，最適合印一式多聯單據；噴墨、雷射、熱感式無撞擊力無法複寫。好記：要複寫多聯＝點陣撞擊式。"
+},
+{
+  id:"S89", type:"single", sec:"硬體與週邊",
+  q:"下列何者是「輸入」設備也是「輸出」設備？",
+  opts:[
+    {k:"A", t:"鍵盤"},
+    {k:"B", t:"滑鼠"},
+    {k:"C", t:"喇叭"},
+    {k:"D", t:"磁碟機"},
+  ],
+  ans:["D"],
+  exp:"磁碟機可讀取(輸入)也可寫入(輸出)資料，屬輸入/輸出雙向裝置；鍵盤、滑鼠只輸入，喇叭只輸出。好記：能讀又能寫＝磁碟機。"
+},
+{
+  id:"S90", type:"single", sec:"作業系統",
+  q:"電腦正常使用下，如要重新開機，應採用哪種方式較適當？",
+  opts:[
+    {k:"A", t:"直接關主機電源再重開"},
+    {k:"B", t:"直接按主機「RESET」鈕"},
+    {k:"C", t:"按 Ctrl+Alt+Del 鍵"},
+    {k:"D", t:"開始→關機→重新啟動電腦"},
+  ],
+  ans:["D"],
+  exp:"透過「開始→重新啟動」讓系統正常結束再重開，最不傷資料；直接斷電或按 RESET 屬強制手段。好記：正常重開走軟體流程。參見單55。"
+},
+{
+  id:"S91", type:"single", sec:"資訊安全",
+  q:"下列哪個物件，能被病毒和其他惡意程式所影響呢？",
+  opts:[
+    {k:"A", t:"記憶體"},
+    {k:"B", t:"硬碟"},
+    {k:"C", t:"網路"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"惡意程式可常駐記憶體、感染硬碟檔案、也可透過網路擴散，三者皆會受影響。好記：病毒無孔不入，記憶體/硬碟/網路都會中。"
+},
+{
+  id:"S92", type:"single", sec:"資訊安全",
+  q:"透過大量且密集的封包傳送，使被攻擊的主機或網站無法處理正常客戶的連線，此攻擊方法稱為：",
+  opts:[
+    {k:"A", t:"阻斷服務攻擊"},
+    {k:"B", t:"跨站腳本攻擊"},
+    {k:"C", t:"社交工程法"},
+    {k:"D", t:"SQL 注入"},
+  ],
+  ans:["A"],
+  exp:"以海量封包癱瘓服務、讓正常使用者無法連線，即阻斷服務攻擊(DoS/DDoS)。好記：灌爆流量讓網站當機＝阻斷服務。"
+},
+{
+  id:"S93", type:"single", sec:"資訊安全",
+  q:"下列哪種「安全機制」，可用於網路環境並與本人簽名具備相同的法律效力？",
+  opts:[
+    {k:"A", t:"電子簽章"},
+    {k:"B", t:"網路簽名檔"},
+    {k:"C", t:"帳號密碼"},
+    {k:"D", t:"加密電子郵件"},
+  ],
+  ans:["A"],
+  exp:"依電子簽章法，符合規定的電子簽章與親筆簽名有同等法律效力；簽名檔、帳密只是識別工具。好記：具法律效力的網路簽名＝電子簽章。"
+},
+{
+  id:"S94", type:"single", sec:"資訊安全",
+  q:"為防止硬碟機中毒或資料流失，應該時常定期？",
+  opts:[
+    {k:"A", t:"備份"},
+    {k:"B", t:"規格化"},
+    {k:"C", t:"用清潔片清洗"},
+    {k:"D", t:"壓縮"},
+  ],
+  ans:["A"],
+  exp:"定期備份是資料流失後能復原的最後保障；規格化(格式化)反而清空資料。好記：怕資料不見＝定期備份。"
+},
+{
+  id:"S95", type:"single", sec:"資訊安全",
+  q:"為確保下單者是小王本人，在公開金鑰加密法中，如何產生數位簽章？",
+  opts:[
+    {k:"A", t:"小王用自己的公鑰產生簽章"},
+    {k:"B", t:"小王用自己的私鑰產生簽章"},
+    {k:"C", t:"用兆豐證券公司的公鑰產生簽章"},
+    {k:"D", t:"用兆豐證券公司的私鑰產生簽章"},
+  ],
+  ans:["B"],
+  exp:"數位簽章以簽署者的「私鑰」簽署，他人再用其「公鑰」驗證，可證明身分且不可否認。好記：私鑰簽名、公鑰驗證。參見卷二單48。"
+},
+{
+  id:"S96", type:"single", sec:"資訊安全",
+  q:"瀏覽社群網站或使用即時通訊過程中，下列哪一項方式可能造成電腦中毒？",
+  opts:[
+    {k:"A", t:"點擊連結"},
+    {k:"B", t:"分享相片"},
+    {k:"C", t:"打卡"},
+    {k:"D", t:"更新個人資訊"},
+  ],
+  ans:["A"],
+  exp:"點擊不明連結可能導向惡意網站或下載惡意程式，是常見的中毒途徑。好記：亂點連結最危險。"
+},
+{
+  id:"S97", type:"single", sec:"網路與通訊",
+  q:"關於電子郵件 Email，下列何者敘述錯誤？",
+  opts:[
+    {k:"A", t:"Email 一定要有 @。"},
+    {k:"B", t:"常見的協定有 SMTP、POP3、IMAP 等。"},
+    {k:"C", t:"英文有大小寫之分。"},
+    {k:"D", t:"每封信件的容量限制上限可設定。"},
+  ],
+  ans:["C"],
+  exp:"Email 位址通常不區分大小寫，故 C 為錯誤敘述。A、B、D 均正確。好記：郵件位址大小寫視為相同。參見卷二單… 相關協定 SMTP/POP3/IMAP。"
+},
+{
+  id:"S98", type:"single", sec:"資料庫",
+  q:"資料庫每個交易(Transaction)都應具備四項特性(ACID)，下列何者不正確？",
+  opts:[
+    {k:"A", t:"自動性(Automaticity)。"},
+    {k:"B", t:"一致性(Consistency)。"},
+    {k:"C", t:"隔離性(Isolation)。"},
+    {k:"D", t:"持續性(Durability)。"},
+  ],
+  ans:["A"],
+  exp:"ACID 四特性為原子性(Atomicity)、一致性、隔離性、持久性；A 誤植為「自動性(Automaticity)」，正解應為原子性。好記：ACID＝原子、一致、隔離、持久。"
+},
+{
+  id:"S99", type:"single", sec:"雲端與新興科技",
+  q:"關於加密貨幣錢包，以下概念何者正確？",
+  opts:[
+    {k:"A", t:"加密貨幣存放在錢包裡面。"},
+    {k:"B", t:"冷錢包沒有被駭的風險。"},
+    {k:"C", t:"錢包裡存放私密金鑰，用來證明區塊鏈上加密貨幣的擁有者。"},
+    {k:"D", t:"加密貨幣交易透明，沒有洗錢風險。"},
+  ],
+  ans:["C"],
+  exp:"錢包實際存放的是「私鑰」，用以證明並動用鏈上資產；幣本身記錄在區塊鏈上。冷錢包只是降低而非零風險，交易透明也不代表無洗錢。好記：錢包裝的是「鑰匙」不是「幣」。"
+},
+{
+  id:"S100", type:"single", sec:"雲端與新興科技",
+  q:"下列何者是應用 ChatGPT 可能出現的問題？",
+  opts:[
+    {k:"A", t:"捏造不實的資料來源。"},
+    {k:"B", t:"言論偏頗或歧見。"},
+    {k:"C", t:"產出物之版權爭議。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"生成式 AI 可能幻覺捏造來源、反映訓練資料偏見、並產生版權歸屬爭議，三者皆為已知風險。好記：用 AI 要防幻覺、偏見、版權三大坑。"
+},
+{
+  id:"S101", type:"single", sec:"雲端與新興科技",
+  q:"雲原生(Cloud Native)組成關鍵因素之一為下列何者？",
+  opts:[
+    {k:"A", t:"Carbon neutrality 碳中和。"},
+    {k:"B", t:"Containers 容器。"},
+    {k:"C", t:"SCADA 資料採集與監視系統。"},
+    {k:"D", t:"BIA 營運衝擊分析。"},
+  ],
+  ans:["B"],
+  exp:"雲原生的核心技術之一是「容器(Containers)」搭配微服務與動態編排(如 Kubernetes)。SCADA 屬工控、BIA 屬營運持續，皆非雲原生要素。好記：雲原生＝容器化微服務。"
+},
+{
+  id:"S102", type:"single", sec:"金融科技與數位金融",
+  q:"以下何者是目前人工智慧在銀行產業的應用案例？",
+  opts:[
+    {k:"A", t:"運用 AI 分析潛在客戶。"},
+    {k:"B", t:"運用 AI 強化辨識洗錢風險。"},
+    {k:"C", t:"導入機器學習評估客戶信用風險。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"AI 已廣泛用於銀行的行銷客群分析、反洗錢(AML)偵測與信用風險評分，三者皆為實際應用。好記：AI 在銀行＝找客戶、抓洗錢、評信用。"
+},
+{
+  id:"S103", type:"single", sec:"雲端與新興科技",
+  q:"下列何者不屬於美國國家標準和技術研究院(NIST)所定義之雲端運算服務模式？",
+  opts:[
+    {k:"A", t:"網路即服務(NaaS)。"},
+    {k:"B", t:"平台即服務(PaaS)。"},
+    {k:"C", t:"基礎架構即服務(IaaS)。"},
+    {k:"D", t:"軟體即服務(SaaS)。"},
+  ],
+  ans:["A"],
+  exp:"NIST 定義的三大雲端服務模式為 IaaS、PaaS、SaaS，並無 NaaS。好記：雲端三模式＝IaaS/PaaS/SaaS。參見卷二單56。"
+},
+{
+  id:"S104", type:"single", sec:"雲端與新興科技",
+  q:"有關機器人流程自動化工具(RPA)導入原則，下列何者正確？",
+  opts:[
+    {k:"A", t:"優先選擇低導入成本並能創造高效益的流程。"},
+    {k:"B", t:"應使用新進應用的人工智慧能力。"},
+    {k:"C", t:"應尋求一步到位，快速解決問題。"},
+    {k:"D", t:"應先將作業流程自動化再進行流程改善。"},
+  ],
+  ans:["A"],
+  exp:"RPA 導入應挑「低成本、高效益、規則明確、重複性高」的流程優先，並先改善流程再自動化，避免把壞流程自動化。好記：RPA 先撿「省力又划算」的來做。參見複55、複56。"
+},
+{
+  id:"S105", type:"single", sec:"網路與通訊",
+  q:"何者是最常見的電子郵件協定？",
+  opts:[
+    {k:"A", t:"POP3。"},
+    {k:"B", t:"FTP。"},
+    {k:"C", t:"HTTPS。"},
+    {k:"D", t:"TCP/IP。"},
+  ],
+  ans:["A"],
+  exp:"POP3 是常見的收信協定(搭配寄信的 SMTP)；FTP 傳檔、HTTPS 瀏覽網頁、TCP/IP 是底層傳輸協定組。好記：收信＝POP3/IMAP。"
+},
+{
+  id:"S106", type:"single", sec:"雲端與新興科技",
+  q:"下列何者是 AI 的應用？",
+  opts:[
+    {k:"A", t:"購物推薦。"},
+    {k:"B", t:"線性代數。"},
+    {k:"C", t:"即時通訊。"},
+    {k:"D", t:"音樂播放器。"},
+  ],
+  ans:["A"],
+  exp:"依使用者行為進行個人化「購物推薦」是典型 AI/機器學習應用；線性代數是數學工具、通訊與播放器只是一般軟體功能。好記：會「推薦/預測」的多半是 AI。"
+},
+{
+  id:"S107", type:"single", sec:"雲端與新興科技",
+  q:"下列哪項不是嵌入式系統的例子？",
+  opts:[
+    {k:"A", t:"智慧手機。"},
+    {k:"B", t:"汽車引擎控制器。"},
+    {k:"C", t:"家用電腦。"},
+    {k:"D", t:"洗衣機控制面板。"},
+  ],
+  ans:["C"],
+  exp:"嵌入式系統是為特定功能而內建於裝置的專用電腦；家用電腦屬通用型電腦，不是嵌入式。好記：專職單一任務＝嵌入式，什麼都能做＝通用電腦。"
+},
+{
+  id:"S108", type:"single", sec:"金融科技與數位金融",
+  q:"下列何者是數位金融的趨勢？",
+  opts:[
+    {k:"A", t:"紙本帳單。"},
+    {k:"B", t:"虛擬貨幣。"},
+    {k:"C", t:"郵政匯票。"},
+    {k:"D", t:"支票付款。"},
+  ],
+  ans:["B"],
+  exp:"虛擬貨幣代表金融數位化的新趨勢；紙本帳單、匯票、支票都是傳統紙本工具。好記：數位金融走向無紙化、虛擬化。"
+},
+{
+  id:"S109", type:"single", sec:"程式與資料表示",
+  q:"何者是最流行的版本控制系統？",
+  opts:[
+    {k:"A", t:"Git。"},
+    {k:"B", t:"SVN。"},
+    {k:"C", t:"Mercurial。"},
+    {k:"D", t:"Perforce。"},
+  ],
+  ans:["A"],
+  exp:"Git 是目前最主流的分散式版本控制系統(GitHub、GitLab 皆基於它)。好記：版本控制首選 Git。"
+},
+{
+  id:"S110", type:"single", sec:"雲端與新興科技",
+  q:"下列何者不是區塊鏈(Block Chain)技術特性？",
+  opts:[
+    {k:"A", t:"匿名性。"},
+    {k:"B", t:"中心化。"},
+    {k:"C", t:"交易內容不可竄改性。"},
+    {k:"D", t:"透明性(節點資料公開)。"},
+  ],
+  ans:["B"],
+  exp:"區塊鏈的核心是「去中心化」，由眾多節點共同維護，故「中心化」不是其特性。好記：區塊鏈＝去中心、不可竄改、公開透明。參見單117。"
+},
+{
+  id:"S111", type:"single", sec:"金融科技與數位金融",
+  q:"關於電子支付與第三方支付的特性，以下說法何者有誤？",
+  opts:[
+    {k:"A", t:"主管機關不同。"},
+    {k:"B", t:"皆可提供儲值/轉帳/提領服務。"},
+    {k:"C", t:"皆屬行動支付。"},
+    {k:"D", t:"支付潮流趨勢。"},
+  ],
+  ans:["B"],
+  exp:"第三方支付僅代收代付、不得辦理儲值與轉帳提領，那是「電子支付」才有的功能，故 B 有誤。好記：能儲值/轉帳/提領＝電子支付，第三方支付不行。"
+},
+{
+  id:"S112", type:"single", sec:"資訊安全",
+  q:"電腦瀏覽器清 cookie 的目的，以下說法何者有誤？",
+  opts:[
+    {k:"A", t:"提升隱私保護。"},
+    {k:"B", t:"解決網站問題。"},
+    {k:"C", t:"清除個人資訊。"},
+    {k:"D", t:"節省電腦開關機時間。"},
+  ],
+  ans:["D"],
+  exp:"清 cookie 有助隱私、清除登入/追蹤資訊、排解網站顯示問題，但與開關機速度無關，故 D 有誤。好記：清 cookie 管的是「隱私與網站」，不是開機快慢。"
+},
+{
+  id:"S113", type:"single", sec:"資訊安全",
+  q:"使用公用 Wi-Fi 時，下列何者網路行為是安全的？",
+  opts:[
+    {k:"A", t:"收發電子郵件。"},
+    {k:"B", t:"登入網路銀行進行轉帳。"},
+    {k:"C", t:"查詢資料，不登入任何帳號密碼。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["C"],
+  exp:"公用 Wi-Fi 易被竊聽，凡涉及帳密登入或金融交易都有風險；僅做「不登入」的一般查詢相對安全。好記：公用 Wi-Fi 別打帳密、別轉帳。"
+},
+{
+  id:"S114", type:"single", sec:"資訊安全",
+  q:"以 AI 合成影像與聲音偽冒同事或主管、取得信任後行騙(Deepfake)，屬何種駭客攻擊手法？",
+  opts:[
+    {k:"A", t:"中間人攻擊。"},
+    {k:"B", t:"社交工程。"},
+    {k:"C", t:"阻斷服務攻擊。"},
+    {k:"D", t:"連線劫持。"},
+  ],
+  ans:["B"],
+  exp:"Deepfake 冒充身分騙取信任與授權，本質是操弄「人」的社交工程手法。好記：偽冒身分騙人＝社交工程。參見單47、卷二複5。"
+},
+{
+  id:"S115", type:"single", sec:"資訊安全",
+  q:"針對零時差攻擊(Zero Day Attack)的描述何者正確？",
+  opts:[
+    {k:"A", t:"系統被攻擊後立即失效無法使用。"},
+    {k:"B", t:"惡意攻擊系統的時間不超過 1 天。"},
+    {k:"C", t:"系統被發現具風險性弱點後立即進行的惡意攻擊。"},
+    {k:"D", t:"弱點被發現後、在修正程式發佈前或使用者更新前所進行的惡意攻擊。"},
+  ],
+  ans:["D"],
+  exp:"零時差攻擊指趁弱點已被發現但官方尚未釋出修補(或使用者尚未更新)的空窗期發動攻擊。好記：漏洞已知、補丁未到，趁隙下手＝零時差。參見卷二單7。"
+},
+{
+  id:"S116", type:"single", sec:"資訊安全",
+  q:"有關零信任(Zero Trust)的敘述何者正確？",
+  opts:[
+    {k:"A", t:"零信任是不用始終驗證。"},
+    {k:"B", t:"僅提供必要的權限。"},
+    {k:"C", t:"不需保持網路可見性。"},
+    {k:"D", t:"在所有流量都安全的前提下進行零信任設計。"},
+  ],
+  ans:["B"],
+  exp:"零信任核心是「永不信任、持續驗證」並落實最小權限(僅給必要權限)；A、C、D 均與其精神相反。好記：零信任＝最小權限＋一直驗證。參見卷二單25、複21、複29。"
+},
+{
+  id:"S117", type:"single", sec:"雲端與新興科技",
+  q:"關於區塊鏈(Blockchain)的敘述，下列何者正確？",
+  opts:[
+    {k:"A", t:"由單一中央伺服器負責管理資料。"},
+    {k:"B", t:"資料一旦寫入後即可任意刪除與修改。"},
+    {k:"C", t:"每個新區塊皆透過密碼學雜湊(Hash)演算法與前一個區塊串接。"},
+    {k:"D", t:"只能應用於虛擬貨幣，無法用於其他產業。"},
+  ],
+  ans:["C"],
+  exp:"區塊鏈以雜湊值把每個區塊與前一區塊環環相扣，形成不可竄改的鏈；它去中心化、資料不可任意修改、應用不限虛擬貨幣。好記：區塊靠 Hash 串成鏈。參見單110、單118。"
+},
+{
+  id:"S118", type:"single", sec:"資訊安全",
+  q:"關於區塊鏈的「雜湊演算法(Hash Algorithm)」特性，下列敘述何者錯誤？",
+  opts:[
+    {k:"A", t:"輸入相同的資料，產生的雜湊值必定相同。"},
+    {k:"B", t:"只要輸入資料有改變，產生的雜湊值就會完全不同。"},
+    {k:"C", t:"雜湊過程是雙向加密，可透過雜湊值還原出原始資料。"},
+    {k:"D", t:"雜湊值具有固定長度的特性。"},
+  ],
+  ans:["C"],
+  exp:"雜湊是「單向」不可逆的，無法從雜湊值反推原文，故 C 錯誤；其餘為雜湊的確定性、雪崩效應與固定長度特性。好記：Hash 只能單向、算不回去。參見單119。"
+},
+{
+  id:"S119", type:"single", sec:"資訊安全",
+  q:"雜湊函數(如 SHA-256)在資訊安全中主要用於確保資料的什麼特性？",
+  opts:[
+    {k:"A", t:"機密性(Confidentiality)。"},
+    {k:"B", t:"完整性(Integrity)。"},
+    {k:"C", t:"不可否認性(Non-repudiation)。"},
+    {k:"D", t:"授權(Authorization)。"},
+  ],
+  ans:["B"],
+  exp:"比對雜湊值可驗證資料是否被竄改，確保「完整性」；機密性靠加密、不可否認性靠數位簽章。好記：Hash 驗完整、加密保機密。參見卷二單55。"
+},
+{
+  id:"S120", type:"single", sec:"資訊安全",
+  q:"下列何者不屬於對稱式加密演算法？",
+  opts:[
+    {k:"A", t:"AES。"},
+    {k:"B", t:"DES。"},
+    {k:"C", t:"RSA。"},
+    {k:"D", t:"RC5。"},
+  ],
+  ans:["C"],
+  exp:"RSA 是「非對稱式」加密(公私鑰成對)；AES、DES、RC5 都是加解密同一把金鑰的對稱式演算法。好記：RSA＝非對稱，AES/DES＝對稱。參見卷二單38、複69。"
+},
+{
+  id:"S121", type:"single", sec:"資訊安全",
+  q:"關於數位簽章(Digital Signature)，下列敘述何者正確？",
+  opts:[
+    {k:"A", t:"用來確保資料的機密性。"},
+    {k:"B", t:"簽署端使用自己的私鑰來進行簽章。"},
+    {k:"C", t:"接收端使用傳送端的私鑰來驗證簽章。"},
+    {k:"D", t:"數位簽章與加密的原理完全相同。"},
+  ],
+  ans:["B"],
+  exp:"簽署端用「自己的私鑰」簽章，接收端用「傳送端的公鑰」驗證；數位簽章確保的是完整性與不可否認性而非機密性。好記：私鑰簽、公鑰驗。參見單95。"
+},
+{
+  id:"S122", type:"single", sec:"資訊安全",
+  q:"FIDO(Fast Identity Online)標準被廣泛應用在身分識別，下列描述何者正確？",
+  opts:[
+    {k:"A", t:"認證資料皆集中儲存於雲端伺服器以防遺失。"},
+    {k:"B", t:"伺服器端保存私鑰，使用者端保存公鑰。"},
+    {k:"C", t:"結合了生物辨識(如指紋、臉部)與公開金鑰加密架構。"},
+    {k:"D", t:"無法與多因子驗證(MFA)搭配使用。"},
+  ],
+  ans:["C"],
+  exp:"FIDO 以裝置端生物辨識搭配公私鑰加密，私鑰留在使用者裝置、公鑰交伺服器，能與 MFA 搭配。好記：FIDO＝生物辨識＋公鑰加密，私鑰不離身。參見單123。"
+},
+{
+  id:"S123", type:"single", sec:"金融科技與數位金融",
+  q:"有關數位金融採取之開放 FIDO 數位身分認證方式，下列敘述何者正確？",
+  opts:[
+    {k:"A", t:"開通金融 FIDO 後，每次交易仍需手動輸入卡號。"},
+    {k:"B", t:"使用者端可透過手機的生物辨識進行線上驗證。"},
+    {k:"C", t:"雲端帳號的個資會直接透過 FIDO 傳送給第三方。"},
+    {k:"D", t:"金融機構必須負責保管客戶的生物辨識特徵。"},
+  ],
+  ans:["B"],
+  exp:"金融 FIDO 讓使用者以手機指紋/臉部辨識完成線上驗證，生物特徵留在裝置端、不外傳，機構不保管。好記：FIDO 用手機生物辨識登入、特徵不離機。參見單122。"
+},
+{
+  id:"S124", type:"single", sec:"資訊安全",
+  q:"網路釣魚(Phishing)是一種常見的網路詐騙手法，其主要目的為何？",
+  opts:[
+    {k:"A", t:"提供免費的防毒軟體。"},
+    {k:"B", t:"竊取使用者的帳號、密碼或信用卡等機密資訊。"},
+    {k:"C", t:"加速電腦網路連線。"},
+    {k:"D", t:"自動備份檔案。"},
+  ],
+  ans:["B"],
+  exp:"釣魚以假冒信件/網站誘騙使用者交出帳密或卡號等機密資訊。好記：Phishing＝釣你的帳密。參見單36。"
+},
+{
+  id:"S125", type:"single", sec:"雲端與新興科技",
+  q:"下列何者技術主要用於「理解人類語言」？",
+  opts:[
+    {k:"A", t:"應用程式設計界面(API)。"},
+    {k:"B", t:"機器人流程自動化(RPA)。"},
+    {k:"C", t:"自然語言處理(NLP)。"},
+    {k:"D", t:"物件導向程式設計(OOP)。"},
+  ],
+  ans:["C"],
+  exp:"NLP(自然語言處理)專門讓電腦理解與生成人類語言，是聊天機器人、語音助理的核心。好記：懂人話＝NLP。"
+},
+{
+  id:"S126", type:"single", sec:"資安治理與內規",
+  q:"依「金融機構提供行動裝置應用程式作業規範」，App 偵測到裝置 Root 或 Jailbreak 時應採取何種措施？",
+  opts:[
+    {k:"A", t:"提示刪除 App。"},
+    {k:"B", t:"提示風險並限制非約定轉帳服務。"},
+    {k:"C", t:"限制網路功能。"},
+    {k:"D", t:"強制重開機。"},
+  ],
+  ans:["B"],
+  exp:"裝置被 Root/越獄代表安全防線失效，App 應提示風險並限制高風險的非約定轉帳等服務。好記：手機被越獄→擋掉高風險交易。參見複70。"
+},
+{
+  id:"S127", type:"single", sec:"資安治理與內規",
+  q:"依上述規範，App 儲存金鑰採晶片安全設計時，金鑰應儲存於至少何種等級之安全元件？",
+  opts:[
+    {k:"A", t:"CNS 15408 EAL3。"},
+    {k:"B", t:"ISO 9001。"},
+    {k:"C", t:"ISO 22301。"},
+    {k:"D", t:"FIPS 140-2 Level 3。"},
+  ],
+  ans:["D"],
+  exp:"以晶片安全元件保護金鑰，須符合 FIPS 140-2 Level 3 以上強度。ISO 9001 是品質、ISO 22301 是營運持續，皆非金鑰保護標準。好記：硬體金鑰保護＝FIPS 140-2 L3。參見複71。"
+},
+{
+  id:"S128", type:"single", sec:"資安治理與內規",
+  q:"依上述規範，App 儲存金鑰採「軟體保護技術」時，下列何者為適當措施？",
+  opts:[
+    {k:"A", t:"白箱加密法。"},
+    {k:"B", t:"白箱加密搭配程式碼混淆。"},
+    {k:"C", t:"儲存於安全元件內。"},
+    {k:"D", t:"MD5 加密金鑰。"},
+  ],
+  ans:["B"],
+  exp:"軟體保護須以白箱加密再加上程式碼混淆，增加逆向工程難度；C 屬硬體方式非軟體、MD5 已不安全。好記：軟體保金鑰＝白箱加密＋混淆。"
+},
+{
+  id:"S129", type:"single", sec:"資安治理與內規",
+  q:"依「金融機構資通安全防護基準」，核心資通系統之營運環境容量管理應考量下列何項因素？",
+  opts:[
+    {k:"A", t:"軟體更新。"},
+    {k:"B", t:"軟硬體相容性。"},
+    {k:"C", t:"生命週期。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"容量管理須綜合考量軟體更新、軟硬體相容性與設備生命週期，三者皆是。好記：容量規劃要看更新、相容、汰換三面向。參見卷二複31。"
+},
+{
+  id:"S130", type:"single", sec:"資安治理與內規",
+  q:"依上述基準，提供客戶使用之公用電腦，下列措施何者錯誤？",
+  opts:[
+    {k:"A", t:"建立上網管制措施，限制連結非業務相關網站。"},
+    {k:"B", t:"定期清理客戶留存資料。"},
+    {k:"C", t:"建立病毒偵測機制並定期更新病毒碼。"},
+    {k:"D", t:"系統重新安裝後，並建立黑名單管控機制後提供客戶使用。"},
+  ],
+  ans:["D"],
+  exp:"公用電腦應採「白名單」(僅允許必要程式/網站)而非黑名單，黑名單難以窮舉惡意項目，故 D 錯誤。好記：公用電腦管控用白名單。參見卷二單52。"
+},
+{
+  id:"S131", type:"single", sec:"資安治理與內規",
+  q:"依「金融機構資通系統與服務供應鏈風險管理規範」，委外前分析規劃供應鏈資安事項，下列敘述何者正確？",
+  opts:[
+    {k:"A", t:"專案成員只須包含資訊處人員。"},
+    {k:"B", t:"由資訊安全處辦理資訊安全可行性分析。"},
+    {k:"C", t:"由起案單位辦理資訊安全可行性分析。"},
+    {k:"D", t:"成本估算不含資訊安全要求。"},
+  ],
+  ans:["C"],
+  exp:"委外案的資安可行性分析應由「起案(需求)單位」負責，並將資安要求納入成本，專案成員也不限資訊處。好記：誰起案誰做資安可行性分析。"
+},
+{
+  id:"S132", type:"single", sec:"資安治理與內規",
+  q:"依本行「資通系統與服務供應鏈風險管理須知」，有關選擇供應商事項，以下何者正確？",
+  opts:[
+    {k:"A", t:"可選擇股份超過百分之二十五來自中國之供應商。"},
+    {k:"B", t:"完成保密承諾書簽署後才可進行資訊交換。"},
+    {k:"C", t:"服務集中度過高之供應商不得列入評選。"},
+    {k:"D", t:"一年內曾發生資通安全事件之供應商不得列入評選。"},
+  ],
+  ans:["B"],
+  exp:"與供應商交換資訊前，須先簽署保密承諾書(B 正確)。陸資比例、集中度、曾發生資安事件屬風險考量但非一律「不得列入」。好記：交換資訊前先簽保密。"
+},
+{
+  id:"S133", type:"single", sec:"資安治理與內規",
+  q:"依上述規範，廠商與本行契約終止時，本行應監督供應商完成何事項？",
+  opts:[
+    {k:"A", t:"刪除本行窗口聯繫方式。"},
+    {k:"B", t:"返還本行交付之委外資料。"},
+    {k:"C", t:"銷毀契約副本及刪除信件往來紀錄。"},
+    {k:"D", t:"對專案成員辦理教育訓練。"},
+  ],
+  ans:["B"],
+  exp:"契約終止時最重要的是監督供應商「返還」本行交付的委外資料，避免資料滯留外部造成外洩。好記：合約結束＝把資料要回來。"
+},
+{
+  id:"S134", type:"single", sec:"資安治理與內規",
+  q:"依本行「電腦設備維修汰換管理須知」，廠商工程師到行內維修電腦時之注意事項何者正確？",
+  opts:[
+    {k:"A", t:"毋須要求工程師配帶識別證明。"},
+    {k:"B", t:"應詳實查對工程師身分，並登錄於「電腦設備維修登記表」。"},
+    {k:"C", t:"應詳實查對工程師身分，並登錄於「電腦設備送修登記簿」。"},
+    {k:"D", t:"應陪同工程師複製本行資料，再於「儲存媒體維修作業攜出登記簿」填寫攜出登記。"},
+  ],
+  ans:["B"],
+  exp:"廠商到行內維修須查驗身分並登錄於「電腦設備維修登記表」；「送修登記簿」用於外送、複製本行資料則非常態。好記：行內維修→查身分＋登維修登記表。參見複76。"
+},
+{
+  id:"S135", type:"single", sec:"資安治理與內規",
+  q:"依上述須知，電腦設備汰換報廢時應拆除儲存媒體，以下辦理流程何者錯誤？",
+  opts:[
+    {k:"A", t:"國內單位應於 PC 最高權限暨硬碟報廢管理系統填寫「儲存媒體報送表」。"},
+    {k:"B", t:"國內單位應自行列冊銷毀。"},
+    {k:"C", t:"國外單位應自行列冊銷毀。"},
+    {k:"D", t:"國外單位應將物理破壞儲存媒體前後照片上傳至 PC 最高權限暨硬碟報廢管理系統。"},
+  ],
+  ans:["B"],
+  exp:"國內單位報廢須透過系統填報並依規定程序處理，不得「自行列冊銷毀」，故 B 錯誤；國外單位因地制宜可自行列冊並上傳破壞照片佐證。好記：國內硬碟報廢要走系統、不能私下處理。"
+},
+{
+  id:"S136", type:"single", sec:"資安治理與內規",
+  q:"依據本行政策，各單位應定期審視瀏覽器業務系統權限清單，其審視頻率為何？",
+  opts:[
+    {k:"A", t:"每週。"},
+    {k:"B", t:"每月。"},
+    {k:"C", t:"每季。"},
+    {k:"D", t:"每年。"},
+  ],
+  ans:["B"],
+  exp:"依本行政策，業務系統權限清單應每月審視一次，及時移除不當或離職權限。好記：權限清單＝每月盤點。"
+},
+{
+  id:"S137", type:"single", sec:"資安治理與內規",
+  q:"依本行「各單位電腦機房機櫃管理須知」，重要主機及網路設備電源應接 UPS，停電時 UPS 應至少支撐多久？",
+  opts:[
+    {k:"A", t:"10 分鐘。"},
+    {k:"B", t:"30 分鐘。"},
+    {k:"C", t:"60 分鐘。"},
+    {k:"D", t:"2 小時。"},
+  ],
+  ans:["B"],
+  exp:"依須知，UPS 至少須支撐 30 分鐘，以爭取正常關機或啟動備援的時間。好記：機房 UPS＝至少撐 30 分。參見複80(僅撐 10 分鐘為不合規)。"
+},
+{
+  id:"S138", type:"single", sec:"資安治理與內規",
+  q:"系統已確認 App 完整性、函式庫完整性及非模擬器環境，但仍允許手機畫面被其他程式覆蓋時進行交易確認，最可能違反何項要求？",
+  opts:[
+    {k:"A", t:"執行期間防竄改機制。"},
+    {k:"B", t:"防入侵機制。"},
+    {k:"C", t:"使用設備保護金鑰。"},
+    {k:"D", t:"機敏資料保護機制。"},
+  ],
+  ans:["B"],
+  exp:"畫面被其他 App 覆蓋(overlay)可能遭誘導點擊或竊取輸入，屬防入侵機制未落實。好記：畫面被蓋住還能確認交易＝防入侵漏洞。"
+},
+{
+  id:"S139", type:"single", sec:"資安治理與內規",
+  q:"依本行「資訊作業韌性須知」，某核心業務 RTO 訂為 4 小時，但關鍵設備無法於 RTO 內完成重建，後續如何辦理？",
+  opts:[
+    {k:"A", t:"直接將 RTO 調高至 8 小時。"},
+    {k:"B", t:"停止該核心業務。"},
+    {k:"C", t:"由營運持續管理小組或以上核決層級決定解決方案。"},
+    {k:"D", t:"修正本行核心業務項目。"},
+  ],
+  ans:["C"],
+  exp:"RTO 無法達成屬重大營運持續議題，應提報營運持續管理小組或更高層級決策，而非逕自調整目標或砍業務。好記：達不到 RTO＝往上呈報決定。"
+},
+{
+  id:"S140", type:"single", sec:"資安治理與內規",
+  q:"某第一類系統建置專案，廠商可存取測試環境資料，並定期開會追蹤進度成本。下列哪一項最需進一步審視？",
+  opts:[
+    {k:"A", t:"是否建立專案管理工具追蹤進度。"},
+    {k:"B", t:"是否有資訊安全專責單位參與專案。"},
+    {k:"C", t:"是否採敏捷式開發方法。"},
+    {k:"D", t:"是否建立跨單位溝通會議。"},
+  ],
+  ans:["B"],
+  exp:"廠商能接觸測試資料涉及資安風險，最需確認是否有資安專責單位把關。進度工具、開發方法屬管理面而非資安重點。好記：外部碰到資料＝先看資安單位有沒有介入。"
+},
+{
+  id:"S141", type:"single", sec:"資安治理與內規",
+  q:"供應商因組織重整，原服務團隊與部分系統管理職責移轉至新成立子公司承作(服務內容不變)，供應鏈資安風險評估之辦理方式何者最適當？",
+  opts:[
+    {k:"A", t:"因服務未變更毋須額外處理。"},
+    {k:"B", t:"僅更新聯絡窗口即可。"},
+    {k:"C", t:"應重新執行供應鏈資訊安全風險評估。"},
+    {k:"D", t:"待契約到期後再重新檢討。"},
+  ],
+  ans:["C"],
+  exp:"承作主體變更(移轉至新子公司)即屬供應鏈重大變動，即使服務不變也應重新執行資安風險評估。好記：承作的「人/公司」變了，就要重評。"
+},
+{
+  id:"S142", type:"single", sec:"資安治理與內規",
+  q:"某單位擬採 SaaS 雲端服務，業者稱已通過國際資安驗證且免自行維護主機。依「雲端服務資訊管理須知」，下列何者最適當？",
+  opts:[
+    {k:"A", t:"SaaS 由業者全權管理，本行僅須確認價格與功能。"},
+    {k:"B", t:"不論 IaaS、PaaS 或 SaaS，仍應依所採用之雲端服務模式執行盡職調查。"},
+    {k:"C", t:"僅 IaaS 涉及基礎設施安全，才需執行盡職調查。"},
+    {k:"D", t:"只要業者具國際驗證，即可取代本行內部審查程序。"},
+  ],
+  ans:["B"],
+  exp:"任何雲端模式(IaaS/PaaS/SaaS)本行都保有相應的資安責任，須依模式執行盡職調查，業者驗證不能取代內部審查。好記：上雲不卸責，仍要盡職調查。參見卷二單59(盡職調查)。"
+},
+{
+  id:"S143", type:"single", sec:"資安治理與內規",
+  q:"某雲端方案主要管理介面在境內，但備援及部分客服在境外。依「雲端服務資訊管理須知」，採用前應確認之事項為何？",
+  opts:[
+    {k:"A", t:"境外資料中心是否提供較低成本之備援服務。"},
+    {k:"B", t:"客戶資料處理地及儲存地之資料保護法規是否不低於我國要求。"},
+    {k:"C", t:"雲端業者是否可提供更多客服語言。"},
+    {k:"D", t:"境外維運人員是否與本行使用相同專案管理工具。"},
+  ],
+  ans:["B"],
+  exp:"資料跨境時，最須確認處理地/儲存地的資料保護法規保障不低於我國，以免客戶個資保護降級。好記：資料出國，法規保障不能縮水。"
+},
+{
+  id:"S144", type:"single", sec:"資安治理與內規",
+  q:"某雲端契約屆滿不再續用，業者稱終止後會自動清除資料但無法提供刪除證明，平台管理人員可自行刪除並匯出紀錄。下列何者最適當？",
+  opts:[
+    {k:"A", t:"因業者會自動清除，本行無須另行留存紀錄。"},
+    {k:"B", t:"應通報資訊處並處理雲端平台資料刪除或銷毀；業者無法提供紀錄時，由平台管理人員留存操作紀錄。"},
+    {k:"C", t:"只要契約已終止，資料刪除責任即歸屬雲端業者。"},
+    {k:"D", t:"可待下次續約評估週期再確認資料是否已清除。"},
+  ],
+  ans:["B"],
+  exp:"契約終止須確實刪除資料並留存刪除證明；業者無法提供時應由本行平台管理人員自行執行刪除並保存操作紀錄，責任不外推。好記：資料刪除要有「證據」，本行自己也要留紀錄。"
+},
+{
+  id:"S145", type:"single", sec:"資安治理與內規",
+  q:"依本行「資訊主管及 PC 管理人員設置須知」，下列敘述何者適當？",
+  opts:[
+    {k:"A", t:"資訊主管或 PC 管理人員異動時，各單位文書人員應於異動後三個營業日內透過 Notes 系統遞報資訊處。"},
+    {k:"B", t:"PC 管理人員可由未滿一年之新進行員擔任。"},
+    {k:"C", t:"完成「PC 管理人員講習班」為資訊主管資格條件。"},
+    {k:"D", t:"執行各項軟硬體安裝、設定及異動之作業為資訊主管之職責。"},
+  ],
+  ans:["A"],
+  exp:"人員異動須於三個營業日內經 Notes 遞報資訊處(A 正確)。PC 管理人員不宜由未滿一年新進者擔任、實際軟硬體操作屬 PC 管理人員而非資訊主管。好記：人員異動＝3 個營業日內回報。"
+},
+{
+  id:"S146", type:"single", sec:"資安治理與內規",
+  q:"依本行「SWIFT 雲中主機管理注意事項」，下列敘述何者錯誤？",
+  opts:[
+    {k:"A", t:"使用者密碼管理應依本行「電腦系統使用者密碼檔案管理要點」辦理。"},
+    {k:"B", t:"使用者應採用多因子認證模式登入系統。"},
+    {k:"C", t:"授權主管應負責建置與維護該單位之使用者帳號與權限。"},
+    {k:"D", t:"授權主管應每季列印使用者帳號權限清單，送各有關部門核對並呈單位主管核閱歸檔存查。"},
+  ],
+  ans:["D"],
+  exp:"帳號權限清單之核對應「每月」辦理而非每季，故 D 錯誤；A、B、C 均為正確作法。好記：權限清單核對＝每月(參見單136)。"
+},
+{
+  id:"S147", type:"single", sec:"資安治理與內規",
+  q:"依規範，本行對外提供之 App，應辦理之檢測項目何者正確？(1)合格實驗室依 App 基本資安檢測基準檢測；(2)依 OWASP LLM Top 10 檢測；(3)依 OWASP MASC L2 檢測。",
+  opts:[
+    {k:"A", t:"(1)。"},
+    {k:"B", t:"(1)(2)。"},
+    {k:"C", t:"(1)(2)(3)。"},
+    {k:"D", t:"(1)(3)。"},
+  ],
+  ans:["D"],
+  exp:"對外 App 須做基本資安檢測(1)與行動應用安全查核 MASC L2(3)；OWASP LLM Top 10(2)是針對大型語言模型，非一般 App 必檢，故選 (1)(3)。好記：App 檢測＝基本資安＋MASC L2。"
+},
+{
+  id:"S148", type:"single", sec:"資安治理與內規",
+  q:"有關 RTO(復原時間目標)之定義，下列何者正確？",
+  opts:[
+    {k:"A", t:"中斷事故發生時，可承受業務流程資料可被回復的最近時間點。"},
+    {k:"B", t:"業務發生中斷事故之最大可容許中斷時間。"},
+    {k:"C", t:"評估業務中斷對本行所造成衝擊之分析方法。"},
+    {k:"D", t:"中斷事故發生後，從中斷到回復至最小可接受服務水準之目標時間。"},
+  ],
+  ans:["D"],
+  exp:"RTO 是「多久內要復原」的目標時間；A 講的是 RPO(可容忍的資料遺失點)、B 是 MTPD/MTD、C 是 BIA。好記：RTO＝復原「時間」目標。參見卷二複38。"
+},
+{
+  id:"S149", type:"single", sec:"資安治理與內規",
+  q:"依「資訊作業委託他人處理內部作業處理細則」，以下辦理資訊作業委外之注意事項何者錯誤？",
+  opts:[
+    {k:"A", t:"應就委外事項與供應商簽訂書面契約。"},
+    {k:"B", t:"應事先訂定明確之委外事項進度計畫表。"},
+    {k:"C", t:"消費金融業務資訊系統上雲皆須向主管機關申請核准。"},
+    {k:"D", t:"委外涉及雲端服務，應填寫「資訊作業委託他人處理涉及使用雲端服務檢核評估表」。"},
+  ],
+  ans:["C"],
+  exp:"並非所有消金系統上雲都須事前申請核准，部分採事後備查或依風險分級辦理，故 C 敘述過於絕對而錯誤。好記：上雲非一律要「核准」，視規定分級辦理。"
+},
+{
+  id:"S150", type:"single", sec:"資安治理與內規",
+  q:"依本行政策，下列情境何者適當？",
+  opts:[
+    {k:"A", t:"負責外匯同仁安裝 WinRAR 壓縮工具試用版。"},
+    {k:"B", t:"負責授信同仁安裝 DQ2 國際贏家。"},
+    {k:"C", t:"負責外匯同仁安裝無蝦米輸入法。"},
+    {k:"D", t:"PC 管理員協助安裝非公務用軟體。"},
+  ],
+  ans:["C"],
+  exp:"應僅安裝經核可、具授權且與公務相關之軟體；輸入法(無蝦米)屬正當公務工具。WinRAR 試用版有授權疑慮、DQ2/非公務軟體與職務無關。好記：只裝「有授權且公務用」的軟體。"
+},
+{
+  id:"S151", type:"single", sec:"資安治理與內規",
+  q:"依本行「資訊安全作業要點」，以下帳號管理原則何者錯誤？",
+  opts:[
+    {k:"A", t:"帳號及權限之申請應有正式紀錄。"},
+    {k:"B", t:"帳號若超過二個月未登入者應停用。"},
+    {k:"C", t:"可與職務代理人共用帳號。"},
+    {k:"D", t:"應定期檢核帳號權限之適當性。"},
+  ],
+  ans:["C"],
+  exp:"帳號應「一人一號」不得共用，否則無法追蹤責任歸屬，故 C 錯誤。好記：帳號不共用，代理也要各用各的。參見卷二複33。"
+},
+{
+  id:"S152", type:"single", sec:"資安治理與內規",
+  q:"依本行「資訊安全作業要點」，以下密碼管理原則何者錯誤？",
+  opts:[
+    {k:"A", t:"首次登入帳號時未變更密碼。"},
+    {k:"B", t:"密碼不使用固定數字或鍵盤連續性組合。"},
+    {k:"C", t:"密碼不與出生年月日等個人資訊相似。"},
+    {k:"D", t:"不將密碼以文字形式置於登入設備附近。"},
+  ],
+  ans:["A"],
+  exp:"首次登入應立即變更預設密碼，故「未變更」為錯誤作法；其餘皆是良好密碼習慣。好記：預設密碼一定要「馬上改」。參見單19。"
+},
+{
+  id:"S153", type:"single", sec:"資安治理與內規",
+  q:"依本行「資訊安全作業要點」，以下敘述何者錯誤？",
+  opts:[
+    {k:"A", t:"實體環境安全保護程度，應視資訊資產及系統價值的安全風險而決定。"},
+    {k:"B", t:"安全區域包括密閉式安全區域(如機房)及放置重要設備但非密閉式之安全區域(如機櫃)。"},
+    {k:"C", t:"僅有職務相關並已獲授權之員工或維護廠商可進出機房。"},
+    {k:"D", t:"機房進出紀錄至多保存一個月。"},
+  ],
+  ans:["D"],
+  exp:"機房進出紀錄應保存足夠期間以備稽核，「至多一個月」保存過短，故 D 錯誤。好記：進出紀錄要「留夠久」，不是頂多一個月。"
+},
+{
+  id:"S154", type:"single", sec:"資安治理與內規",
+  q:"依本行「使用個人電腦設備管理須知」，以下原則何者正確？",
+  opts:[
+    {k:"A", t:"個人電腦於辦公場所，除特殊業務需求，不得使用任何無線網路裝置。"},
+    {k:"B", t:"網域電腦命名原則可由 PC 管理人員更改。"},
+    {k:"C", t:"個人電腦只有具殘值者應納入使用單位之財產管理。"},
+    {k:"D", t:"網路銀行服務區之個人電腦最高權限 Administrator 帳號由 PC 管理人員保管。"},
+  ],
+  ans:["A"],
+  exp:"辦公室 PC 除特殊需求外禁用無線網路裝置，以降低無線被入侵風險(A 正確)。命名不得任意更改、財產管理不以殘值為準、網銀區最高權限應由更高層級控管。好記：辦公電腦原則上「不接無線」。"
+},
+{
+  id:"S155", type:"single", sec:"資安治理與內規",
+  q:"依本行政策，以下 Windows AD 網域密碼規則何者錯誤？",
+  opts:[
+    {k:"A", t:"密碼長度至少為 12 碼。"},
+    {k:"B", t:"密碼複雜度為 4 選 2 英文加數字。"},
+    {k:"C", t:"國內單位密碼效期為 60 天，海外單位為 30 天。"},
+    {k:"D", t:"國內單位密碼錯誤次數為 6 次，海外單位為 3 次。"},
+  ],
+  ans:["B"],
+  exp:"密碼複雜度要求應為「4 選 3」(大寫、小寫、數字、特殊符號中至少三類)，而非 4 選 2，故 B 錯誤。好記：複雜度＝四類中至少湊三類。參見卷二複12。"
+},
+{
+  id:"M1", type:"multi", sec:"資安治理與內規",
+  q:"下列何者是電腦機房的必要設備？",
+  opts:[
+    {k:"A", t:"伺服器。"},
+    {k:"B", t:"不斷電系統。"},
+    {k:"C", t:"冷氣。"},
+    {k:"D", t:"光碟機。"},
+  ],
+  ans:["A","B","C"],
+  exp:"機房須有主機(伺服器)、UPS 不斷電系統與空調(冷氣)維持運作與散熱；光碟機非機房必備。好記：機房三寶＝主機、UPS、空調。"
+},
+{
+  id:"M2", type:"multi", sec:"企業資訊系統",
+  q:"下列何者是軟體工程的企業應用系統之重點？",
+  opts:[
+    {k:"A", t:"符合企業的需求。"},
+    {k:"B", t:"系統架構。"},
+    {k:"C", t:"資料表正規化。"},
+    {k:"D", t:"建置資料庫。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"企業應用系統開發須貼合需求、規劃良好架構、資料表正規化並建置資料庫，四者皆為重點。好記：從需求→架構→資料庫設計一氣呵成。"
+},
+{
+  id:"M3", type:"multi", sec:"企業資訊系統",
+  q:"下列何者是「企業資源計劃(ERP)系統」的功能重點？",
+  opts:[
+    {k:"A", t:"產生報表。"},
+    {k:"B", t:"作業程序自動化。"},
+    {k:"C", t:"資料關聯。"},
+    {k:"D", t:"零售。"},
+  ],
+  ans:["A","B","C"],
+  exp:"ERP 著重整合各模組資料(關聯)、自動化作業流程並產生管理報表；「零售」只是應用場景而非 ERP 功能本身。好記：ERP＝整合、自動化、出報表。"
+},
+{
+  id:"M4", type:"multi", sec:"企業資訊系統",
+  q:"「平行上線」是指：",
+  opts:[
+    {k:"A", t:"舊新系統不同時上線。"},
+    {k:"B", t:"舊新系統不同時導入。"},
+    {k:"C", t:"舊新系統同時上線。"},
+    {k:"D", t:"新系統上線時，舊系統亦在運轉。"},
+  ],
+  ans:["C","D"],
+  exp:"平行上線(parallel run)指新舊系統同時運作一段時間、互相對照驗證，確認新系統無誤才停用舊系統，故 C、D 正確。好記：新舊「並跑」一陣子＝平行上線。"
+},
+{
+  id:"M5", type:"multi", sec:"企業資訊系統",
+  q:"企業營運差異(Gap)問題是指：",
+  opts:[
+    {k:"A", t:"ERP 系統和企業需求差異。"},
+    {k:"B", t:"價格差異太大。"},
+    {k:"C", t:"速度差異太大。"},
+    {k:"D", t:"新舊系統功能差異。"},
+  ],
+  ans:["A","D"],
+  exp:"Gap 分析指套裝系統(ERP)或新系統與企業實際需求/舊系統之間的功能落差，需靠客製或流程調整彌補。好記：Gap＝系統做得到的 vs 企業要的，之間的差。"
+},
+{
+  id:"M6", type:"multi", sec:"企業資訊系統",
+  q:"建構「客戶關係(CRM)系統」時，資訊發展會有哪些程序？",
+  opts:[
+    {k:"A", t:"資訊收集(Data Collection)。"},
+    {k:"B", t:"資訊儲存(Data Storage)。"},
+    {k:"C", t:"資訊分析(Data Analysis)。"},
+    {k:"D", t:"資料刪除。"},
+  ],
+  ans:["A","B","C"],
+  exp:"CRM 資訊發展流程為收集→儲存→分析客戶資料以支援行銷決策；「資料刪除」非其發展目的。好記：CRM＝收集、儲存、分析客戶資料。"
+},
+{
+  id:"M7", type:"multi", sec:"企業資訊系統",
+  q:"在產品問題客訴的整個作業過程中，有以下哪些問題發生？",
+  opts:[
+    {k:"A", t:"所耗時間太長。"},
+    {k:"B", t:"上下游的責任單位互不清楚。"},
+    {k:"C", t:"整個作業過程無法成為緊密。"},
+    {k:"D", t:"銷售單位負責。"},
+  ],
+  ans:["A","B","C"],
+  exp:"客訴流程常見問題是耗時過長、跨部門權責不清、流程銜接鬆散；D「銷售單位負責」是責任歸屬而非問題本身。好記：客訴痛點＝慢、權責亂、不連貫。"
+},
+{
+  id:"M8", type:"multi", sec:"企業資訊系統",
+  q:"資訊「擷取」作業，主要由哪些工作項目所組成？",
+  opts:[
+    {k:"A", t:"建立一個平台。"},
+    {k:"B", t:"自動關聯相關跨區域資訊。"},
+    {k:"C", t:"透過連線從公司資訊系統存取相關資訊。"},
+    {k:"D", t:"存取授權管制。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"資訊擷取須建平台、跨區關聯、連線存取並做好授權管制，四者皆屬其組成。好記：擷取資訊＝平台+關聯+連線+授權。"
+},
+{
+  id:"M9", type:"multi", sec:"企業資訊系統",
+  q:"「知識庫」功能是何種資訊系統？",
+  opts:[
+    {k:"A", t:"ERP。"},
+    {k:"B", t:"KM。"},
+    {k:"C", t:"CRM。"},
+    {k:"D", t:"DATA MART(資料市集)。"},
+  ],
+  ans:["B","D"],
+  exp:"知識庫屬知識管理(KM)的核心，並可搭配資料市集(Data Mart)儲存分析用資料。ERP 管資源、CRM 管客戶。好記：知識庫＝KM，資料儲存分析＝Data Mart。"
+},
+{
+  id:"M10", type:"multi", sec:"網路與通訊",
+  q:"Extranet、Internet、Intranet 三者最大差異是？",
+  opts:[
+    {k:"A", t:"Internet 以企業內部為中心。"},
+    {k:"B", t:"Intranet 對外角色產生應用功能。"},
+    {k:"C", t:"Internet 是企業和另一企業的交易作業。"},
+    {k:"D", t:"Intranet 是企業集團的交易作業。"},
+  ],
+  ans:["C","D"],
+  exp:"依原卷答案為 C、D。三者差別在範圍：Internet 為公開網際網路、Extranet 供合作企業間、Intranet 為企業內部。※原卷選項敘述與定義略有出入，照原卷作答。"
+},
+{
+  id:"M11", type:"multi", sec:"資訊安全",
+  q:"關於數位簽章，下列敘述哪些正確？",
+  opts:[
+    {k:"A", t:"數位簽章具有不可否認性。"},
+    {k:"B", t:"數位簽章的文件容易被驗證。"},
+    {k:"C", t:"將簽名或印章掃描去背後套圖至電子文件上，即為數位簽章。"},
+    {k:"D", t:"數位簽章亦可使用筆式輸入系統，在電子文件上簽名。"},
+  ],
+  ans:["A","B"],
+  exp:"數位簽章以私鑰簽署，具不可否認性且可用公鑰輕易驗證(A、B 正確)；掃描印章或手寫筆跡只是圖像，不具加密驗證效力。好記：數位簽章＝加密機制，不是貼圖或手寫。參見單121。"
+},
+{
+  id:"M12", type:"multi", sec:"網路與通訊",
+  q:"下列何者是企業在網際網路(Internet)的識別方式？",
+  opts:[
+    {k:"A", t:"主機名稱。"},
+    {k:"B", t:"機構名稱。"},
+    {k:"C", t:"住家地址。"},
+    {k:"D", t:"IP 位址。"},
+  ],
+  ans:["A","B","D"],
+  exp:"網路上以主機名稱、網域(機構名稱)與 IP 位址來識別；「住家地址」是實體世界的定位，非網路識別。好記：網路認的是主機名/網域/IP。"
+},
+{
+  id:"M13", type:"multi", sec:"程式與資料表示",
+  q:"物件導向技術盛行的原因：",
+  opts:[
+    {k:"A", t:"網際盛行。"},
+    {k:"B", t:"物件導向程式盛行。"},
+    {k:"C", t:"物件導向系統分析方法盛行。"},
+    {k:"D", t:"物件導向資料庫盛行。"},
+  ],
+  ans:["B","C","D"],
+  exp:"物件導向從程式語言、系統分析方法到資料庫全面發展，帶動整體技術盛行；「網際盛行」與物件導向無直接因果。好記：OO 從寫程式、做分析到存資料都成熟了。"
+},
+{
+  id:"M14", type:"multi", sec:"金融科技與數位金融",
+  q:"行動商務之資料應用可分為？",
+  opts:[
+    {k:"A", t:"訊息/電子郵件(messaging/email)。"},
+    {k:"B", t:"網路封包傳送。"},
+    {k:"C", t:"資訊服務及行動商務(information services and m-commerce)。"},
+    {k:"D", t:"網路存取(LAN access)。"},
+  ],
+  ans:["A","C","D"],
+  exp:"行動資料應用包含訊息/郵件、資訊服務與行動商務、以及網路存取；「網路封包傳送」是底層傳輸機制而非應用類別。好記：行動應用＝訊息、資訊服務、上網。"
+},
+{
+  id:"M15", type:"multi", sec:"網路與通訊",
+  q:"下列何者是「WWW」的瀏覽器？",
+  opts:[
+    {k:"A", t:"Google Chrome。"},
+    {k:"B", t:"Microsoft Edge。"},
+    {k:"C", t:"Mozilla Firefox。"},
+    {k:"D", t:"LINE。"},
+  ],
+  ans:["A","B","C"],
+  exp:"Chrome、Edge、Firefox 都是網頁瀏覽器；LINE 是即時通訊軟體。好記：瀏覽器＝看網頁的工具，LINE 是聊天用。"
+},
+{
+  id:"M16", type:"multi", sec:"網路與通訊",
+  q:"下列何者屬於「通訊傳輸」媒介？",
+  opts:[
+    {k:"A", t:"光纖。"},
+    {k:"B", t:"微波。"},
+    {k:"C", t:"衛星。"},
+    {k:"D", t:"傳真機。"},
+  ],
+  ans:["A","B","C"],
+  exp:"光纖(有線)、微波與衛星(無線)都是資料傳輸媒介；傳真機是終端設備而非傳輸媒介。好記：媒介是「路」，傳真機是「車」。"
+},
+{
+  id:"M17", type:"multi", sec:"程式與資料表示",
+  q:"根據軟體工程理論，軟體測試過程步驟有哪些？",
+  opts:[
+    {k:"A", t:"單元測試。"},
+    {k:"B", t:"整合測試。"},
+    {k:"C", t:"系統測試。"},
+    {k:"D", t:"驗收測試。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"軟體測試由小到大依序為單元→整合→系統→驗收測試，四者皆是標準步驟。好記：測試由細到粗，最後給使用者驗收。參見複64。"
+},
+{
+  id:"M18", type:"multi", sec:"網路與通訊",
+  q:"王先生的電子郵件地址為 wang.an@abc.com.tw，哪幾項為正確描述？",
+  opts:[
+    {k:"A", t:"電子郵件的帳號為 wang.an。"},
+    {k:"B", t:"電子郵件的帳號為 wang.an@。"},
+    {k:"C", t:"電子郵件的伺服器為 @abc.com.tw。"},
+    {k:"D", t:"電子郵件的伺服器為 abc.com.tw。"},
+  ],
+  ans:["A","D"],
+  exp:"以 @ 分隔，前面 wang.an 是帳號、後面 abc.com.tw 是郵件伺服器；@ 只是分隔符不屬帳號或伺服器名。好記：帳號@伺服器，@ 不算在兩邊。參見單73、單76。"
+},
+{
+  id:"M19", type:"multi", sec:"網路與通訊",
+  q:"URL：http://www.hinet.net/index.htm，其中「http://」的描述哪幾項為真？",
+  opts:[
+    {k:"A", t:"為路徑名稱。"},
+    {k:"B", t:"為傳輸協定。"},
+    {k:"C", t:"為網站位址。"},
+    {k:"D", t:"為未加密連線。"},
+  ],
+  ans:["B","D"],
+  exp:"http:// 標示所用的傳輸協定，且 http(非 https)為未加密連線。網站位址是 www.hinet.net、路徑是 /index.htm。好記：http＝協定且沒加密，https 才加密。"
+},
+{
+  id:"M20", type:"multi", sec:"資訊安全",
+  q:"在電腦或網路上設定密碼，哪幾項是較安全的方式？",
+  opts:[
+    {k:"A", t:"定期變動。"},
+    {k:"B", t:"用家人生日。"},
+    {k:"C", t:"用朋友電話。"},
+    {k:"D", t:"使用文字加數字。"},
+  ],
+  ans:["A","D"],
+  exp:"定期更換與混用文字加數字能提高強度；用生日、電話等個人資訊易被猜出。好記：密碼要常換、要混字元，別用生日電話。參見單19。"
+},
+{
+  id:"M21", type:"multi", sec:"資訊安全",
+  q:"為維護網路上電子交易安全，下列哪幾項為正確方式？",
+  opts:[
+    {k:"A", t:"需要加安全密碼。"},
+    {k:"B", t:"要有公正的驗證單位。"},
+    {k:"C", t:"可以用明碼傳送。"},
+    {k:"D", t:"使用公用電腦交易。"},
+  ],
+  ans:["A","B"],
+  exp:"電子交易須加密(安全密碼)並有公正第三方(憑證中心)驗證身分；明碼傳送與公用電腦交易都極不安全。好記：交易要加密＋有第三方驗證。"
+},
+{
+  id:"M22", type:"multi", sec:"網路與通訊",
+  q:"將「ADSL」網路升級為「光纖」網路的優點有哪些？",
+  opts:[
+    {k:"A", t:"費用比較便宜。"},
+    {k:"B", t:"最高速率比較快。"},
+    {k:"C", t:"保證對稱上下傳速率。"},
+    {k:"D", t:"傳輸品質比銅線更穩定。"},
+  ],
+  ans:["B","D"],
+  exp:"光纖速率更快、抗干擾且傳輸品質比銅線穩定(B、D)；費用未必較便宜、也不保證上下傳對稱。好記：光纖＝更快更穩，但不一定更便宜。"
+},
+{
+  id:"M23", type:"multi", sec:"資訊安全",
+  q:"請問下列哪幾項違反「資訊安全」概念？",
+  opts:[
+    {k:"A", t:"將檔案定期備份，遇檔案損毀可復原。"},
+    {k:"B", t:"將檔案設定公開，方便快速存取。"},
+    {k:"C", t:"將檔案設定密碼保護，密碼原則為簡單易記。"},
+    {k:"D", t:"將檔案分別設定存取權限(如唯讀、可寫入)。"},
+  ],
+  ans:["B","C"],
+  exp:"檔案全公開會失去機密性、密碼太簡單易被破解，兩者違反資安；定期備份與分級權限則是良好做法。好記：亂公開、弱密碼＝資安大忌。"
+},
+{
+  id:"M24", type:"multi", sec:"資安治理與內規",
+  q:"本行「資訊安全政策」適用範圍為？",
+  opts:[
+    {k:"A", t:"本行所有員工。"},
+    {k:"B", t:"約聘僱人員。"},
+    {k:"C", t:"本行客戶。"},
+    {k:"D", t:"協力廠商及顧問。"},
+  ],
+  ans:["A","B","D"],
+  exp:"資安政策適用於能接觸本行系統/資料的內部人員(員工、約聘僱)及外部協力廠商顧問；客戶非政策規範對象。好記：政策管的是「替本行做事的人」，不含客戶。"
+},
+{
+  id:"M25", type:"multi", sec:"資訊安全",
+  q:"以下對於「資訊安全」所稱之「資訊」，何者為是？",
+  opts:[
+    {k:"A", t:"單純由資訊人員負責保護之電腦檔案。"},
+    {k:"B", t:"不管其存在形式為何，都應受到適當保護。"},
+    {k:"C", t:"可藉由各種形式儲存。"},
+    {k:"D", t:"是一種有價值的資產。"},
+  ],
+  ans:["B","C","D"],
+  exp:"資訊是有價值的資產、可以各種形式(紙本、電子、口頭)存在、都應受保護；A 錯在把責任侷限於資訊人員與電腦檔案。好記：資訊人人有責、形式不拘。參見卷二單11。"
+},
+{
+  id:"M26", type:"multi", sec:"資安治理與內規",
+  q:"本行各單位辦理資料檔案複製至 USB 可攜式儲存媒體時，應採取下列哪些管制措施？",
+  opts:[
+    {k:"A", t:"指派 2-4 名乙級(含)以上主管擔任作業授權主管。"},
+    {k:"B", t:"攜出人應先填寫「資料檔案攜出申請單」。"},
+    {k:"C", t:"次日應由作業授權主管簽核「資料檔案攜出明細表」，送單位主管核閱。"},
+    {k:"D", t:"交由任一甲級主管複製即可。"},
+  ],
+  ans:["A","B","C"],
+  exp:"USB 攜出資料須設授權主管、事前填申請單、事後簽核明細並呈核，形成雙重控管；不可由任一主管逕行複製。好記：資料攜出＝申請、授權、留紀錄。參見卷二單13。"
+},
+{
+  id:"M27", type:"multi", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：下列哪幾項為本行「自動櫃員機」之正確服務項目？",
+  opts:[
+    {k:"A", t:"連線至「網購」網站。"},
+    {k:"B", t:"餘額查詢。"},
+    {k:"C", t:"提款。"},
+    {k:"D", t:"轉帳。"},
+  ],
+  ans:["B","C","D"],
+  exp:"ATM 提供餘額查詢、提款、轉帳等金融服務；連線網購並非 ATM 功能。好記：ATM 做的是查、提、轉。"
+},
+{
+  id:"M28", type:"multi", sec:"資安治理與內規",
+  q:"本行 ATM 作業處理須知：報廢 ATM 交由專門公司處理前，必須執行下列哪幾項事項？",
+  opts:[
+    {k:"A", t:"專門公司須當面拆除磁碟機交予本行。"},
+    {k:"B", t:"摧毀自動櫃員機外觀面板至無法修復。"},
+    {k:"C", t:"摧毀讀卡機至無法使用。"},
+    {k:"D", t:"拆除所有貼於外觀之本行 LOGO 及本行有關之標示。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"報廢 ATM 須取回含資料的磁碟、摧毀面板與讀卡機、並移除行徽標示，以防資料外洩與冒用，四項皆須辦理。好記：報廢要「取資料、砸關鍵零件、去 LOGO」。"
+},
+{
+  id:"M29", type:"multi", sec:"作業系統",
+  q:"下列哪些作業系統，是目前「智慧型手機」最常用的作業系統？",
+  opts:[
+    {k:"A", t:"Android。"},
+    {k:"B", t:"Windows。"},
+    {k:"C", t:"MS-DOS。"},
+    {k:"D", t:"iOS。"},
+  ],
+  ans:["A","D"],
+  exp:"智慧型手機兩大主流系統為 Android 與 iOS；Windows(桌機為主)、MS-DOS(早期 PC)非手機主流。好記：手機系統＝Android + iOS。"
+},
+{
+  id:"M30", type:"multi", sec:"網路與通訊",
+  q:"於網路專有名詞中，下列哪些網路代表「WAN」、「LAN」？",
+  opts:[
+    {k:"A", t:"網際網路。"},
+    {k:"B", t:"區域網路。"},
+    {k:"C", t:"企業內部網路。"},
+    {k:"D", t:"廣域網路。"},
+  ],
+  ans:["B","D"],
+  exp:"LAN＝區域網路、WAN＝廣域網路；網際網路、企業內部網路是其他概念。好記：LAN 小(區域)、WAN 大(廣域)。"
+},
+{
+  id:"M31", type:"multi", sec:"網路與通訊",
+  q:"請問下列哪些網路協定，是目前「網際網路(Internet)」無法使用的？",
+  opts:[
+    {k:"A", t:"IPX/SPX。"},
+    {k:"B", t:"TCP/IP。"},
+    {k:"C", t:"NetBEUI。"},
+    {k:"D", t:"X.25。"},
+  ],
+  ans:["A","C","D"],
+  exp:"網際網路以 TCP/IP 為基礎；IPX/SPX(Novell)、NetBEUI(區域網路)、X.25(舊式封包網)皆非網際網路使用的協定。好記：上網只認 TCP/IP。"
+},
+{
+  id:"M32", type:"multi", sec:"網路與通訊",
+  q:"請問下列哪些網路設備，不具備「連接兩個(或以上)TCP/IP 網路及路徑選擇」的功能？",
+  opts:[
+    {k:"A", t:"Switch 交換器。"},
+    {k:"B", t:"Hub 集線器。"},
+    {k:"C", t:"Router 路由器。"},
+    {k:"D", t:"Bridge 橋接器。"},
+  ],
+  ans:["A","B","D"],
+  exp:"具跨網路連接與路徑選擇(routing)功能的是 Router；Switch、Hub、Bridge 主要在同網段內轉送，不做路由。好記：會「選路」的只有路由器 Router。"
+},
+{
+  id:"M33", type:"multi", sec:"網路與通訊",
+  q:"於「網域名稱」中，下列哪些單位代表「.com」、「.gov」？",
+  opts:[
+    {k:"A", t:"政府機關。"},
+    {k:"B", t:"國防軍事單位。"},
+    {k:"C", t:"財團法人及組織單位。"},
+    {k:"D", t:"公司行號。"},
+  ],
+  ans:["A","D"],
+  exp:".com＝公司行號、.gov＝政府機關；軍事為 .mil、組織為 .org。好記：com＝公司、gov＝政府。參見單35。"
+},
+{
+  id:"M34", type:"multi", sec:"網路與通訊",
+  q:"使用「Edge」瀏覽器時，下列哪些原因會造成網頁顯示速度變慢？",
+  opts:[
+    {k:"A", t:"「我的最愛」中收集太多網站。"},
+    {k:"B", t:"網路塞車。"},
+    {k:"C", t:"系統之程式太多。"},
+    {k:"D", t:"網頁的內容太過龐大。"},
+  ],
+  ans:["B","D"],
+  exp:"網頁載入慢主要因網路壅塞或網頁內容龐大(圖多、程式多)；「我的最愛」數量不影響瀏覽速度。好記：網頁慢＝網路塞或頁面太肥。"
+},
+{
+  id:"M35", type:"multi", sec:"辦公室軟體",
+  q:"需要進行「視訊會議」時，下列哪些軟體不具備「視訊會議」功能？",
+  opts:[
+    {k:"A", t:"即時通訊軟體。"},
+    {k:"B", t:"Teams。"},
+    {k:"C", t:"電子郵件軟體。"},
+    {k:"D", t:"影音播放軟體。"},
+  ],
+  ans:["C","D"],
+  exp:"電子郵件與影音播放軟體不能即時視訊；即時通訊軟體與 Teams 則具視訊會議功能。好記：收信、播影片≠開視訊會議。"
+},
+{
+  id:"M36", type:"multi", sec:"辦公室軟體",
+  q:"下列哪些功能，是正規的「電子郵件系統」所具備的功能？",
+  opts:[
+    {k:"A", t:"看電影。"},
+    {k:"B", t:"傳送郵件。"},
+    {k:"C", t:"小畫家。"},
+    {k:"D", t:"接收郵件。"},
+  ],
+  ans:["B","D"],
+  exp:"郵件系統的核心功能就是收信與寄信；看電影、小畫家屬其他軟體。好記：郵件系統＝收信＋寄信。"
+},
+{
+  id:"M37", type:"multi", sec:"資訊安全",
+  q:"智慧型手機下載安裝應用程式有哪些方法？",
+  opts:[
+    {k:"A", t:"透過軟體市集(Market)線上下載安裝。"},
+    {k:"B", t:"透過分享合法官方網址下載。"},
+    {k:"C", t:"手機安裝 AppsInstaller 即可安裝記憶卡內部的檔案。"},
+    {k:"D", t:"開啟相機鏡頭掃描 App 安裝路徑二維條碼下載安裝。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"依原卷答案為全選。實務上仍以官方市集最安全，側載(如 C、D)風險較高應審慎。※原卷將四種途徑皆列為可行方法，照原卷作答。"
+},
+{
+  id:"M38", type:"multi", sec:"網路與通訊",
+  q:"下列哪些服務屬於網路社群？",
+  opts:[
+    {k:"A", t:"Facebook。"},
+    {k:"B", t:"Microsoft Office。"},
+    {k:"C", t:"Email。"},
+    {k:"D", t:"IG。"},
+  ],
+  ans:["A","D"],
+  exp:"Facebook、IG 是社群媒體平台；Office 是辦公軟體、Email 是通訊工具，非社群。好記：社群＝FB、IG 這類分享互動平台。"
+},
+{
+  id:"M39", type:"multi", sec:"網路與通訊",
+  q:"下列哪些是「網路社群」主要的「目的」？",
+  opts:[
+    {k:"A", t:"預期互惠。"},
+    {k:"B", t:"增加認同。"},
+    {k:"C", t:"瀏覽隱私。"},
+    {k:"D", t:"建立自我形象。"},
+  ],
+  ans:["A","B","D"],
+  exp:"參與社群多為互惠交流、尋求群體認同與經營個人形象；「瀏覽隱私」並非社群目的。好記：玩社群為互惠、認同、形象。"
+},
+{
+  id:"M40", type:"multi", sec:"作業系統",
+  q:"下列有哪幾項是「作業系統」？",
+  opts:[
+    {k:"A", t:"Windows。"},
+    {k:"B", t:"UNIX。"},
+    {k:"C", t:"FreeBSD。"},
+    {k:"D", t:"Linux。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"Windows、UNIX、FreeBSD、Linux 都是作業系統，四者皆是。好記：這四個都是 OS。"
+},
+{
+  id:"M41", type:"multi", sec:"資訊安全",
+  q:"下列哪幾項行為，可能造成電腦感染「病毒」？",
+  opts:[
+    {k:"A", t:"上網。"},
+    {k:"B", t:"接收電子郵件。"},
+    {k:"C", t:"拷貝程式或檔案。"},
+    {k:"D", t:"讀取來路不明之「USB」隨身碟。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"上網、開郵件附件、拷貝檔案、插不明 USB 都是病毒常見入侵途徑，四者皆有風險。好記：病毒從網路、郵件、檔案、USB 通通進得來。參見卷二複19。"
+},
+{
+  id:"M42", type:"multi", sec:"硬體與週邊",
+  q:"小王隨身碟容量已使用 3084MB，這些容量可能被下列哪些檔案所使用？",
+  opts:[
+    {k:"A", t:"600MB 的音樂檔。"},
+    {k:"B", t:"10MB 簡報檔。"},
+    {k:"C", t:"2,048KB 的文件檔。"},
+    {k:"D", t:"3GB 的影片。"},
+  ],
+  ans:["B","C","D"],
+  exp:"換算後：3GB≈3072MB(D)、10MB(B)、2048KB＝2MB(C)，三者合計約 3084MB 相符；再加 600MB 音樂就超過，故 A 不含。好記：1GB＝1024MB、1MB＝1024KB。"
+},
+{
+  id:"M43", type:"multi", sec:"辦公室軟體",
+  q:"下列哪些是「即時訊息軟體」的功能？",
+  opts:[
+    {k:"A", t:"文字訊息交流。"},
+    {k:"B", t:"語音交流。"},
+    {k:"C", t:"視訊交流。"},
+    {k:"D", t:"檔案傳輸。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"現代即時通訊軟體(如 LINE、Teams)整合文字、語音、視訊與傳檔，四者皆具。好記：即時通訊＝文字、語音、視訊、傳檔全包。"
+},
+{
+  id:"M44", type:"multi", sec:"辦公室軟體",
+  q:"Excel 儲存檔案時可設定密碼，下列說明何者正確？",
+  opts:[
+    {k:"A", t:"設定保護密碼後，其他使用者開檔一定要輸入密碼才可開啟。"},
+    {k:"B", t:"輸入密碼時，Excel 只會出現 * 符號代表。"},
+    {k:"C", t:"要從「檔案/保護活頁簿」去設定。"},
+    {k:"D", t:"密碼檢查時，並不區分英文字母的大小寫。"},
+  ],
+  ans:["A","B","C"],
+  exp:"開檔密碼須輸入正確密碼才能開、輸入時以 * 遮蔽、可由保護功能設定；但 Excel 密碼「區分大小寫」，故 D 錯誤。好記：Excel 密碼有分大小寫。"
+},
+{
+  id:"M45", type:"multi", sec:"作業系統",
+  q:"關於「資源回收筒」的敘述，以下何者正確？",
+  opts:[
+    {k:"A", t:"丟到資源回收筒的檔案，還可以還原為未刪除。"},
+    {k:"B", t:"如果不想丟到資源回收筒，刪除時要按著 [Shift] 鍵。"},
+    {k:"C", t:"檔案丟到資源回收筒中，並不會佔硬碟空間。"},
+    {k:"D", t:"資源回收筒位在「RECYCLED」資料夾中。"},
+  ],
+  ans:["A","B","D"],
+  exp:"回收筒中的檔案可還原(A)、按 Shift+Delete 可略過回收筒直接刪(B)、對應系統資料夾(D)；但檔案在回收筒中「仍佔硬碟空間」，故 C 錯誤。好記：進回收筒的檔還在佔空間，清空才真的釋放。參見單82。"
+},
+{
+  id:"M46", type:"multi", sec:"資訊安全",
+  q:"電腦病毒會經由下列何種途徑傳染？",
+  opts:[
+    {k:"A", t:"拷貝他人的軟體。"},
+    {k:"B", t:"瀏覽全球資訊網(WWW)。"},
+    {k:"C", t:"空氣。"},
+    {k:"D", t:"開啟電子郵件的附加檔案。"},
+  ],
+  ans:["A","B","D"],
+  exp:"病毒透過拷貝軟體、瀏覽惡意網頁、開啟郵件附件傳播；「空氣」不會傳電腦病毒。好記：電腦病毒不走空氣，只走檔案與網路。參見單64。"
+},
+{
+  id:"M47", type:"multi", sec:"資訊安全",
+  q:"發行「自然人憑證」的內政部憑證管理中心提供哪項服務？",
+  opts:[
+    {k:"A", t:"憑證核發、更新與終止。"},
+    {k:"B", t:"憑證爭議仲裁。"},
+    {k:"C", t:"憑證保存。"},
+    {k:"D", t:"智財權認證。"},
+  ],
+  ans:["A","B","C"],
+  exp:"憑證管理中心(CA)負責憑證的核發更新終止、爭議處理與保存；智財權認證非其業務。好記：CA 管憑證的生老病死，不管智財權。參見卷二複36。"
+},
+{
+  id:"M48", type:"multi", sec:"資訊安全",
+  q:"網際網路資訊傳播力強，下列哪些為使用時必須謹慎防範的問題？",
+  opts:[
+    {k:"A", t:"言論問題。"},
+    {k:"B", t:"版權問題。"},
+    {k:"C", t:"隱私權問題。"},
+    {k:"D", t:"著作權問題。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"網路傳播快，言論、版權、隱私與著作權都可能觸法或引發爭議，四者皆須留意。好記：網路發言前想想言論、版權、隱私、著作權。"
+},
+{
+  id:"M49", type:"multi", sec:"資訊安全",
+  q:"使用「HTTPS」進行網站連線時，可獲得下列哪些好處？",
+  opts:[
+    {k:"A", t:"網站的身分正確性。"},
+    {k:"B", t:"流量傳輸的品質。"},
+    {k:"C", t:"資料傳輸的安全。"},
+    {k:"D", t:"預防電腦病毒。"},
+  ],
+  ans:["A","C"],
+  exp:"HTTPS 透過憑證驗證網站身分(A)並加密傳輸內容(C)；但它不改善「傳輸品質」，也不能防病毒。好記：HTTPS＝驗身分＋加密，不管速度與病毒。參見複19。"
+},
+{
+  id:"M50", type:"multi", sec:"網路與通訊",
+  q:"有關「WWW」之敘述，下列哪些是正確的？",
+  opts:[
+    {k:"A", t:"全球資訊網是 WorldWideWeb 之縮寫。"},
+    {k:"B", t:"讓企業可將產品或服務訊息提供給大眾。"},
+    {k:"C", t:"為使資訊自由流通，建立首頁時可不受智慧財產保護法令約束。"},
+    {k:"D", t:"WWW 上之資訊可顯示文字、圖形，還可顯示聲音、影像。"},
+  ],
+  ans:["A","B","D"],
+  exp:"WWW 是 World Wide Web 縮寫、可供企業行銷、能呈現多媒體；但網頁內容仍受智慧財產權法規範，故 C 錯誤。好記：網路內容一樣要守智財權。"
+},
+{
+  id:"M51", type:"multi", sec:"網路與通訊",
+  q:"目前通行的網路通訊協定(Internet Protocol，IP)有哪幾種？",
+  opts:[
+    {k:"A", t:"IPv4。"},
+    {k:"B", t:"IPv6。"},
+    {k:"C", t:"IPO。"},
+    {k:"D", t:"IP13 Pro。"},
+  ],
+  ans:["A","B"],
+  exp:"目前 IP 有 IPv4 與 IPv6 兩種；IPO 是首次公開發行、IP13 Pro 是手機型號，都是干擾選項。好記：IP 只有 v4、v6。"
+},
+{
+  id:"M52", type:"multi", sec:"金融科技與數位金融",
+  q:"下列哪些是智慧型手機的應用？",
+  opts:[
+    {k:"A", t:"訂購網路商品。"},
+    {k:"B", t:"查詢客戶資料。"},
+    {k:"C", t:"當作電子錢包進行小額付款。"},
+    {k:"D", t:"將資料儲存在雲端硬碟。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"智慧型手機可購物、查詢、行動支付與雲端存取，四者皆為常見應用。好記：手機能購物、查詢、付款、上雲。"
+},
+{
+  id:"M53", type:"multi", sec:"作業系統",
+  q:"下列哪些是作業系統的主要功能？",
+  opts:[
+    {k:"A", t:"防止電腦病毒。"},
+    {k:"B", t:"執行應用程式。"},
+    {k:"C", t:"管理系統資源。"},
+    {k:"D", t:"提供使用者界面。"},
+  ],
+  ans:["B","C","D"],
+  exp:"OS 負責載入執行應用程式、管理 CPU/記憶體等資源、提供操作介面；防毒是防毒軟體的工作而非 OS 核心功能。好記：OS＝跑程式、管資源、給介面。"
+},
+{
+  id:"M54", type:"multi", sec:"雲端與新興科技",
+  q:"關於人工智慧(AI)，以下敘述何者正確？",
+  opts:[
+    {k:"A", t:"使用 AI 可消除決策時的人為偏見。"},
+    {k:"B", t:"AI 適用於所有情境與場景。"},
+    {k:"C", t:"AI 的建議可能無法解釋。"},
+    {k:"D", t:"駭客可透過污染訓練資料而影響 AI。"},
+  ],
+  ans:["C","D"],
+  exp:"AI 存在「黑箱」難解釋(C)與訓練資料被投毒的風險(D)；但 AI 會承襲資料偏見(非消除)、也非萬用於所有場景，故 A、B 錯。好記：AI 有黑箱與被投毒風險，且不消除偏見、非萬能。"
+},
+{
+  id:"M55", type:"multi", sec:"雲端與新興科技",
+  q:"關於機器人流程自動化(RPA)，以下敘述何者正確？",
+  opts:[
+    {k:"A", t:"記錄人員對電腦的操作行為，並重複不間斷地執行。"},
+    {k:"B", t:"功能強大，應賦予最高系統權限。"},
+    {k:"C", t:"可隨業務量需求而彈性擴展機器人數量。"},
+    {k:"D", t:"機器人需與人員協作，故帳號與權限應共享。"},
+  ],
+  ans:["A","C"],
+  exp:"RPA 模擬並重複人員操作(A)、可彈性增減機器人數量(C)；但應遵守最小權限、不得給最高權限或共用帳號，故 B、D 錯。好記：RPA 也要守最小權限、不共用帳號。參見單104、複56。"
+},
+{
+  id:"M56", type:"multi", sec:"雲端與新興科技",
+  q:"企業中適合導入流程機器人(RPA)之數位流程，具有以下哪些特性？",
+  opts:[
+    {k:"A", t:"流程重複執行頻率較高(如一天數次或每天固定執行)。"},
+    {k:"B", t:"流程活動涉及不同業務系統，需人工反覆切換。"},
+    {k:"C", t:"流程執行步驟無須跨部門。"},
+    {k:"D", t:"流程執行過程較需要複雜之人為專業判斷與決策。"},
+  ],
+  ans:["A","B"],
+  exp:"RPA 最適合高頻重複、需跨多系統反覆操作的規則性流程(A、B)；需複雜人為判斷的流程不適合自動化，「無須跨部門」也非必要條件。好記：RPA 擅長「重複又要換系統」的例行工作。參見單104。"
+},
+{
+  id:"M57", type:"multi", sec:"金融科技與數位金融",
+  q:"金融機構發展數位金融時，應注意的法令遵循風險包含以下哪幾類？",
+  opts:[
+    {k:"A", t:"是否具備媒體曝光效果。"},
+    {k:"B", t:"資訊安全風險。"},
+    {k:"C", t:"金融犯罪風險。"},
+    {k:"D", t:"消費者權益保護。"},
+  ],
+  ans:["B","C","D"],
+  exp:"數位金融須防範資安、金融犯罪(如洗錢詐欺)與消費者保護等法遵風險；「媒體曝光」屬行銷考量非法遵風險。好記：法遵三防＝資安、犯罪、消保。"
+},
+{
+  id:"M58", type:"multi", sec:"雲端與新興科技",
+  q:"下列何者是雲端運算的部署模型？",
+  opts:[
+    {k:"A", t:"公有雲(Public cloud)。"},
+    {k:"B", t:"私有雲(Private cloud)。"},
+    {k:"C", t:"社群雲(Community cloud)。"},
+    {k:"D", t:"混合雲(Hybrid cloud)。"},
+    {k:"E", t:"公司雲(Company Cloud)。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"NIST 定義四種雲端部署模型：公有、私有、社群、混合雲；並無「公司雲」。好記：雲端四部署＝公有/私有/社群/混合。"
+},
+{
+  id:"M59", type:"multi", sec:"金融科技與數位金融",
+  q:"對於 Bank4.0 帶來的轉變，下列哪些敘述是對的？",
+  opts:[
+    {k:"A", t:"Banking Everywhere, Never at a bank.(金融常在，銀行不再)"},
+    {k:"B", t:"大量運用大數據來分析客戶需求。"},
+    {k:"C", t:"全面撤除傳統線下(offline)實體交易服務。"},
+    {k:"D", t:"提供更多服務人員處理銀行收付服務。"},
+  ],
+  ans:["A","B"],
+  exp:"Bank4.0 強調服務無所不在、以大數據洞察需求(A、B)；但並非「全面撤除」實體或增加臨櫃人力，而是虛實整合。好記：Bank4.0＝金融無所不在＋數據驅動，非全面關實體。"
+},
+{
+  id:"M60", type:"multi", sec:"雲端與新興科技",
+  q:"何者是雲端運算的服務模式？",
+  opts:[
+    {k:"A", t:"IaaS。"},
+    {k:"B", t:"SaaS。"},
+    {k:"C", t:"VPN。"},
+    {k:"D", t:"FTP。"},
+  ],
+  ans:["A","B"],
+  exp:"雲端服務模式為 IaaS、PaaS、SaaS；VPN 是虛擬私網、FTP 是傳檔協定，皆非雲端服務模式。好記：雲端服務＝XaaS(IaaS/PaaS/SaaS)。參見單103。"
+},
+{
+  id:"M61", type:"multi", sec:"雲端與新興科技",
+  q:"下列哪些是物聯網(IoT)的應用範疇？",
+  opts:[
+    {k:"A", t:"智慧家居。"},
+    {k:"B", t:"智慧農業。"},
+    {k:"C", t:"遊戲開發。"},
+    {k:"D", t:"自駕車。"},
+  ],
+  ans:["A","B","D"],
+  exp:"IoT 將感測器連網應用於智慧家居、農業、自駕車等場域；遊戲開發屬軟體開發非 IoT 範疇。好記：IoT＝把實體裝置連網變聰明。"
+},
+{
+  id:"M62", type:"multi", sec:"程式與資料表示",
+  q:"在程式設計中，以下哪些是遞迴函式的特性？",
+  opts:[
+    {k:"A", t:"可以用迴圈完全替代。"},
+    {k:"B", t:"函式呼叫自己。"},
+    {k:"C", t:"需要有終止條件。"},
+    {k:"D", t:"執行效率較高。"},
+  ],
+  ans:["B","C"],
+  exp:"遞迴的特徵是函式呼叫自己(B)且必須有終止條件避免無限迴圈(C)；它未必能被迴圈完全替代，且因函式呼叫開銷效率通常不比迴圈高。好記：遞迴＝自己叫自己＋要有出口。"
+},
+{
+  id:"M63", type:"multi", sec:"程式與資料表示",
+  q:"哪些是物件導向程式設計(OOP)的基本原則？",
+  opts:[
+    {k:"A", t:"繼承。"},
+    {k:"B", t:"封裝。"},
+    {k:"C", t:"多型。"},
+    {k:"D", t:"遞迴。"},
+  ],
+  ans:["A","B","C"],
+  exp:"OOP 三大特性為封裝、繼承、多型；遞迴是一種演算法技巧，非 OOP 原則。好記：OOP＝封裝、繼承、多型。參見單30。"
+},
+{
+  id:"M64", type:"multi", sec:"程式與資料表示",
+  q:"哪些是程式開發中的常見測試方法？",
+  opts:[
+    {k:"A", t:"單元測試。"},
+    {k:"B", t:"整合測試。"},
+    {k:"C", t:"靜態測試。"},
+    {k:"D", t:"動態測試。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"單元、整合測試依規模劃分；靜態(不執行程式，如程式碼審查)與動態(執行程式)依是否執行劃分，四者皆為常見測試方法。好記：測試分規模(單元/整合)與方式(靜態/動態)。參見複17。"
+},
+{
+  id:"M65", type:"multi", sec:"雲端與新興科技",
+  q:"下列哪些是雲端運算的好處？",
+  opts:[
+    {k:"A", t:"彈性擴展。"},
+    {k:"B", t:"資料安全性。"},
+    {k:"C", t:"低成本。"},
+    {k:"D", t:"低效能。"},
+  ],
+  ans:["A","B","C"],
+  exp:"雲端具彈性擴展、集中防護提升安全、依用量付費降低成本等優點；「低效能」是缺點不是好處。好記：雲端好處＝彈性、安全、省錢。參見單5。"
+},
+{
+  id:"M66", type:"multi", sec:"硬體與週邊",
+  q:"生成式 AI 當紅時代，以下哪些電腦組件(處理器)最能影響訓練/推論的效能？",
+  opts:[
+    {k:"A", t:"CPU。"},
+    {k:"B", t:"GPU。"},
+    {k:"C", t:"NPU。"},
+    {k:"D", t:"TPU。"},
+  ],
+  ans:["B","C","D"],
+  exp:"AI 訓練/推論仰賴大量平行運算，GPU、NPU、TPU 為專長加速器；CPU 擅長通用序列運算，對 AI 效能影響相對小。好記：算 AI 靠 G/N/T PU 這些平行加速器。"
+},
+{
+  id:"M67", type:"multi", sec:"資訊安全",
+  q:"下列何者為常見的網路服務安全管理機制？",
+  opts:[
+    {k:"A", t:"使用具複雜度(如八字元以上且字母、數字、特殊符號混合)密碼。"},
+    {k:"B", t:"套用原廠提供的修補程式來防止安全問題。"},
+    {k:"C", t:"將網路設備放置於設置門禁之管制室。"},
+    {k:"D", t:"管控登入管理介面之帳號。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"強密碼、及時修補、實體門禁與帳號管控是網路服務安全的基本管理機制，四者皆是。好記：資安基本功＝強密碼、勤修補、實體管制、帳號控管。"
+},
+{
+  id:"M68", type:"multi", sec:"資安治理與內規",
+  q:"為避免系統容量不足導致服務中斷，須監看系統運作並預先評估擴充，以下哪些為容量監控標的？",
+  opts:[
+    {k:"A", t:"Patch(修補程式)。"},
+    {k:"B", t:"CPU。"},
+    {k:"C", t:"硬碟空間。"},
+    {k:"D", t:"記憶體。"},
+  ],
+  ans:["B","C","D"],
+  exp:"容量管理監控 CPU 使用率、硬碟空間與記憶體等資源負載；Patch 是安全修補作業，非容量標的。好記：容量看 CPU、硬碟、記憶體。參見單129。"
+},
+{
+  id:"M69", type:"multi", sec:"資訊安全",
+  q:"關於加解密技術的敘述，下列哪些正確？",
+  opts:[
+    {k:"A", t:"對稱式加/解密速度通常比非對稱式快。"},
+    {k:"B", t:"非對稱性密碼系統因不需考慮對稱性，所以速度較快。"},
+    {k:"C", t:"非對稱性密碼系統是因加密端與解密端用以加密與解密之金鑰不相同而得名。"},
+    {k:"D", t:"傳輸大量資料一般會用非對稱性加密系統直接加密。"},
+  ],
+  ans:["A","C"],
+  exp:"對稱式速度較快(A)、非對稱因加解密用不同金鑰而得名(C)；非對稱其實較慢(B 錯)，大量資料通常先用非對稱交換金鑰、再以對稱加密(D 錯)。好記：對稱快、非對稱用雙鑰但慢。參見單120。"
+},
+{
+  id:"M70", type:"multi", sec:"資安治理與內規",
+  q:"下列哪些項目屬於行動裝置遭破解情形？",
+  opts:[
+    {k:"A", t:"Root。"},
+    {k:"B", t:"Jailbreak。"},
+    {k:"C", t:"USB Debugging。"},
+    {k:"D", t:"JSON Web Token Hijacking。"},
+  ],
+  ans:["A","B","C"],
+  exp:"Root(Android 提權)、Jailbreak(iOS 越獄)、開啟 USB Debugging 都代表裝置安全防線被破壞；JWT Hijacking 是竊取權杖的網路攻擊，非裝置破解狀態。好記：Root/越獄/開 USB 除錯＝裝置被破解。參見單126。"
+},
+{
+  id:"M71", type:"multi", sec:"資安治理與內規",
+  q:"依規範，行動銀行 App 之行動裝置儲存金鑰保護可採用哪些方式？",
+  opts:[
+    {k:"A", t:"CNS 15408 EAL5 以上強度安全元件(SE)。"},
+    {k:"B", t:"FIPS 140-2 Level 1 以上強度安全元件(SE)。"},
+    {k:"C", t:"FIPS 140-2 Level 3 以上強度安全元件(SE)。"},
+    {k:"D", t:"白箱加密搭配程式碼混淆。"},
+  ],
+  ans:["A","C","D"],
+  exp:"硬體保護可用 CNS 15408 EAL5 以上或 FIPS 140-2 Level 3 以上安全元件；軟體保護則用白箱加密加程式碼混淆。FIPS 140-2 Level 1 強度不足，故 B 不採。好記：硬體要高等級(EAL5/L3)，軟體用白箱＋混淆。參見單127、單128。"
+},
+{
+  id:"M72", type:"multi", sec:"資安治理與內規",
+  q:"依本行「資通系統與服務供應鏈風險管理須知」，供應商之委託契約應約定哪些內容？",
+  opts:[
+    {k:"A", t:"未符合資訊安全要求或服務水準時之罰責標準。"},
+    {k:"B", t:"本行與供應商之資訊安全權責。"},
+    {k:"C", t:"產品或服務之交付驗收程序和標準。"},
+    {k:"D", t:"系統或程式定期檢測與修復要求。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"委外契約應明訂罰責、雙方資安權責、驗收程序與定期檢測修復要求，四者皆須約定以保障權益。好記：委外合約要把罰責、權責、驗收、維護都寫清楚。"
+},
+{
+  id:"M73", type:"multi", sec:"資安治理與內規",
+  q:"依上述須知，供應商契約存續期間應執行哪些事項？",
+  opts:[
+    {k:"A", t:"本行與供應商應分別指定資安窗口。"},
+    {k:"B", t:"定期對供應商辦理供應鏈資訊安全風險評估。"},
+    {k:"C", t:"委託獨立第三方對低風險核心資通系統供應商執行資訊安全訪視作業。"},
+    {k:"D", t:"監督供應商針對其專案執行人員辦理資訊安全教育訓練。"},
+  ],
+  ans:["A","B","D"],
+  exp:"契約期間應設資安窗口、定期做風險評估、監督廠商對人員辦理資安訓練；第三方訪視是針對「高風險」而非低風險系統，故 C 錯。好記：對供應商要設窗口、定期評估、督導訓練。"
+},
+{
+  id:"M74", type:"multi", sec:"資安治理與內規",
+  q:"依本行「自攜裝置連網標準實施細則」，使用 BYOD 設備需符合哪些條件？",
+  opts:[
+    {k:"A", t:"安裝行內防毒軟體。"},
+    {k:"B", t:"更新病毒碼至最新版本。"},
+    {k:"C", t:"使用原廠作業系統。"},
+    {k:"D", t:"符合本行資訊管理要求。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"BYOD 須裝防毒、更新病毒碼、使用未經破解的原廠 OS 並符合本行管理要求，四者皆為連網條件。好記：自帶裝置要防毒、更新、原廠系統、守規定。"
+},
+{
+  id:"M75", type:"multi", sec:"資安治理與內規",
+  q:"依本行「資訊作業韌性須知」，以下說明何者正確？",
+  opts:[
+    {k:"A", t:"核心業務依業務中斷對客戶影響等風險評估決定，評估範圍如存款、放款、匯款、外匯業務等。"},
+    {k:"B", t:"核心資通系統是支持核心業務持續運作必要之系統或設備。"},
+    {k:"C", t:"營運持續管理小組應每年識別核心業務、核心資通系統與重要支援資訊系統。"},
+    {k:"D", t:"因已建立年度核心業務識別機制，故重大業務調整時可於年度檢視時一併評估。"},
+  ],
+  ans:["A","B","C"],
+  exp:"A、B、C 均為韌性須知的正確作法；D 錯在重大業務調整時應「即時」重新評估，不能拖到年度檢視。好記：業務有重大變動要馬上重評，不能等一年。"
+},
+{
+  id:"M76", type:"multi", sec:"資安治理與內規",
+  q:"依本行「電腦設備維修汰換管理須知」，以下何者正確？",
+  opts:[
+    {k:"A", t:"電腦系統建置完成後，國內外各單位應要求廠商安裝 PC 最高權限暨硬碟報廢管理系統元件統一控管 Administrator 帳號密碼。"},
+    {k:"B", t:"電腦設備維修時，應指派相關同仁在場監督，得任由廠商工程師複製本行資料。"},
+    {k:"C", t:"電腦設備如需外送修理，應拆除儲存媒體，經單位正(副)主管核可並填寫「電腦設備送修登記簿」。"},
+    {k:"D", t:"若儲存媒體故障無法清除，填寫「儲存媒體維修作業攜出登記簿」後即可由廠商攜出。"},
+  ],
+  ans:["A","C"],
+  exp:"應統一控管最高權限帳密(A)、外送前拆除儲存媒體並登記(C)；維修時不得任由廠商複製資料(B 錯)、含資料的儲存媒體原則不得逕由廠商攜出(D 錯)。好記：外送先拆硬碟，資料不外流。參見單134、單135。"
+},
+{
+  id:"M77", type:"multi", sec:"資安治理與內規",
+  q:"以下電腦機房管理措施，何者適當？",
+  opts:[
+    {k:"A", t:"設置溫濕度監控裝置。"},
+    {k:"B", t:"設置環境異常時自動告警機制。"},
+    {k:"C", t:"設置備用風扇。"},
+    {k:"D", t:"設置液體滅火器。"},
+  ],
+  ans:["A","B","C"],
+  exp:"機房應監控溫濕度、異常自動告警、備援散熱；但應使用氣體滅火而非液體(水/泡沫)滅火器，以免損壞設備，故 D 不當。好記：機房滅火用氣體不用水。參見卷二複35。"
+},
+{
+  id:"M78", type:"multi", sec:"資安治理與內規",
+  q:"某供應商於契約期間具有 VPN 連線權限，可存取本行部分維運系統。下列哪些措施為本行之管理要求？",
+  opts:[
+    {k:"A", t:"識別其涉及之關鍵資訊資產。"},
+    {k:"B", t:"定期檢視供應商存取權限。"},
+    {k:"C", t:"辦理供應鏈資訊安全風險評估。"},
+    {k:"D", t:"供應商自行決定風險接受標準。"},
+  ],
+  ans:["A","B","C"],
+  exp:"對有存取權限的供應商，本行須辨識關鍵資產、定期檢視權限並做供應鏈風險評估；風險接受標準應由本行決定，不能交供應商自訂，故 D 錯。好記：風險由「本行」定，不讓廠商自己說了算。"
+},
+{
+  id:"M79", type:"multi", sec:"資安治理與內規",
+  q:"某分行欲設置提供客戶使用之公用電腦，應注意下列哪些措施以符合「金融機構資通安全防護基準」？",
+  opts:[
+    {k:"A", t:"限制瀏覽非業務相關網站。"},
+    {k:"B", t:"建立病毒偵測與病毒碼更新機制。"},
+    {k:"C", t:"已設置自動定期清除瀏覽器 Cookie 及帳號資訊，不用提醒客戶避免輸入個人資訊。"},
+    {k:"D", t:"限制可攜式儲存裝置介面存取。"},
+  ],
+  ans:["A","B","D"],
+  exp:"公用電腦應限制上網範圍、建立防毒機制、管制 USB 介面；即使會清 Cookie，仍應提醒客戶勿輸入個資，故 C 錯。好記：公用電腦再乾淨也要提醒客戶別打個資。參見單130。"
+},
+{
+  id:"M80", type:"multi", sec:"資安治理與內規",
+  q:"檢查某單位電腦機房環境，發現以下狀況，哪些事項較可能被認定為不符合規範？",
+  opts:[
+    {k:"A", t:"放置單位歸檔文件。"},
+    {k:"B", t:"無溫濕度監控機制。"},
+    {k:"C", t:"重要電腦主機之 UPS 約可維持設備運作 10 分鐘。"},
+    {k:"D", t:"機房內溫度維持 22°C。"},
+  ],
+  ans:["A","B","C"],
+  exp:"機房堆放歸檔文件(增火載)、缺溫濕度監控、UPS 僅撐 10 分鐘(不足 30 分鐘)都不合規；維持 22°C 屬正常範圍。好記：UPS 至少 30 分、機房不堆雜物、要監控環境。參見單137。"
+},
+{
+  id:"M81", type:"multi", sec:"資安治理與內規",
+  q:"依據本行「資訊安全作業要點」，以下人員管理敘述何者正確？",
+  opts:[
+    {k:"A", t:"員工接觸本行系統前應簽訂保密合約。"},
+    {k:"B", t:"人員離職時應立即取消相關系統權限。"},
+    {k:"C", t:"分行同仁每年至少須接受三小時以上資訊安全宣導課。"},
+    {k:"D", t:"委外廠商專案使用之權限，於專案結束時才需審視關閉。"},
+  ],
+  ans:["A","B","C"],
+  exp:"接觸系統前簽保密、離職即撤權、每年至少 3 小時資安教育皆為正確；委外權限應「定期」審視而非拖到專案結束才處理，故 D 錯。好記：權限要定期檢視、離職馬上收。"
+},
+{
+  id:"M82", type:"multi", sec:"資安治理與內規",
+  q:"某行員工作輪調，原系統權限仍可使用，另主管口頭同意其協助原單位辦理部分作業、未調整權限。上述情境牴觸哪些權限管理原則？",
+  opts:[
+    {k:"A", t:"職務調動時，應重新評估其權限。"},
+    {k:"B", t:"代理職務所需權限應經相關主管核准並保留書面授權紀錄。"},
+    {k:"C", t:"不需重新檢視代理原職務所需之權限。"},
+    {k:"D", t:"權限授與只需考慮業務需求，不需考慮制衡機制。"},
+  ],
+  ans:["A","B"],
+  exp:"輪調應重評權限(牴觸 A)、代理須書面核准授權(牴觸 B)；C、D 本身即為錯誤原則(權限本就要重檢並考量制衡)，故非「正確原則」被牴觸的選項。好記：調動重評權限、代理要書面授權。"
+},
+{
+  id:"M83", type:"multi", sec:"資安治理與內規",
+  q:"依據本行「網際網路使用及電子郵件帳號管理須知」，寄送含個資之郵件限制有哪些？",
+  opts:[
+    {k:"A", t:"個資郵件審核放行主管可放行本人所寄送之個資郵件。"},
+    {k:"B", t:"個資郵件不會受到電子郵件資料外洩防範(DLP)系統檢查。"},
+    {k:"C", t:"應將個人資料去識別化後寄送。"},
+    {k:"D", t:"應加密處理後再由「個資郵件審核放行主管」覆核後寄送。"},
+  ],
+  ans:["C","D"],
+  exp:"寄送個資應先去識別化或加密，並經審核主管覆核放行(C、D)；主管不得放行「自己」寄的個資郵件(A 錯)、個資郵件仍會受 DLP 檢查(B 錯)。好記：寄個資要去識別/加密＋他人覆核，且逃不過 DLP。"
+},
+{
+  id:"M84", type:"multi", sec:"資訊安全",
+  q:"以下哪些行為不符合本行規範？",
+  opts:[
+    {k:"A", t:"客戶交付之 USB，毋須執行病毒掃描即可開啟。"},
+    {k:"B", t:"寄送敏感性資料予客戶時，採加密方式辦理。"},
+    {k:"C", t:"行員使用私人手機分享網路熱點予客戶，並指導客戶執行交易。"},
+    {k:"D", t:"無人領取之列印文件，指派專人定時整理收妥或銷毀。"},
+  ],
+  ans:["A","C"],
+  exp:"外來 USB 未掃毒即開(A)、用私人手機熱點指導客戶交易(C)都違規；加密寄敏感資料、定時清理列印文件則為正確作法。好記：外來 USB 先掃毒、別用私人熱點辦交易。"
+},
+{
+  id:"M85", type:"multi", sec:"資訊安全",
+  q:"下列使用者行為，何者不恰當？",
+  opts:[
+    {k:"A", t:"辦公桌面淨空，機敏文件收妥於上鎖櫃中。"},
+    {k:"B", t:"含有個人資料之檔案放置於共用資料夾且未加密。"},
+    {k:"C", t:"未經授權將公司機敏文件帶離辦公室。"},
+    {k:"D", t:"離開座位時鎖定螢幕。"},
+  ],
+  ans:["B","C"],
+  exp:"個資檔放共用資料夾又未加密(B)、擅自把機敏文件帶出(C)都不恰當；桌面淨空與離座鎖屏是良好習慣。好記：清桌面、鎖螢幕是對的；亂放個資、私帶文件是錯的。"
+},
+{
+  id:"SB1", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列哪一項是違背維護資料安全？",
+  opts:[
+    {k:"A", t:"授予資訊管理人員檢視所有資料的權限，以防止資料不當的存取。"},
+    {k:"B", t:"在企業內部資料傳輸也必須加密。"},
+    {k:"C", t:"採取使用者存取權限區分與管理。"},
+    {k:"D", t:"隨身碟備份檔案加密。"},
+  ],
+  ans:["A"],
+  exp:"讓管理人員擁有「檢視所有資料」的權限違反最小權限原則，反而增加內部濫用風險，故 A 違背資料安全。好記：權限越大風險越高，別給任何人看全部。"
+},
+{
+  id:"SB2", type:"single", sec:"資訊安全",
+  q:"【資安卷】為有效防止企業網站遭受 SQL INJECTION 攻擊，可導入何種安全機制？",
+  opts:[
+    {k:"A", t:"Microsoft WSUS。"},
+    {k:"B", t:"Code Review。"},
+    {k:"C", t:"建置防火牆。"},
+    {k:"D", t:"DB Auditor。"},
+  ],
+  ans:["B"],
+  exp:"SQL Injection 源於程式未妥善過濾輸入，透過程式碼審查(Code Review)找出並修正不安全寫法最能治本；WSUS 是更新派送、防火牆擋網路層、DB Auditor 是稽核。好記：注入漏洞出在程式碼，要靠 Code Review。"
+},
+{
+  id:"SB3", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者為資訊安全保護資訊資產的三大目標？",
+  opts:[
+    {k:"A", t:"Confidentiality、Non-repudiation、Availability。"},
+    {k:"B", t:"Certification、Non-duplication、Authorization。"},
+    {k:"C", t:"Confidentiality、Integrity、Authentication。"},
+    {k:"D", t:"Confidentiality、Availability、Integrity。"},
+  ],
+  ans:["D"],
+  exp:"資安三大目標即 CIA：機密性(Confidentiality)、完整性(Integrity)、可用性(Availability)。好記：資安 CIA 三本柱。參見複6。"
+},
+{
+  id:"SB4", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列對於資訊資產之敘述，何者正確？",
+  opts:[
+    {k:"A", t:"資訊資產與一般實體資產的不同點在於其不具有生命循環。"},
+    {k:"B", t:"資訊資產專指與電腦相關設備及資料。"},
+    {k:"C", t:"資訊資產價值係由其購買價格所決定。"},
+    {k:"D", t:"企業內部員工也屬於資訊資產。"},
+  ],
+  ans:["D"],
+  exp:"人員(員工的知識與技能)也是重要的資訊資產(D 正確)；資訊資產有生命週期、不限電腦設備、其價值取決於重要性而非購價。好記：資產不只機器，「人」也是資產。"
+},
+{
+  id:"SB5", type:"single", sec:"資訊安全",
+  q:"【資安卷】社交工程(Social Engineering)造成資訊安全極大威脅的原因在於？",
+  opts:[
+    {k:"A", t:"破壞資訊服務可用性，使企業服務中斷。"},
+    {k:"B", t:"隱匿性高，不易追查惡意者。"},
+    {k:"C", t:"惡意人士不需要具備頂尖電腦技術即可輕易避過企業的軟硬體安全防護。"},
+    {k:"D", t:"利用通訊埠掃描(PortScan)方式，無從防範。"},
+  ],
+  ans:["C"],
+  exp:"社交工程繞過技術防線、直接操弄人的心理，攻擊者不需高深技術即能得手，故威脅極大。好記：社交工程用「騙人」跳過所有防火牆。參見卷一單47。"
+},
+{
+  id:"SB6", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列哪一個是指使用者或應用程式應該僅給予能夠完成任務所需的權限原則？",
+  opts:[
+    {k:"A", t:"最適權限原則。"},
+    {k:"B", t:"最適存取原則。"},
+    {k:"C", t:"最小存取原則。"},
+    {k:"D", t:"最小權限原則。"},
+  ],
+  ans:["D"],
+  exp:"只給完成任務所需的最低權限，即「最小權限原則(Least Privilege)」，可縮小被濫用或入侵的影響面。好記：夠用就好＝最小權限。參見複26。"
+},
+{
+  id:"SB7", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列對於「零時差攻擊(zero-day attack)」的描述，何者正確？",
+  opts:[
+    {k:"A", t:"在午夜 12 點(零點)發動攻擊的一種病毒行為。"},
+    {k:"B", t:"在軟體弱點被發現、但尚未有任何修補方法前所出現的對應攻擊行為。"},
+    {k:"C", t:"攻擊與修補發生在同一天的一種網路事件。"},
+    {k:"D", t:"弱點掃描與攻擊發生在同一天的一種攻擊行為。"},
+  ],
+  ans:["B"],
+  exp:"零時差指弱點已被發現、官方修補尚未問世的空窗期所發動的攻擊，防守方「零天」準備。好記：補丁還沒出就被打＝零時差。參見卷一單115。"
+},
+{
+  id:"SB8", type:"single", sec:"資訊安全",
+  q:"【資安卷】何謂 DLP？",
+  opts:[
+    {k:"A", t:"Data Lock Prevention。"},
+    {k:"B", t:"防止企業內部重要資料外洩的解決方案。"},
+    {k:"C", t:"協助企業處理 Big Data 的解決方案。"},
+    {k:"D", t:"防止企業遭受持續性目標攻擊的解決方案。"},
+  ],
+  ans:["B"],
+  exp:"DLP＝Data Loss Prevention，資料外洩防護，用以偵測並阻止機敏資料被未授權傳輸或複製。好記：DLP＝防資料外洩。參見複8。"
+},
+{
+  id:"SB9", type:"single", sec:"資訊安全",
+  q:"【資安卷】以下哪一個非營利組織以研議 Web 軟體安全標準、工具與技術文件為主要目標，其發佈的十大 Web 弱點防護守則已成企業改善網頁安全的重要參考？",
+  opts:[
+    {k:"A", t:"ISO。"},
+    {k:"B", t:"BSI。"},
+    {k:"C", t:"CCRA。"},
+    {k:"D", t:"OWASP。"},
+  ],
+  ans:["D"],
+  exp:"OWASP(Open Web Application Security Project)以 Web 應用安全著稱，其 OWASP Top 10 是業界公認的網頁弱點防護指引。好記：Web 十大弱點＝OWASP Top 10。"
+},
+{
+  id:"SB10", type:"single", sec:"資訊安全",
+  q:"【資安卷】以下哪一項對資訊安全的敘述是正確？",
+  opts:[
+    {k:"A", t:"保護資訊不受各種威脅。"},
+    {k:"B", t:"保護資訊的機密性、完整性與可用性。"},
+    {k:"C", t:"確保持續營運，將營運損失降到最低。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"資安兼顧防範各種威脅、維護 CIA 三性、並支撐營運持續、降低損失，三者皆為其目的。好記：資安＝擋威脅、保 CIA、續營運。"
+},
+{
+  id:"SB11", type:"single", sec:"資訊安全",
+  q:"【資安卷】以下對於資訊安全所稱之「資訊」，何者為非？",
+  opts:[
+    {k:"A", t:"是一種有價值的資產。"},
+    {k:"B", t:"可藉由各種形式儲存。"},
+    {k:"C", t:"不管其存在之形式為何，都應該受到適當的保護。"},
+    {k:"D", t:"僅限由資訊人員負責保護之電腦檔案。"},
+  ],
+  ans:["D"],
+  exp:"資訊保護是全員責任、不限電腦檔案，故 D 為非；A、B、C 皆正確描述資訊的價值與保護原則。好記：保護資訊人人有責，不只資訊人員。參見卷一複25。"
+},
+{
+  id:"SB12", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】依本行資安政策，資訊安全專責單位應於每年第一季結束前，向董事會報告前一年度？",
+  opts:[
+    {k:"A", t:"滲透測試執行情形。"},
+    {k:"B", t:"社交工程演練辦理情形。"},
+    {k:"C", t:"資訊安全整體執行情形。"},
+    {k:"D", t:"紅隊演練辦理情形。"},
+  ],
+  ans:["C"],
+  exp:"專責單位須每年第一季結束前向董事會報告前一年度「資訊安全整體執行情形」，其他項目屬其中的細項。好記：向董事會報告的是「整體」資安執行成果。"
+},
+{
+  id:"SB13", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】各單位以不加密方式將資料檔案複製至 USB 可攜式儲存媒體時，應採取下列哪項管制措施？",
+  opts:[
+    {k:"A", t:"指派 2-4 名乙級(含)以上主管擔任作業授權主管。"},
+    {k:"B", t:"資料檔案攜出申請人應先填寫「光碟燒錄暨特殊攜出流程作業申請單」。"},
+    {k:"C", t:"應由相關主管核准後，再送作業授權主管執行轉錄作業。"},
+    {k:"D", t:"以上皆是。", pin:true}
+  ],
+  ans:["D"],
+  exp:"不加密複製至 USB 屬高風險，須設授權主管、填申請單、經主管核准後再由授權主管轉錄，三道控管缺一不可。好記：不加密攜出＝申請＋核准＋授權轉錄。參見卷一複26。"
+},
+{
+  id:"SB14", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者為本行使用物聯網設備的安全原則？",
+  opts:[
+    {k:"A", t:"應於安裝後立即進行初始密碼變更。"},
+    {k:"B", t:"盡量利用 USB 儲存功能。"},
+    {k:"C", t:"設備直接配置於一般辦公網段。"},
+    {k:"D", t:"使用非經本行資安處審視完成合格之機型。"},
+  ],
+  ans:["A"],
+  exp:"IoT 裝置出廠常有預設密碼，安裝後應立即變更(A)；其餘做法(濫用 USB、直接放辦公網段、用未經審核機型)都增加風險。好記：IoT 裝好第一件事＝改預設密碼。"
+},
+{
+  id:"SB15", type:"single", sec:"資訊安全",
+  q:"【資安卷】要避免感染電腦病毒須養成良好習慣，以下哪個做法為錯誤觀念，應該要避免？",
+  opts:[
+    {k:"A", t:"看到奇怪的檔案時，不要嘗試去執行。"},
+    {k:"B", t:"將作業系統以及防毒軟體的自動更新功能開啟。"},
+    {k:"C", t:"開啟在電子郵件上看到腥羶色內容的附件檔案。"},
+    {k:"D", t:"嘗試養成閱讀病毒新聞的習慣。"},
+  ],
+  ans:["C"],
+  exp:"點開來路不明或誘騙性(腥羶色)的郵件附件極易中毒，是錯誤觀念(C)；其餘皆為良好習慣。好記：誘餌附件千萬別點。"
+},
+{
+  id:"SB16", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者不是感染勒索軟體的緊急應變之道？",
+  opts:[
+    {k:"A", t:"評估災情，並進行清查。"},
+    {k:"B", t:"環境重建佈署。"},
+    {k:"C", t:"一直不斷重開機。"},
+    {k:"D", t:"執行證據保全作業，以利數位鑑識。"},
+  ],
+  ans:["C"],
+  exp:"不斷重開機無助於復原，還可能破壞記憶體中的鑑識跡證(C 錯誤)；正確做法是評估清查、隔離重建與保全證據。好記：中勒索別亂重開，先隔離、保全證據。"
+},
+{
+  id:"SB17", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】有關本行資訊安全政策，下列何者錯誤？",
+  opts:[
+    {k:"A", t:"應對員工施以資訊安全教育訓練及宣導，建立員工資安認知。"},
+    {k:"B", t:"應定期執行網路安全風險評估、滲透測試和脆弱性評估。"},
+    {k:"C", t:"訂定業務持續運作計畫，並定期測試演練。"},
+    {k:"D", t:"資訊安全專責單位應於每年第三季結束前，向董事會報告前一年度本行資訊安全整體執行情形。"},
+  ],
+  ans:["D"],
+  exp:"向董事會報告應於每年「第一季」結束前，而非第三季，故 D 錯誤。好記：資安年度報告＝第一季前交。參見單SB12。"
+},
+{
+  id:"SB18", type:"single", sec:"資訊安全",
+  q:"【資安卷】有關防範勒索軟體的敘述何者錯誤？",
+  opts:[
+    {k:"A", t:"開啟電子郵件之前請先仔細看清楚。"},
+    {k:"B", t:"重要檔案不需要備份。"},
+    {k:"C", t:"避免點選不明來源電子郵件內的連結。"},
+    {k:"D", t:"定期更新軟體與應用程式。"},
+  ],
+  ans:["B"],
+  exp:"對抗勒索軟體最有效的就是備份，故「不需要備份」錯誤(B)；其餘為正確防護。好記：防勒索靠備份，最忌不備份。參見複23。"
+},
+{
+  id:"SB19", type:"single", sec:"資訊安全",
+  q:"【資安卷】關於檔案傳輸與分享，下列何者正確？",
+  opts:[
+    {k:"A", t:"使用雲端備份時，應將全部資料都進行備份，不需分辨敏感性。"},
+    {k:"B", t:"二手裝置販賣時，應直接交給買方，不須還原，以確保買方擁有最新軟體。"},
+    {k:"C", t:"電子方式傳送機密資料不需加密。"},
+    {k:"D", t:"應確認對方的郵件地址，不要隨意轉寄未確認來源之信件。"},
+  ],
+  ans:["D"],
+  exp:"確認收件地址、不亂轉寄不明信件是正確做法(D)；備份須分辨敏感性、二手機須清空還原、機密傳輸須加密，故 A、B、C 皆錯。好記：寄信先確認對象，別亂轉。"
+},
+{
+  id:"SB20", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者不是防範社交工程所需具備的觀念？",
+  opts:[
+    {k:"A", t:"可隨意開啟來路不明的電子郵件及附加檔案。"},
+    {k:"B", t:"不連結及登入未經確認的網站。"},
+    {k:"C", t:"取消郵件預覽功能，避免無意開啟郵件。"},
+    {k:"D", t:"收到郵件或訊息後，必須注意郵件主旨是否與本身業務相關。"},
+  ],
+  ans:["A"],
+  exp:"隨意開啟不明郵件與附件正是社交工程得逞的破口(A 為錯誤觀念)；其餘皆為正確防範。好記：不明郵件與附件＝絕不亂開。"
+},
+{
+  id:"SB21", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者不是使用個人電腦的正確觀念？",
+  opts:[
+    {k:"A", t:"個人電腦的密碼定期變更。"},
+    {k:"B", t:"為求提高工作效率，可下載網路上的免費小工具使用。"},
+    {k:"C", t:"個人電腦的作業系統應定期更新。"},
+    {k:"D", t:"就算只是短暫離開座位，也隨時將電腦螢幕鎖定。"},
+  ],
+  ans:["B"],
+  exp:"隨意下載來路不明的免費小工具可能夾帶惡意程式，是錯誤觀念(B)；定期改密碼、更新系統、離座鎖屏都正確。好記：來路不明的免費軟體別亂裝。"
+},
+{
+  id:"SB22", type:"single", sec:"資訊安全",
+  q:"【資安卷】有關辦公室設備使用注意事項，下列何者正確？",
+  opts:[
+    {k:"A", t:"不需定期檢視防毒軟體及 Windows 是否有更新。"},
+    {k:"B", t:"機密文件可隨意置於辦公桌上。"},
+    {k:"C", t:"紙本文件回收前應確認是否含有機密資訊。"},
+    {k:"D", t:"可將使用者之帳號密碼記錄於隨處可見的地方，以方便使用。"},
+  ],
+  ans:["C"],
+  exp:"紙本回收前確認是否含機密是正確做法(C)；應定期更新、機密文件須收妥、帳密不可張貼於明顯處，故 A、B、D 皆錯。好記：廢紙回收前先看有沒有機密。參見卷一單46。"
+},
+{
+  id:"SB23", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者不是變臉詐騙攻擊(BEC)常用的手法？",
+  opts:[
+    {k:"A", t:"附件會採取加密的方式寄出並分開寄送密碼。"},
+    {k:"B", t:"通常會假冒董事長或其他高階主管的電子郵件帳號。"},
+    {k:"C", t:"利用與目標機構相似的網域名稱。"},
+    {k:"D", t:"郵件主旨中通常包含「緊急」、「即將到期」等字眼。"},
+  ],
+  ans:["A"],
+  exp:"BEC(商業電子郵件詐騙)靠假冒高層、相似網域與製造急迫感行騙；「加密附件並分開寄密碼」是正規的安全傳檔做法，非詐騙手法(A)。好記：BEC＝冒充高層＋催你快匯款。"
+},
+{
+  id:"SB24", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列作業何者是常見的資訊安全疏忽？",
+  opts:[
+    {k:"A", t:"檔案分類管理。"},
+    {k:"B", t:"電腦系統設定完全依預設值上線服務。"},
+    {k:"C", t:"重要電子郵件加密傳送。"},
+    {k:"D", t:"避免使用即時通訊軟體。"},
+  ],
+  ans:["B"],
+  exp:"沿用系統預設值(如預設帳密、開放埠)上線是常見資安疏忽(B)，易被攻擊者利用已知預設弱點。好記：預設值直接上線＝大漏洞。參見複24(B 亦同)。"
+},
+{
+  id:"SB25", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者為零信任(Zero Trust)架構的核心理念？",
+  opts:[
+    {k:"A", t:"內網使用者預設可信任。"},
+    {k:"B", t:"驗證一次即可永久信任。"},
+    {k:"C", t:"永不信任，持續驗證。"},
+    {k:"D", t:"僅保護網路邊界。"},
+  ],
+  ans:["C"],
+  exp:"零信任精神就是「永不信任、持續驗證」，不論內外網每次存取都要驗證。好記：Zero Trust＝從不預設信任。參見卷一單116、複21、複29。"
+},
+{
+  id:"SB26", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者最符合最小權限原則(Least Privilege)？",
+  opts:[
+    {k:"A", t:"所有 IT 人員擁有系統管理權限。"},
+    {k:"B", t:"員工僅取得執行工作所需權限。"},
+    {k:"C", t:"所有主管具有資料庫管理權限。"},
+    {k:"D", t:"共用系統管理帳號。"},
+  ],
+  ans:["B"],
+  exp:"只給員工完成工作所需的最低權限即最小權限原則(B)；全員給高權限或共用帳號都違反。好記：只給「剛好夠用」的權限。參見單SB6。"
+},
+{
+  id:"SB27", type:"single", sec:"資訊安全",
+  q:"【資安卷】多因素認證(MFA)為何？",
+  opts:[
+    {k:"A", t:"兩組密碼。"},
+    {k:"B", t:"密碼加圖形驗證碼。"},
+    {k:"C", t:"密碼加手機 OTP 驗證碼。"},
+    {k:"D", t:"每月更換密碼。"},
+  ],
+  ans:["C"],
+  exp:"MFA 須結合「不同類型」的驗證因子，密碼(所知)加手機 OTP(所有物)才算多因素；兩組密碼或圖形驗證碼仍屬同一類。好記：MFA＝不同種類的驗證合起來。參見複14、複18。"
+},
+{
+  id:"SB28", type:"single", sec:"資訊安全",
+  q:"【資安卷】何謂軟體供應鏈攻擊？",
+  opts:[
+    {k:"A", t:"攻擊電源設備。"},
+    {k:"B", t:"攻擊物流系統。"},
+    {k:"C", t:"透過受信任軟體或第三方元件發動攻擊。"},
+    {k:"D", t:"盜用憑證。"},
+  ],
+  ans:["C"],
+  exp:"軟體供應鏈攻擊是把惡意程式藏進使用者信任的軟體更新或第三方元件中散播(如 SolarWinds 事件)。好記：從你信任的軟體「上游」下毒。參見單SB33、複33。"
+},
+{
+  id:"SB29", type:"single", sec:"雲端與新興科技",
+  q:"【資安卷】雲端責任共擔模型中客戶通常負責？",
+  opts:[
+    {k:"A", t:"實體機房警衛。"},
+    {k:"B", t:"硬體維修。"},
+    {k:"C", t:"身分權限設定及資料保護。"},
+    {k:"D", t:"骨幹網路維運。"},
+  ],
+  ans:["C"],
+  exp:"責任共擔下，實體、硬體、網路由雲端業者負責，客戶負責自己的身分權限與資料保護。好記：雲端「機房歸業者，資料歸自己」。參見單SB32。"
+},
+{
+  id:"SB30", type:"single", sec:"資訊安全",
+  q:"【資安卷】防範 Deepfake 詐騙最適當措施？",
+  opts:[
+    {k:"A", t:"相信主管聲音即可。"},
+    {k:"B", t:"直接執行指示。"},
+    {k:"C", t:"建立雙重驗證及回撥確認機制。"},
+    {k:"D", t:"關閉防毒軟體。"},
+  ],
+  ans:["C"],
+  exp:"Deepfake 可偽造聲音影像，僅憑聽感易受騙；應以雙重驗證與另循管道回撥確認身分。好記：聽到主管急call匯款，先掛斷回撥確認。參見卷一單114、複5。"
+},
+{
+  id:"SB31", type:"single", sec:"資訊安全",
+  q:"【資安卷】某單位主管要求授予員工系統管理員權限以避免未來申請耗時。依零信任與最小權限原則，下列何者最適當？",
+  opts:[
+    {k:"A", t:"先授權再追蹤使用情形。"},
+    {k:"B", t:"主管同意即可授權。"},
+    {k:"C", t:"僅於執行特定工作期間授予必要權限，完成後立即收回。"},
+    {k:"D", t:"多人共用管理員帳號。"},
+  ],
+  ans:["C"],
+  exp:"應採即時、最小、限期授權，工作完成後立即回收(C)，符合最小權限與零信任；預先給高權限或共用帳號都不當。好記：權限「用時才給、用完就收」。"
+},
+{
+  id:"SB32", type:"single", sec:"雲端與新興科技",
+  q:"【資安卷】某銀行採用雲端服務，依責任共擔模型，何者通常仍屬於客戶責任？",
+  opts:[
+    {k:"A", t:"機房保全。"},
+    {k:"B", t:"硬體設備維護。"},
+    {k:"C", t:"機櫃管理。"},
+    {k:"D", t:"身分權限管理與資料加密政策。"},
+  ],
+  ans:["D"],
+  exp:"實體與硬體(機房、機櫃、設備)由業者負責，客戶須自行管理身分權限與資料加密。好記：資料與身分的鑰匙，永遠握在客戶手上。參見單SB29。"
+},
+{
+  id:"SB33", type:"single", sec:"資訊安全",
+  q:"【資安卷】何者最符合供應鏈攻擊特徵？",
+  opts:[
+    {k:"A", t:"暴力破解。"},
+    {k:"B", t:"透過受信任軟體更新植入惡意程式。"},
+    {k:"C", t:"釣魚郵件。"},
+    {k:"D", t:"DDoS。"},
+  ],
+  ans:["B"],
+  exp:"供應鏈攻擊的典型手法就是把惡意程式藏進受信任的軟體更新中散佈。好記：從可信更新「夾帶病毒」＝供應鏈攻擊。參見單SB28。"
+},
+{
+  id:"SB34", type:"single", sec:"資訊安全",
+  q:"【資安卷】資安事件調查期間發現主機遭入侵，何者最符合數位鑑識原則？",
+  opts:[
+    {k:"A", t:"刪除惡意程式。"},
+    {k:"B", t:"格式化硬碟。"},
+    {k:"C", t:"重開機。"},
+    {k:"D", t:"保全證據後再進行處置。"},
+  ],
+  ans:["D"],
+  exp:"數位鑑識首重「證據保全」，須先完整保存現場再處置；刪除、格式化、重開機都會破壞跡證。好記：先保全證據，再動手。參見複28。"
+},
+{
+  id:"SB35", type:"single", sec:"資訊安全",
+  q:"【資安卷】伺服器大量向外傳送加密流量但防毒未偵測異常，下列哪一項最能支持該設備可能已遭入侵？",
+  opts:[
+    {k:"A", t:"CPU 使用率略高於平時。"},
+    {k:"B", t:"有定期安裝安全更新。"},
+    {k:"C", t:"出現異常對外連線目的地且非業務所需。"},
+    {k:"D", t:"系統運作正常無使用者抱怨。"},
+  ],
+  ans:["C"],
+  exp:"連往非業務所需的異常外部位址，是資料外傳或中繼(C2)受控的強烈指標；CPU 略高、系統正常都不足以佐證。好記：亂連陌生位址＝可能被控外傳資料。"
+},
+{
+  id:"SB36", type:"single", sec:"資訊安全",
+  q:"【資安卷】公司實施資料分級制度，下列何者最可能被歸類為「機密級」資料？",
+  opts:[
+    {k:"A", t:"公司官方網站新聞稿。"},
+    {k:"B", t:"員工教育訓練教材。"},
+    {k:"C", t:"尚未公開之併購評估文件。"},
+    {k:"D", t:"公司年度活動照片。"},
+  ],
+  ans:["C"],
+  exp:"未公開的併購評估涉及重大敏感資訊，外洩衝擊最大，屬機密級；新聞稿、教材、活動照片多屬公開或內部一般資料。好記：外洩會出大事的＝機密級。"
+},
+{
+  id:"SB37", type:"single", sec:"資訊安全",
+  q:"【資安卷】某系統管理員發現高風險漏洞已公布但尚無官方修補程式，下列哪項措施最符合風險管理原則？",
+  opts:[
+    {k:"A", t:"等待廠商發布修補程式再處理。"},
+    {k:"B", t:"立即關閉所有系統服務。"},
+    {k:"C", t:"評估影響範圍並採取暫時性降低風險措施。"},
+    {k:"D", t:"因尚未發生事件，維持現況即可。"},
+  ],
+  ans:["C"],
+  exp:"補丁未到時應先評估影響、採取緩解(如加強監控、暫時封鎖、虛擬修補)以降低風險；被動等待或全面關機都不理想。好記：沒補丁就先「緩解降風險」。"
+},
+{
+  id:"SB38", type:"single", sec:"資訊安全",
+  q:"【資安卷】RSA 演算法的安全性主要是建立在下列何種數學難題上？",
+  opts:[
+    {k:"A", t:"整數質因數分解(Integer Factorization Problem)。"},
+    {k:"B", t:"離散對數問題(Discrete Logarithm Problem)。"},
+    {k:"C", t:"橢圓曲線離散對數問題(ECDLP)。"},
+    {k:"D", t:"子集合和問題(Subset Sum Problem)。"},
+  ],
+  ans:["A"],
+  exp:"RSA 的安全性建立在「大整數質因數分解」極為困難之上；離散對數是 DH/DSA、ECDLP 是橢圓曲線密碼的基礎。好記：RSA＝難以分解大數。參見卷一單120、單SB39。"
+},
+{
+  id:"SB39", type:"single", sec:"資訊安全",
+  q:"【資安卷】下列何者最能說明量子電腦對 RSA 加密演算法造成的威脅原因？",
+  opts:[
+    {k:"A", t:"可快速執行暴力破解攻擊。"},
+    {k:"B", t:"可繞過憑證驗證機制。"},
+    {k:"C", t:"可利用 Shor's Algorithm 有效求解大整數質因數分解問題。"},
+    {k:"D", t:"可直接取得私密金鑰而無須計算。"},
+  ],
+  ans:["C"],
+  exp:"量子電腦可用 Shor 演算法高效分解大整數，直接瓦解 RSA 賴以安全的難題，故威脅重大。好記：量子＋Shor 演算法＝RSA 剋星。參見複24、複25。"
+},
+{
+  id:"SB40", type:"single", sec:"資訊安全",
+  q:"【資安卷】量子電腦使用 Grover's Algorithm 對對稱式加密 AES 造成威脅，可將 AES-128 的安全強度由 128 位元降低至幾位元？",
+  opts:[
+    {k:"A", t:"32 位元。"},
+    {k:"B", t:"64 位元。"},
+    {k:"C", t:"96 位元。"},
+    {k:"D", t:"112 位元。"},
+  ],
+  ans:["B"],
+  exp:"Grover 演算法對對稱式加密提供平方根加速，等效把金鑰強度砍半，AES-128 降至約 64 位元。好記：Grover 讓對稱金鑰強度「打對折」。"
+},
+{
+  id:"SB41", type:"single", sec:"資訊安全",
+  q:"【資安卷】懷疑伺服器遭「惡意程式注入」或「權限提升攻擊」且核心設定檔被非法修改，鑑識初期哪一種資訊最無法幫助找出是「誰」動了檔案？",
+  opts:[
+    {k:"A", t:"修改該檔案的行程名稱(Process Name)與行程識別碼(Process ID)。"},
+    {k:"B", t:"執行寫入動作的登入帳號(User Account)與權限等級。"},
+    {k:"C", t:"該伺服器所在機房的實體門禁進出紀錄。"},
+    {k:"D", t:"觸發該檔案修改事件的完整檔案路徑與時間戳記。"},
+  ],
+  ans:["C"],
+  exp:"遠端入侵者透過網路作案，實體門禁紀錄無法對應到誰動了檔案；行程、帳號、路徑時間戳才是鎖定操作者的關鍵。好記：抓遠端入侵者，門禁紀錄派不上用場。"
+},
+{
+  id:"SB42", type:"single", sec:"資訊安全",
+  q:"【資安卷】員工機密金鑰(如 SSH id_rsa 私鑰)疑似在記憶體中被惡意程式竊取，下列哪一項措施最無法有效防止這類憑證洩漏攻擊？",
+  opts:[
+    {k:"A", t:"定期更新系統與軟體修補程式，減少漏洞被利用的風險。"},
+    {k:"B", t:"嚴格控管主機執行檔權限，防止未授權第三方程式(如竊密工具)執行。"},
+    {k:"C", t:"僅將機密檔案的副檔名從 .txt 改為 .dat。"},
+    {k:"D", t:"導入端點偵測與回應系統(EDR)，監控異常的記憶體讀取與檔案存取行為。"},
+  ],
+  ans:["C"],
+  exp:"只改副檔名毫無保護作用，惡意程式照樣讀取記憶體或檔案內容(C 最無效)；更新修補、控管執行權限、部署 EDR 才是有效防線。好記：改副檔名＝自欺欺人。"
+},
+{
+  id:"SB43", type:"single", sec:"資訊安全",
+  q:"【資安卷】駭客可針對 DNS、PKI、雲端/VPN/網路服務供應商及合作夥伴發動供應鏈攻擊，下列何者非供應鏈攻擊的類型？",
+  opts:[
+    {k:"A", t:"遭竊的程式碼簽署憑證。"},
+    {k:"B", t:"已遭破解的特定程式碼安裝到硬體或韌體的元件。"},
+    {k:"C", t:"預先安裝惡意程式碼於裝置上。"},
+    {k:"D", t:"更新受認可的 SSL 和憑證。"},
+  ],
+  ans:["D"],
+  exp:"更新合法且受認可的 SSL 憑證是正常安全維護，非攻擊；竊憑證、植入被破解元件、預裝惡意碼都是供應鏈攻擊手法。好記：正常換合法憑證≠攻擊。"
+},
+{
+  id:"SB44", type:"single", sec:"資訊安全",
+  q:"【資安卷】有關 BadUSB 的敘述，下列何者正確？",
+  opts:[
+    {k:"A", t:"BadUSB 是一種惡意軟體，僅會感染 USB 隨身碟內的檔案資料。"},
+    {k:"B", t:"BadUSB 攻擊僅限於 Windows 作業系統，不會影響 macOS 或 Linux。"},
+    {k:"C", t:"BadUSB 攻擊無法被一般的防毒軟體偵測並阻擋。"},
+    {k:"D", t:"BadUSB 利用修改 USB 裝置的韌體，使其在電腦上被辨識為其他硬體裝置(如鍵盤)。"},
+  ],
+  ans:["D"],
+  exp:"BadUSB 竄改 USB 韌體，讓裝置偽裝成鍵盤等自動下指令(D 正確)；它不限檔案、不限作業系統，且因藏在韌體層，一般防毒難以偵測。好記：BadUSB＝把隨身碟變成假鍵盤。"
+},
+{
+  id:"SB45", type:"single", sec:"資訊安全",
+  q:"【資安卷】關於「紅隊演練(Red Teaming)」與傳統「滲透測試(Penetration Testing)」的本質差異，下列敘述何者最正確？",
+  opts:[
+    {k:"A", t:"滲透測試通常在受限範圍內以發現並收錄系統弱點總量為目標；紅隊演練則在盡量不驚動藍隊下，驗證複數攻擊鏈(Kill Chain)的串聯與繞過防禦能力。"},
+    {k:"B", t:"滲透測試旨在檢視網路邊界與單一系統防禦強度；紅隊演練核心效益在測試全行員工社交工程點擊率與臨場警覺。"},
+    {k:"C", t:"滲透測試採白箱或灰箱以提高涵蓋率；紅隊演練必須採嚴格黑箱且過程中嚴禁銀行內部任何人干預或中止。"},
+    {k:"D", t:"滲透測試著重修補弱點技術指引；紅隊演練計分完全取決於是否攻破核心主機或竊取敏感資料。"},
+  ],
+  ans:["A"],
+  exp:"滲透測試重「找出並列舉弱點」，紅隊演練重「模擬真實對手、串接攻擊鏈並測試偵測與應變(藍隊)能力」，故 A 最正確。好記：滲測找洞、紅隊實戰演練整條攻擊鏈。"
+},
+{
+  id:"SB46", type:"single", sec:"資訊安全",
+  q:"【資安卷】內部系統採 RBAC(角色基礎存取)，行員「小明」職務調動到財務部門時，最適當的做法為何？",
+  opts:[
+    {k:"A", t:"經申請核准後，修改小明帳號底下所有檔案讀寫權限。"},
+    {k:"B", t:"刪除小明原本的帳號，並為他重新建立一個新帳號。"},
+    {k:"C", t:"將小明的帳號從「分行行員」角色移除，並指派至「財務專員」角色。"},
+    {k:"D", t:"將小明的身分直接設定為強制存取控制(MAC)的最高權限。"},
+  ],
+  ans:["C"],
+  exp:"RBAC 精神是「以角色授權」，調職只需把使用者從舊角色移除、指派到新角色即可繼承對應權限(C)；逐檔改權限、重建帳號或給最高權限都不符 RBAC。好記：RBAC 換工作＝換角色。"
+},
+{
+  id:"SB47", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】以下何者不是本行弱點掃描修補之相關規定？",
+  opts:[
+    {k:"A", t:"中風險弱點自弱點掃描後起 60 日內須完成修補。"},
+    {k:"B", t:"高風險弱點自弱點掃描後起 15 日內須完成修補。"},
+    {k:"C", t:"修補人員評估無法於時間內完成修補之弱點，可提出展延需求，並由其直屬主管覆核。"},
+    {k:"D", t:"以上皆非。", pin:true}
+  ],
+  ans:["B"],
+  exp:"依原卷答案為 B。※原卷以 B 為「非屬相關規定」者，惟高風險弱點限期(常見 15 日內完成)實務上普遍存在；照原卷作答。好記：修補期限依風險分級，高風險最急。"
+},
+{
+  id:"SB48", type:"single", sec:"資訊安全",
+  q:"【資安卷】使用「非對稱加密」技術，銀行欲發送加密訊息給客戶 A，應使用何種金鑰加密？",
+  opts:[
+    {k:"A", t:"銀行私鑰。"},
+    {k:"B", t:"客戶 A 公鑰。"},
+    {k:"C", t:"銀行公鑰。"},
+    {k:"D", t:"客戶 A 私鑰。"},
+  ],
+  ans:["B"],
+  exp:"非對稱加密要「用收件人的公鑰加密」，只有持有對應私鑰的客戶 A 能解密，確保機密性。好記：加密用「對方公鑰」，解密用「自己私鑰」。參見卷一單95、單121。"
+},
+{
+  id:"SB49", type:"single", sec:"資訊安全",
+  q:"【資安卷】在資安的 AAA 架構中，這三個英文字母分別代表下列哪三項核心機制？",
+  opts:[
+    {k:"A", t:"Authentication(認證)、Authorization(授權)、Accounting(紀錄/審計)。"},
+    {k:"B", t:"Auditing(稽核)、Automation(自動化)、Access(存取)。"},
+    {k:"C", t:"Authenticity(真實性)、Availability(可用性)、Accountability(當責性)。"},
+    {k:"D", t:"Administrator(管理員)、Access(存取)、Action(動作)。"},
+  ],
+  ans:["A"],
+  exp:"AAA＝Authentication(認證你是誰)、Authorization(授權你能做什麼)、Accounting(記錄你做了什麼)。好記：AAA＝認證、授權、計量記錄。"
+},
+{
+  id:"SB50", type:"single", sec:"資訊安全",
+  q:"【資安卷】關於生物辨識系統的效能指標，FAR(錯誤接受率)過高會導致什麼結果？",
+  opts:[
+    {k:"A", t:"合法行員被拒絕進入。"},
+    {k:"B", t:"未經授權人員被錯誤允許進入。"},
+    {k:"C", t:"辨識速度變慢。"},
+    {k:"D", t:"耗電增加。"},
+  ],
+  ans:["B"],
+  exp:"FAR(False Acceptance Rate)過高＝把不該通過的人誤判為通過，讓未授權者混入(安全性下降)；把合法者擋在外是 FRR 過高。好記：FAR 高＝壞人放進來，FRR 高＝好人被擋。"
+},
+{
+  id:"SB51", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】下列何種災難復原場地的準備程度最高，具備即時數據備份且能立即接手運作？",
+  opts:[
+    {k:"A", t:"熱端場地(熱備援)。"},
+    {k:"B", t:"溫端場地(溫備援)。"},
+    {k:"C", t:"冷端場地(冷備援)。"},
+    {k:"D", t:"移動式場地。"},
+  ],
+  ans:["A"],
+  exp:"熱備援(Hot Site)已備妥設備且資料即時同步，可立即接手；溫備援需部分整備、冷備援僅有場地空間最慢。好記：熱站＝隨時能上、冷站＝從頭準備。"
+},
+{
+  id:"SB52", type:"single", sec:"資訊安全",
+  q:"【資安卷】為確保系統僅安裝經核可的軟體，管理員僅列出允許安裝的軟體清單，這稱為：",
+  opts:[
+    {k:"A", t:"黑名單。"},
+    {k:"B", t:"白名單。"},
+    {k:"C", t:"灰名單。"},
+    {k:"D", t:"審核清單。"},
+  ],
+  ans:["B"],
+  exp:"只允許清單內項目、其餘一律拒絕，即「白名單(Allow List)」；黑名單則是列出禁止項目。好記：白名單＝只放行清單內的。參見卷一單130。"
+},
+{
+  id:"SB53", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】若銀行購買「資安保險」以降低資安事故的財務衝擊，這屬於哪種風險處理策略？",
+  opts:[
+    {k:"A", t:"風險減輕。"},
+    {k:"B", t:"風險轉移。"},
+    {k:"C", t:"風險規避。"},
+    {k:"D", t:"風險接受。"},
+  ],
+  ans:["B"],
+  exp:"買保險是把損失轉嫁給保險公司，屬「風險轉移」；減輕是降低發生機率/衝擊、規避是不做該活動、接受是承擔。好記：保險＝把風險丟給別人＝轉移。"
+},
+{
+  id:"SB54", type:"single", sec:"資訊安全",
+  q:"【資安卷】關於憑證簽章之規定，應用於「高風險交易」時，憑證私鑰應儲存於何處？",
+  opts:[
+    {k:"A", t:"電腦硬碟使用 AES-256 以上加密之 BitLocker 中。"},
+    {k:"B", t:"手機記憶體中。"},
+    {k:"C", t:"符合 EAL 4+ 或 FIPS 140-1 Level 2 之晶片硬體內。"},
+    {k:"D", t:"轉成 QR Code 後於密封信件存放。"},
+  ],
+  ans:["C"],
+  exp:"高風險交易私鑰應存於通過 EAL 4+ 或 FIPS 140 標準的安全晶片硬體(如 HSM/安全元件)，防止被複製；存硬碟、手機記憶體或 QR Code 都不夠安全。好記：私鑰要放專用安全晶片。參見卷一單127。"
+},
+{
+  id:"SB55", type:"single", sec:"資訊安全",
+  q:"【資安卷】確保訊息內容不會遭竄改而造成資料不正確，即訊息如遭竄改時該筆訊息無效，是指：",
+  opts:[
+    {k:"A", t:"訊息隱密性。"},
+    {k:"B", t:"訊息完整性。"},
+    {k:"C", t:"來源辨識性。"},
+    {k:"D", t:"不可重複性。"},
+  ],
+  ans:["B"],
+  exp:"防止內容被竄改、確保資料正確一致，即「完整性(Integrity)」；隱密性是防偷看、來源辨識是驗身分。好記：防竄改＝完整性。參見卷一單119、單SB3。"
+},
+{
+  id:"SB56", type:"single", sec:"雲端與新興科技",
+  q:"【資安卷】關於雲端服務模型，若銀行租用一套軟體即服務(SaaS)之線上差勤系統，則銀行需負責什麼？",
+  opts:[
+    {k:"A", t:"伺服器弱點修補。"},
+    {k:"B", t:"應用程式內的帳號權限管理與資料輸入。"},
+    {k:"C", t:"虛擬機負載平衡。"},
+    {k:"D", t:"作業系統設定。"},
+  ],
+  ans:["B"],
+  exp:"SaaS 下主機、OS、虛擬機、應用維護都由業者負責，客戶只需管理應用內的帳號權限與自己輸入的資料。好記：用 SaaS，客戶只管「帳號與資料」。參見卷一單103、單SB32。"
+},
+{
+  id:"SB57", type:"single", sec:"資訊安全",
+  q:"【資安卷】電子銀行固定密碼儲存於系統時，應：",
+  opts:[
+    {k:"A", t:"加密保存(Encryption)。"},
+    {k:"B", t:"雜湊保護(Hashing)。"},
+    {k:"C", t:"匿名化(Anonymization)。"},
+    {k:"D", t:"代碼化(Tokenization)。"},
+  ],
+  ans:["B"],
+  exp:"密碼應以「雜湊(加鹽)」不可逆方式保存，即使資料庫外洩也無法還原原始密碼；加密可被解回、匿名/代碼化用於其他個資場景。好記：存密碼用 Hash 不用加密。參見卷一單118、單119。"
+},
+{
+  id:"SB58", type:"single", sec:"資訊安全",
+  q:"【資安卷】在自主存取控制(DAC)模型中，決定一個物件(如檔案)的存取權限給其他使用者，主要取決於下列哪一個角色或條件？",
+  opts:[
+    {k:"A", t:"系統管理員集中制定的安全政策。"},
+    {k:"B", t:"檔案或物件的擁有者擁有自主決定權。"},
+    {k:"C", t:"存取主體與客體之間的安全性標籤是否匹配。"},
+    {k:"D", t:"使用者在組織中所被指派的職務與角色。"},
+  ],
+  ans:["B"],
+  exp:"DAC(自主存取控制)由「資源擁有者」自行決定分享權限給誰；A/C 是強制存取控制(MAC)、D 是角色型(RBAC)的特徵。好記：DAC＝檔案主人說了算。"
+},
+{
+  id:"SB59", type:"single", sec:"資安治理與內規",
+  q:"【資安卷】銀行檢視委外廠商時，確認其是否「確實履行安全合規義務」，此行為稱為？",
+  opts:[
+    {k:"A", t:"盡職調查。"},
+    {k:"B", t:"注意義務。"},
+    {k:"C", t:"風險接受。"},
+    {k:"D", t:"風險轉移。"},
+  ],
+  ans:["A"],
+  exp:"事前查核與持續檢視廠商是否落實合規義務，即「盡職調查(Due Diligence)」。好記：查廠商有沒有做到＝盡職調查。參見卷一單142。"
+},
+{
+  id:"SB60", type:"single", sec:"資訊安全",
+  q:"【資安卷】銀行遭遇勒索軟體，且離線備份檔案也遭受感染時，最根本的處置缺失通常在於？",
+  opts:[
+    {k:"A", t:"未開啟雙 A(Active-Active)機制。"},
+    {k:"B", t:"備份未實施實體隔離或寫入保護。"},
+    {k:"C", t:"密碼設定太短。"},
+    {k:"D", t:"未購買資安保險。"},
+  ],
+  ans:["B"],
+  exp:"連離線備份都被加密，代表備份未做好實體隔離或防寫(唯讀)保護，讓惡意程式一併感染。好記：備份要「隔離＋防寫」才擋得住勒索。參見複23。"
+},
+{
+  id:"MB1", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】下列何者是正確的資安防護觀念？",
+  opts:[
+    {k:"A", t:"從管理階層到下級單位，資安你我有責，並不僅僅只是資訊單位的職責。"},
+    {k:"B", t:"每三年進行一次資安稽核，以落實全體同仁資訊安全管理工作。"},
+    {k:"C", t:"每位同仁皆應落實資訊安全，以降低資安威脅所造成之衝擊並強化公司服務品質。"},
+    {k:"D", t:"企業應加強資安訓練，透過多元化教育訓練及溝通宣導，持續深化每位同仁的資安意識。"},
+  ],
+  ans:["A","C","D"],
+  exp:"資安是全員責任、須落實並持續教育(A、C、D)；「每三年才稽核一次」頻率過低，故 B 錯。好記：資安人人有責，稽核要夠頻繁。"
+},
+{
+  id:"MB2", type:"multi", sec:"雲端與新興科技",
+  q:"【資安卷】下列哪些屬於雲端安全重點控制措施？",
+  opts:[
+    {k:"A", t:"IAM 身分管理。"},
+    {k:"B", t:"資料加密。"},
+    {k:"C", t:"日誌監控。"},
+    {k:"D", t:"MFA。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"雲端安全靠身分管理(IAM)、資料加密、日誌監控與多因素驗證(MFA)等多層控制，四者皆是。好記：上雲要管身分、加密、看日誌、開 MFA。"
+},
+{
+  id:"MB3", type:"multi", sec:"資訊安全",
+  q:"【資安卷】居家辦公的資安防護面向包含下列哪些？",
+  opts:[
+    {k:"A", t:"科技面。"},
+    {k:"B", t:"人員面。"},
+    {k:"C", t:"流程面。"},
+    {k:"D", t:"法律面。"},
+  ],
+  ans:["A","B","C"],
+  exp:"居家辦公防護涵蓋技術(VPN/端點)、人員(意識/行為)與流程(規範/申請)三面向；法律面非其防護操作面向。好記：資安防護＝科技、人員、流程三管齊下。"
+},
+{
+  id:"MB4", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】關於資安事件應變規劃的描述何者正確？",
+  opts:[
+    {k:"A", t:"應變規劃包括建置團隊與確認資源的工作，需從上至下釐清整體建置需求與構想。"},
+    {k:"B", t:"企業應考慮在演練過程中安排與實際工作無關的員工，以提高全公司資安風險認識。"},
+    {k:"C", t:"在持續演練及測試中，企業需定期進行資安事件應變的模擬演練，以確認團隊能力與作業流程是否正確有效。"},
+    {k:"D", t:"在管理機制與實務建置中，企業需建立危機管理機制，惟待事件真實發生時再調查所需的工具。"},
+  ],
+  ans:["A","C"],
+  exp:"應變規劃須組建團隊、備妥資源(A)並定期演練驗證(C)；演練應由相關人員參與(非無關員工，B 錯)、工具應事前備妥而非事發才找(D 錯)。好記：應變＝先備人備工具、平時勤演練。"
+},
+{
+  id:"MB5", type:"multi", sec:"資訊安全",
+  q:"【資安卷】深度偽造(deepfake)釣魚攻擊的形容何者正確？",
+  opts:[
+    {k:"A", t:"一般人不可能遇到。"},
+    {k:"B", t:"攻擊者可能會使用深度偽造技術來創造假的影片或音檔消息。"},
+    {k:"C", t:"一種使用深度偽造(deepfake)技術進行的釣魚攻擊。"},
+    {k:"D", t:"假影片中人物可以非常逼真，讓人難以分辨真偽，但聲音無法偽造。"},
+  ],
+  ans:["B","C"],
+  exp:"Deepfake 可偽造逼真影片與聲音進行釣魚(B、C)；它並非罕見(A 錯)，且聲音同樣能被偽造(D 錯)。好記：Deepfake 連聲音都能造假，人人都可能遇到。參見卷一單114、單SB30。"
+},
+{
+  id:"MB6", type:"multi", sec:"資訊安全",
+  q:"【資安卷】資訊安全的三要素(CIA Triad)通常是指哪三項？",
+  opts:[
+    {k:"A", t:"機密性(Confidentiality)。"},
+    {k:"B", t:"完整性(Integrity)。"},
+    {k:"C", t:"可用性(Availability)。"},
+    {k:"D", t:"可追溯性(Traceability)。"},
+  ],
+  ans:["A","B","C"],
+  exp:"CIA 三要素為機密性、完整性、可用性；可追溯性非 CIA 三本柱。好記：資安 CIA＝機密、完整、可用。參見單SB3。"
+},
+{
+  id:"MB7", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些行為有助於提升個人帳戶的資訊安全？",
+  opts:[
+    {k:"A", t:"設定複雜且不易猜測的密碼。"},
+    {k:"B", t:"啟用多因素驗證(MFA)。"},
+    {k:"C", t:"定期更換密碼。"},
+    {k:"D", t:"不重複使用相同密碼於不同服務。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"強密碼、開 MFA、定期更換、各服務不共用密碼，都能提升帳戶安全，四者皆是。好記：帳戶防護＝強密碼＋MFA＋常換＋不共用。"
+},
+{
+  id:"MB8", type:"multi", sec:"資訊安全",
+  q:"【資安卷】資料外洩防護(DLP)系統的主要功能包括哪些？",
+  opts:[
+    {k:"A", t:"監控和識別敏感資料。"},
+    {k:"B", t:"防止敏感資料被未經授權地傳輸或複製。"},
+    {k:"C", t:"針對對外發送的郵件內容進行掃描。"},
+    {k:"D", t:"控制 USB 隨身碟等可移除裝置的使用。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"DLP 能辨識敏感資料、阻擋未授權傳輸複製、掃描外寄郵件並管制 USB 等外接裝置，四者皆為其功能。好記：DLP 全方位防資料外流。參見單SB8。"
+},
+{
+  id:"MB9", type:"multi", sec:"資訊安全",
+  q:"【資安卷】使用者辨識網站是否安全，除了檢查是否為 HTTPS 外，還應注意哪些細節？",
+  opts:[
+    {k:"A", t:"檢查網址是否拼寫正確，避免釣魚網站。"},
+    {k:"B", t:"點擊網址列的鎖頭圖示，查看憑證資訊是否有效且由信任的機構簽發。"},
+    {k:"C", t:"避免點擊來源不明的電子郵件中的連結。"},
+    {k:"D", t:"注意網站介面是否有異常或拼字錯誤。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"辨識安全網站應核對網址拼字、檢視憑證、不點不明連結並留意介面異常，四者皆是。好記：看網址、驗憑證、不亂點、察異常。參見卷一複49。"
+},
+{
+  id:"MB10", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】進行資安培訓和意識教育對銀行資訊安全的重要性體現在哪些方面？",
+  opts:[
+    {k:"A", t:"提高員工對資安威脅的認知。"},
+    {k:"B", t:"減少因人為疏忽導致的資安事件。"},
+    {k:"C", t:"培養員工良好的資安習慣。"},
+    {k:"D", t:"使員工能夠識別並報告潛在的釣魚郵件或社交工程攻擊。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"資安教育能提升認知、降低人為疏失、養成好習慣並強化辨識通報能力，四者皆是其價值。好記：教育訓練是資安的第一道防線。"
+},
+{
+  id:"MB11", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些屬於常見的網路攻擊類型？",
+  opts:[
+    {k:"A", t:"釣魚攻擊(Phishing)。"},
+    {k:"B", t:"DDoS 攻擊。"},
+    {k:"C", t:"軟體更新(SoftwareUpdate)。"},
+    {k:"D", t:"中間人攻擊(Man-in-the-Middle)。"},
+  ],
+  ans:["A","B","D"],
+  exp:"釣魚、DDoS、中間人攻擊都是常見攻擊；軟體更新是正常維護作業(除非被供應鏈植入)。好記：正常更新不是攻擊。"
+},
+{
+  id:"MB12", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】本行行員專用網站密碼政策有哪些要求？",
+  opts:[
+    {k:"A", t:"長度至少 12 碼。"},
+    {k:"B", t:"包含多種字元類型。"},
+    {k:"C", t:"應定期更換密碼。"},
+    {k:"D", t:"啟用多因素驗證。"},
+  ],
+  ans:["A","B","C","D"],
+  exp:"密碼政策要求長度至少 12 碼、混合多種字元、定期更換並搭配 MFA，四者皆是。好記：長、雜、常換、加 MFA。參見卷一單155。"
+},
+{
+  id:"MB13", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些是「社交工程(Social Engineering)」的手法？",
+  opts:[
+    {k:"A", t:"假冒 IT 人員索取帳號密碼。"},
+    {k:"B", t:"發送偽造的中獎郵件。"},
+    {k:"C", t:"利用漏洞掃描系統。"},
+    {k:"D", t:"電話詐騙要求提供個人資料。"},
+  ],
+  ans:["A","B","D"],
+  exp:"假冒身分、偽造誘餌郵件、電話詐騙都是操弄人的社交工程；漏洞掃描是技術性攻擊手法，非社交工程。好記：社交工程靠騙人，掃描靠技術。參見卷一單47。"
+},
+{
+  id:"MB14", type:"multi", sec:"資訊安全",
+  q:"【資安卷】關於「雙因素認證(2FA)」，哪些敘述正確？",
+  opts:[
+    {k:"A", t:"僅需密碼即可登入。"},
+    {k:"B", t:"結合兩種不同類型的驗證(如密碼+簡訊驗證碼)。"},
+    {k:"C", t:"可提高帳號安全性。"},
+    {k:"D", t:"一定需要生物識別(如指紋)。"},
+  ],
+  ans:["B","C"],
+  exp:"2FA 須結合兩種不同類型的因子(B)以提升安全(C)；但它不是「只要密碼」(A 錯)，也不一定要生物辨識(簡訊 OTP 亦可，D 錯)。好記：2FA＝兩種不同因子，不限指紋。參見單SB27。"
+},
+{
+  id:"MB15", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些行為可能導致資料外洩？",
+  opts:[
+    {k:"A", t:"使用公共 Wi-Fi 傳輸敏感資料。"},
+    {k:"B", t:"點擊來路不明的郵件附件。"},
+    {k:"C", t:"定期備份資料。"},
+    {k:"D", t:"分享帳號密碼給同事。"},
+  ],
+  ans:["A","B","D"],
+  exp:"公共 Wi-Fi 傳敏感資料、開不明附件、共享帳密都可能外洩資料；定期備份是保護措施而非外洩風險。好記：備份是防護，其餘三者是破口。參見卷一單113。"
+},
+{
+  id:"MB16", type:"multi", sec:"資訊安全",
+  q:"【資安卷】防範惡意軟體(Malware)的方法包括？",
+  opts:[
+    {k:"A", t:"安裝防毒軟體並定期掃描。"},
+    {k:"B", t:"禁用所有瀏覽器擴充功能。"},
+    {k:"C", t:"不隨意下載不明檔案。"},
+    {k:"D", t:"關閉自動更新功能。"},
+  ],
+  ans:["A","C"],
+  exp:"裝防毒定期掃描(A)、不下載不明檔案(C)可有效防惡意軟體；「禁用所有擴充」過度且非必要，「關閉自動更新」反而讓漏洞不補，故 B、D 錯。好記：防毒＋不亂下載才對，別關更新。"
+},
+{
+  id:"MB17", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些是「內部威脅(Insider Threat)」的範例？",
+  opts:[
+    {k:"A", t:"離職員工刪除公司資料。"},
+    {k:"B", t:"員工誤點釣魚郵件。"},
+    {k:"C", t:"外部駭客入侵資料庫。"},
+    {k:"D", t:"員工私自複製客戶資料。"},
+  ],
+  ans:["A","B","D"],
+  exp:"內部威脅來自組織內部人員，含惡意(離職刪檔、私複資料)與非惡意(誤點釣魚)；外部駭客入侵屬外部威脅，故 C 非。好記：威脅來自「自己人」＝內部威脅。"
+},
+{
+  id:"MB18", type:"multi", sec:"資訊安全",
+  q:"【資安卷】多因素認證(MFA)包含哪些類型？",
+  opts:[
+    {k:"A", t:"使用者知道的(如密碼)。"},
+    {k:"B", t:"使用者擁有的(如手機、憑證)。"},
+    {k:"C", t:"使用者所處位置。"},
+    {k:"D", t:"使用者生物特徵(如指紋)。"},
+  ],
+  ans:["A","B","D"],
+  exp:"MFA 三大典型因子為所知(密碼)、所有(手機/憑證)、所是(生物特徵)；「所處位置」雖偶被視為輔助因子，本題不列入。好記：MFA＝你知道的、你有的、你是的。參見單SB27。"
+},
+{
+  id:"MB19", type:"multi", sec:"資訊安全",
+  q:"【資安卷】以下哪些是電腦病毒常見的傳播管道？",
+  opts:[
+    {k:"A", t:"下載非法軟體。"},
+    {k:"B", t:"開啟來路不明的郵件附件。"},
+    {k:"C", t:"插入不明 USB 裝置。"},
+    {k:"D", t:"使用受信任網站下載更新。"},
+  ],
+  ans:["A","B","C"],
+  exp:"非法軟體、不明郵件附件、不明 USB 都是病毒常見來源；從受信任官方網站下載更新則相對安全。好記：盜版、亂附件、亂 USB＝中毒三大來源。參見卷一複41。"
+},
+{
+  id:"MB20", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】哪些行為有助於建立銀行的資訊安全文化？",
+  opts:[
+    {k:"A", t:"定期辦理資安教育訓練。"},
+    {k:"B", t:"鼓勵通報可疑資安事件。"},
+    {k:"C", t:"懲罰所有違規員工。"},
+    {k:"D", t:"設置資訊安全推動小組。"},
+  ],
+  ans:["A","B","D"],
+  exp:"定期教育、鼓勵通報、設推動小組能營造正向資安文化；一味「懲罰所有違規」會讓人隱匿問題、不敢通報，反而有害，故 C 非。好記：資安文化靠教育與鼓勵通報，而非只懲罰。"
+},
+{
+  id:"MB21", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些屬於零信任核心概念？",
+  opts:[
+    {k:"A", t:"持續驗證。"},
+    {k:"B", t:"最小權限原則。"},
+    {k:"C", t:"假設已遭入侵。"},
+    {k:"D", t:"內部網路預設可信。"},
+  ],
+  ans:["A","B","C"],
+  exp:"零信任主張持續驗證、最小權限、假設已被入侵(assume breach)；「內部網路預設可信」正是它要推翻的舊觀念，故 D 非。好記：零信任＝不預設信任任何網段。參見卷一單116、單SB25。"
+},
+{
+  id:"MB22", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些屬於特權帳號管理系統(PAM)主要控制措施？",
+  opts:[
+    {k:"A", t:"特權帳號錄影稽核。"},
+    {k:"B", t:"密碼保管庫。"},
+    {k:"C", t:"關閉紀錄功能。"},
+    {k:"D", t:"會話監控。"},
+  ],
+  ans:["A","B","D"],
+  exp:"PAM 透過操作錄影稽核、密碼保管庫、即時會話監控來管控特權帳號；「關閉紀錄」與稽核精神相反，故 C 非。好記：管特權要「錄、控、存密」，絕不關紀錄。"
+},
+{
+  id:"MB23", type:"multi", sec:"資訊安全",
+  q:"【資安卷】關於勒索軟體攻擊，何者正確？",
+  opts:[
+    {k:"A", t:"只會加密不會竊取資料。"},
+    {k:"B", t:"常見 Double Extortion(雙重勒索)。"},
+    {k:"C", t:"離線備份可降低衝擊。"},
+    {k:"D", t:"EDR 有助偵測。"},
+  ],
+  ans:["B","C","D"],
+  exp:"現代勒索常先竊資料再加密(雙重勒索，B)，離線備份可降衝擊(C)、EDR 有助偵測回應(D)；「只加密不竊取」已過時，故 A 錯。好記：勒索會偷也會鎖，靠備份＋EDR 防。參見單SB18、單SB60。"
+},
+{
+  id:"MB24", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些金融交易或服務可能因量子電腦破解傳統公鑰密碼(如 RSA、ECC)而受影響？",
+  opts:[
+    {k:"A", t:"網路銀行登入與轉帳交易。"},
+    {k:"B", t:"信用卡網路刷卡交易。"},
+    {k:"C", t:"SWIFT 跨境匯款訊息傳輸。"},
+    {k:"D", t:"現金付款交易。"},
+  ],
+  ans:["A","B","C"],
+  exp:"凡依賴公鑰密碼加密/簽章的線上交易(網銀、刷卡、SWIFT)都受量子威脅；現金交易不涉及公鑰密碼，故 D 不受影響。好記：用到公鑰的都會被量子衝擊，現金除外。參見單SB38、單SB39。"
+},
+{
+  id:"MB25", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些措施有助於降低量子電腦對現有密碼系統所帶來的資安風險？",
+  opts:[
+    {k:"A", t:"導入後量子密碼學(Post-Quantum Cryptography, PQC)。"},
+    {k:"B", t:"提升防火牆設備容量。"},
+    {k:"C", t:"提升對稱式加密金鑰長度。"},
+    {k:"D", t:"關閉網際網路連線功能。"},
+  ],
+  ans:["A","C"],
+  exp:"導入抗量子的 PQC(A)、加長對稱金鑰以抵銷 Grover 加速(C)可降風險；防火牆容量與量子破密無關、關網不切實際。好記：抗量子＝上 PQC＋加長對稱金鑰。參見單SB40。"
+},
+{
+  id:"MB26", type:"multi", sec:"資訊安全",
+  q:"【資安卷】下列哪些措施有助於降低橫向移動風險？",
+  opts:[
+    {k:"A", t:"網路微分段。"},
+    {k:"B", t:"共用管理者帳號。"},
+    {k:"C", t:"特權帳號管理。"},
+    {k:"D", t:"MFA 保護遠端登入。"},
+  ],
+  ans:["A","C","D"],
+  exp:"微分段、特權帳號管理與 MFA 都能阻擋攻擊者在內網橫向擴散；共用管理者帳號反而讓攻擊者一把鑰匙通行，故 B 非。好記：擋橫向移動＝分段、控特權、開 MFA，別共用帳號。"
+},
+{
+  id:"MB27", type:"multi", sec:"資訊安全",
+  q:"【資安卷】關於多因素認證(MFA)的敘述，下列哪些正確？",
+  opts:[
+    {k:"A", t:"MFA 可降低帳密外洩所造成的風險。"},
+    {k:"B", t:"使用手機驗證碼屬於第二驗證因子。"},
+    {k:"C", t:"MFA 能完全杜絕帳號遭入侵的可能性。"},
+    {k:"D", t:"生物特徵驗證可作為驗證因子之一。"},
+  ],
+  ans:["A","B","D"],
+  exp:"MFA 能降低帳密外洩風險(A)、手機驗證碼是第二因子(B)、生物特徵可當因子(D)；但沒有任何機制能「完全杜絕」入侵，故 C 過於絕對而錯。好記：MFA 大幅降風險但非萬無一失。參見單SB27。"
+},
+{
+  id:"MB28", type:"multi", sec:"資訊安全",
+  q:"【資安卷】內部電腦發生資安事件，鑑識人員到達前，現場人員為「保護證據並防止損害擴大」，下列哪些處置正確？",
+  opts:[
+    {k:"A", t:"立即將受害電腦的網路線拔除或停用 Wi-Fi，中斷與外部控制端的連線。"},
+    {k:"B", t:"為防止惡意程式擴散，立即對電腦進行關機。"},
+    {k:"C", t:"保持電腦電源開啟，避免重新開機導致記憶體(RAM)中的揮發性跡證消失。"},
+    {k:"D", t:"拍照或紀錄當下螢幕顯示的異常畫面與跳出的錯誤訊息。"},
+  ],
+  ans:["A","C","D"],
+  exp:"應斷網隔離(A)、保持開機保存記憶體揮發跡證(C)、拍照記錄現場(D)；直接關機會抹除 RAM 中的關鍵證據，故 B 錯。好記：斷網不斷電，先保全揮發性跡證。參見單SB34。"
+},
+{
+  id:"MB29", type:"multi", sec:"資訊安全",
+  q:"【資安卷】關於零信任架構(ZTA)的敘述，下列哪些正確？",
+  opts:[
+    {k:"A", t:"對於資源的存取要求，以每次連線為基礎去許可。"},
+    {k:"B", t:"對於存取的要求，每次以最小權限為原則去執行。"},
+    {k:"C", t:"允許存取前，所有資源的身分鑑別與授權機制依監控結果動態決定。"},
+    {k:"D", t:"是一種以邊界為基礎的資安架構，一旦連線通過認證就值得信任。"},
+  ],
+  ans:["A","B","C"],
+  exp:"ZTA 逐次連線驗證、最小權限、動態授權(A、B、C)；它正是要打破「以邊界為基礎、通過一次就信任」的舊模型，故 D 錯。好記：零信任＝逐次驗證、動態授權，非邊界一次通關。參見單SB25。"
+},
+{
+  id:"MB30", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】網銀或 App 呼叫後端 API 進行非約定轉帳或查詢餘額時，為防駭客篡改引數或越權竊取他人資料，下列哪些防禦控制措施正確且必要？",
+  opts:[
+    {k:"A", t:"應落實「物件層級的授權驗證(BOLA/IDOR)」，每次 API 請求皆須驗證當前登入憑證是否有權存取該筆目標資料。"},
+    {k:"B", t:"只要將 API 通訊全面升級至 TLS 1.3 加密，即可完全豁免應用程式層(Layer 7)的參數檢驗。"},
+    {k:"C", t:"應在後端對所有 API 輸入參數實施嚴格的白名單型態檢查與過濾，以防範注入攻擊(Injection Attack)。"},
+    {k:"D", t:"應導入 API 流量限速(Rate Limiting)與令牌桶(Token Bucket)機制，以防範自動化暴力猜測或阻斷服務攻擊。"},
+  ],
+  ans:["A","C","D"],
+  exp:"物件層級授權(防越權)、後端白名單參數檢查(防注入)、流量限速(防暴力/阻斷)皆必要；TLS 只保護傳輸機密，不能取代應用層參數驗證，故 B 錯。好記：加密≠免驗參數，越權/注入/濫用都要各自防。"
+},
+{
+  id:"MB31", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】依「資通安全防護基準」，核心資通系統與第一類電腦系統之容量管理，應符合哪些要求？",
+  opts:[
+    {k:"A", t:"考量軟體更新與生命週期。"},
+    {k:"B", t:"評估採用多重備援或冗餘配置。"},
+    {k:"C", t:"定期評估是否有單點故障風險。"},
+    {k:"D", t:"設定安全強化標準。"},
+  ],
+  ans:["A","B","C"],
+  exp:"容量管理著重更新/生命週期、備援冗餘與單點故障評估(A、B、C)；「設定安全強化標準」屬組態安全(Hardening)而非容量管理範疇。好記：容量管理看更新、備援、單點故障。參見卷一單129。"
+},
+{
+  id:"MB32", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】以下何者為本行海外分行應列入每月業報中報告項目？",
+  opts:[
+    {k:"A", t:"各項資訊管理報表檢核辦理情形。"},
+    {k:"B", t:"誤中社交工程郵件比例。"},
+    {k:"C", t:"Highly Visible Cyber Events or Regulatory Alerts。"},
+    {k:"D", t:"弱點掃描結果與修補情形。"},
+  ],
+  ans:["A","C","D"],
+  exp:"依原卷答案為 A、C、D，涵蓋管理報表檢核、重大資安/法規警示與弱點修補情形。※原卷未將社交工程誤中率(B)列入每月業報項目，照原卷作答。"
+},
+{
+  id:"MB33", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】關於帳號管理，哪些行為符合政府頒佈之「資通安全防護基準」規範？",
+  opts:[
+    {k:"A", t:"採一人一號管理為原則。"},
+    {k:"B", t:"避免多人共用同一帳號。"},
+    {k:"C", t:"共用帳號時須有更換密碼或代登入機制等補強措施。"},
+    {k:"D", t:"共用帳號無須記錄是誰在使用。"},
+  ],
+  ans:["A","B","C"],
+  exp:"帳號應一人一號、避免共用，若不得不共用須有補強措施(A、B、C)；共用帳號更要記錄實際使用者以利追蹤，故 D 錯。好記：帳號一人一號、共用也要留紀錄。參見卷一單151。"
+},
+{
+  id:"MB34", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】金融機構針對 DDoS(分散式阻斷服務)攻擊應採取哪些防護措施？",
+  opts:[
+    {k:"A", t:"建立 DDoS 監控機制。"},
+    {k:"B", t:"建立事故應變機制。"},
+    {k:"C", t:"每年進行程序演練或實際演練。"},
+    {k:"D", t:"導入硬碟加密機制預防資料外洩。"},
+  ],
+  ans:["A","B","C"],
+  exp:"防 DDoS 靠監控、應變機制與定期演練(A、B、C)；硬碟加密是防資料外洩，與抵禦流量攻擊無關，故 D 非。好記：防 DDoS＝監控＋應變＋演練，跟加密無關。參見卷一單92。"
+},
+{
+  id:"MB35", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】關於資料中心消防系統，下列哪些正確？",
+  opts:[
+    {k:"A", t:"乾式管路可降低漏水損壞設備風險。"},
+    {k:"B", t:"應使用氣體滅火系統。"},
+    {k:"C", t:"應使用泡沫滅火系統。"},
+    {k:"D", t:"應具備火警自動通報。"},
+  ],
+  ans:["A","B","D"],
+  exp:"機房宜用乾式管路降低漏水風險、採氣體滅火(不損設備)並具火警自動通報;泡沫會損壞電子設備，故 C 非。好記：機房滅火用氣體、不用水/泡沫。參見卷一複77。"
+},
+{
+  id:"MB36", type:"multi", sec:"資訊安全",
+  q:"【資安卷】數位憑證授權機構(CA)的職責包含？",
+  opts:[
+    {k:"A", t:"驗證申請者身分。"},
+    {k:"B", t:"幫客戶保管私鑰。"},
+    {k:"C", t:"維護憑證撤銷清單。"},
+    {k:"D", t:"簽發憑證。"},
+  ],
+  ans:["A","C","D"],
+  exp:"CA 負責審驗身分、簽發憑證與維護撤銷清單(CRL)；私鑰須由持有者自行保管，CA 不得代管，否則喪失不可否認性，故 B 非。好記：CA 發憑證但不碰你的私鑰。參見卷一複47。"
+},
+{
+  id:"MB37", type:"multi", sec:"資訊安全",
+  q:"【資安卷】某銀行欲事前防範客戶資料未經授權攜出，下列哪些措施最有效？",
+  opts:[
+    {k:"A", t:"建立 DLP(資料外洩防範)機制。"},
+    {k:"B", t:"建立 USB 儲存裝置管制。"},
+    {k:"C", t:"建立使用者個資查詢軌跡。"},
+    {k:"D", t:"開啟伺服器日誌供留存稽查。"},
+  ],
+  ans:["A","B"],
+  exp:"DLP 與 USB 管制屬「事前預防」，能直接阻止資料被攜出(A、B)；查詢軌跡與伺服器日誌屬事後偵測/稽核，非事前防範，故 C、D 非。好記：預防攜出靠 DLP＋管 USB，日誌是事後追。"
+},
+{
+  id:"MB38", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】執行業務衝擊分析(BIA)以支援 BCP 與 DRP 時，下列哪些項目或步驟是經常被查核的？",
+  opts:[
+    {k:"A", t:"RTO 必須大於或等於 MTPD(最大容忍中斷時間)，才能確保災難時於目標時間內完成復原。"},
+    {k:"B", t:"BIA 的首要任務是技術系統的細部修復成本評估，對業務損失與合規衝擊的評估則列為次要。"},
+    {k:"C", t:"應識別並評估營運中斷對組織造成的財務衝擊、聲譽損失、法律責任及監管合規影響。"},
+    {k:"D", t:"RPO(復原點目標)決定了組織在發生中斷事件時，可接受的最大資料遺失量或時間範圍。"},
+  ],
+  ans:["C","D"],
+  exp:"BIA 應評估中斷的財務/聲譽/法律衝擊(C)，RPO 定義可容忍的資料遺失(D)；RTO 應「小於或等於」MTPD(A 錯)、BIA 首重業務衝擊而非技術修復成本(B 錯)。好記：RTO≦MTPD；BIA 看業務衝擊。參見卷一單148。"
+},
+{
+  id:"MB39", type:"multi", sec:"雲端與新興科技",
+  q:"【資安卷】雲端 PaaS(平台即服務)模型中，該平台服務提供廠商負責哪些部分？",
+  opts:[
+    {k:"A", t:"應用程式弱點修補。"},
+    {k:"B", t:"作業系統維護。"},
+    {k:"C", t:"虛擬化平台管理。"},
+    {k:"D", t:"實體環境安全。"},
+  ],
+  ans:["B","C","D"],
+  exp:"PaaS 下業者負責作業系統、虛擬化平台與實體環境；客戶自建的「應用程式」及其弱點修補仍由客戶負責，故 A 非業者責任。好記：PaaS 業者顧到 OS 與平台，App 歸客戶。參見單SB56。"
+},
+{
+  id:"MB40", type:"multi", sec:"資安治理與內規",
+  q:"【資安卷】以下何者為金管會近年公告之金融資安政策？",
+  opts:[
+    {k:"A", t:"金融資安行動方案。"},
+    {k:"B", t:"個人資料保護法。"},
+    {k:"C", t:"金融資安韌性發展藍圖。"},
+    {k:"D", t:"資通安全管理法。"},
+  ],
+  ans:["A","C"],
+  exp:"金管會公告的金融資安政策包含「金融資安行動方案」與「金融資安韌性發展藍圖」；個資法與資通安全管理法是法律(由立法院制定)，非金管會的金融資安政策，故 B、D 非。好記：方案/藍圖＝金管會政策，法＝立法。"
+}
+];
+
+</script>
+<script>
+(function(){
+  "use strict";
+  const LS_KEY="mega_deposit_quiz_v1";
+  const $=s=>document.querySelector(s);
+  const state={
+    type:"all", scope:"all", order:"shuffle", optshuffle:true, sec:"__all",
+    list:[], idx:0, answered:{}, // answered[id]=true
+  };
+  // persistent store
+  let store=load();
+  function load(){ try{return JSON.parse(localStorage.getItem(LS_KEY))||{}}catch(e){return {}} }
+  function save(){ localStorage.setItem(LS_KEY, JSON.stringify(store)); }
+  store.wrong = store.wrong||{};   // id: true
+  store.star  = store.star ||{};   // id: true
+  store.stat  = store.stat ||{done:0,ok:0,no:0};
+
+  // ---- build section chips ----
+  const secs=[...new Set(QUESTIONS.map(q=>q.sec))];
+  const secRow=$("#secRow");
+  secs.forEach(sc=>{
+    const c=document.createElement("span");
+    c.className="chip sm"; c.dataset.sec=sc;
+    c.textContent=sc+"("+QUESTIONS.filter(q=>q.sec===sc).length+")";
+    secRow.appendChild(c);
+  });
+
+  // ---- chip handlers ----
+  document.addEventListener("click",e=>{
+    const c=e.target.closest(".chip"); if(!c) return;
+    if(c.dataset.type){ setGroup(c,"type"); state.type=c.dataset.type; }
+    else if(c.dataset.scope){ setGroup(c,"scope"); state.scope=c.dataset.scope; }
+    else if(c.dataset.order){ setGroup(c,"order"); state.order=c.dataset.order; }
+    else if(c.dataset.optshuffle!==undefined){
+      state.optshuffle=!state.optshuffle;
+      c.classList.toggle("on",state.optshuffle);
+      c.textContent="選項打亂："+(state.optshuffle?"開":"關");
+    }
+    else if(c.dataset.sec){
+      if(c.dataset.sec==="__all"){
+        state.sec="__all";
+        secRow.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.sec==="__all"));
+      }else{
+        secRow.querySelector('[data-sec="__all"]').classList.remove("on");
+        c.classList.toggle("on");
+        // collect selected
+        const sel=[...secRow.querySelectorAll(".chip.on")].map(x=>x.dataset.sec).filter(x=>x!=="__all");
+        state.sec = sel.length? sel : "__all";
+        if(!sel.length) secRow.querySelector('[data-sec="__all"]').classList.add("on");
+      }
+    }
+  });
+  function setGroup(chip,attr){
+    chip.parentElement.querySelectorAll(".chip[data-"+attr+"]").forEach(x=>x.classList.remove("on"));
+    chip.classList.add("on");
+  }
+
+  // ---- start ----
+  $("#btnStart").addEventListener("click",start);
+  $("#btnResetStats").addEventListener("click",()=>{
+    if(!confirm("確定清除所有作答紀錄（含錯題、標記、統計）？")) return;
+    store={wrong:{},star:{},stat:{done:0,ok:0,no:0}}; save(); renderStats();
+    alert("已清除。");
+  });
+
+  function pickList(){
+    let arr=QUESTIONS.slice();
+    if(state.type!=="all") arr=arr.filter(q=>q.type===state.type);
+    if(state.sec!=="__all") arr=arr.filter(q=>state.sec.includes(q.sec));
+    if(state.scope==="wrong") arr=arr.filter(q=>store.wrong[q.id]);
+    if(state.scope==="star")  arr=arr.filter(q=>store.star[q.id]);
+    if(state.order==="shuffle") shuffle(arr);
+    return arr;
+  }
+  function start(){
+    const arr=pickList();
+    if(!arr.length){ alert("此範圍沒有題目，請調整設定。"); return; }
+    state.list=arr; state.idx=0; state.answered={};
+    // prepare display options per question (shuffle once per session)
+    arr.forEach(q=>{ q._disp = dispOpts(q); q._done=false; q._sel=[]; });
+    $("#setup").style.display="none";
+    $("#quiz").style.display="block";
+    renderQ();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function dispOpts(q){
+    let normal=q.opts.filter(o=>!o.pin);
+    let pinned=q.opts.filter(o=>o.pin);
+    if(state.optshuffle) shuffle(normal);
+    return normal.concat(pinned);
+  }
+
+  // ---- render current question ----
+  function renderQ(){
+    const q=state.list[state.idx];
+    const card=$("#qcard");
+    const isMulti=q.type==="multi";
+    const starOn=store.star[q.id]?"on":"";
+    let html="";
+    html+='<div class="qhead"><div class="qmeta">'
+      +'<span class="qtag '+q.type+'">'+(isMulti?'複選':'單選')+'</span>'
+      +'<span class="qtag sec">'+q.sec+'</span>'
+      +'第 '+(state.idx+1)+' / '+state.list.length+' 題'
+      +'</div><span class="star '+starOn+'" id="star" title="標記待複習 (S)">★</span></div>';
+    html+='<div class="qstem"><span class="num">'+niceId(q.id)+'</span>'+esc(q.q)
+      + (isMulti?' <span style="font-size:13px;color:var(--red)">（複選）</span>':'') +'</div>';
+    html+='<div id="opts">';
+    q._disp.forEach((o,i)=>{
+      html+='<div class="opt '+(isMulti?'multi':'')+'" data-k="'+o.k+'">'
+        +'<div class="mk">'+(i+1)+'</div><div class="ot">'+esc(o.t)+'</div></div>';
+    });
+    html+='</div>';
+    html+='<div class="actions">'
+      +'<button class="btn ghost" id="btnPrev">← 上一題</button>'
+      +'<button class="btn" id="btnSubmit">送出作答</button>'
+      +'<span class="nav-spacer"></span>'
+      +'<button class="btn gold" id="btnNext">下一題 →</button>'
+      +'</div>';
+    html+='<div class="explain" id="explain"><div class="bar"><span id="exres"></span>'
+      +'<span id="exans" class="hide-sm" style="font-size:13px;font-weight:700"></span></div>'
+      +'<div class="body"><div style="margin-bottom:7px"><span class="ans" id="exans2"></span></div>'
+      +'<div><span class="lead">解說</span><span id="extext"></span></div></div></div>';
+    card.innerHTML=html;
+
+    // restore prior answer if any
+    if(q._done){ lockAndShow(q); }
+    else {
+      $("#opts").querySelectorAll(".opt").forEach(op=>{
+        op.addEventListener("click",()=>toggleSel(q,op));
+      });
+    }
+    $("#btnSubmit").addEventListener("click",()=>submit(q));
+    $("#btnPrev").addEventListener("click",()=>go(-1));
+    $("#btnNext").addEventListener("click",()=>go(1));
+    $("#star").addEventListener("click",()=>toggleStar(q));
+    updatePBar();
+    $("#btnPrev").disabled = state.idx===0;
+  }
+  function niceId(id){ return id.replace('S','單').replace('M','複'); }
+
+  function toggleSel(q,op){
+    if(q._done) return;
+    const k=op.dataset.k;
+    if(q.type==="single"){
+      q._sel=[k];
+      $("#opts").querySelectorAll(".opt").forEach(x=>x.classList.toggle("sel",x.dataset.k===k));
+    }else{
+      const i=q._sel.indexOf(k);
+      if(i>=0){ q._sel.splice(i,1); op.classList.remove("sel"); }
+      else { q._sel.push(k); op.classList.add("sel"); }
+    }
+  }
+  function submit(q){
+    if(q._done){ go(1); return; }
+    if(!q._sel.length){ alert("請先選擇答案。"); return; }
+    q._done=true;
+    const correct = same(q._sel,q.ans);
+    // stats (count once per id)
+    if(!state.answered[q.id]){
+      state.answered[q.id]=true;
+      store.stat.done++;
+      if(correct){ store.stat.ok++; delete store.wrong[q.id]; }
+      else { store.stat.no++; store.wrong[q.id]=true; }
+      save(); renderStats();
+    }
+    lockAndShow(q);
+  }
+  function lockAndShow(q){
+    const correct=same(q._sel,q.ans);
+    $("#opts").querySelectorAll(".opt").forEach(op=>{
+      op.classList.add("locked");
+      const k=op.dataset.k;
+      const isAns=q.ans.includes(k), isSel=q._sel.includes(k);
+      op.classList.remove("sel");
+      if(isAns) op.classList.add("correct");
+      else if(isSel) op.classList.add("wrong");
+    });
+    const ex=$("#explain"); ex.classList.add("show");
+    ex.classList.toggle("ok",correct); ex.classList.toggle("no",!correct);
+    $("#exres").textContent = correct? "✓ 答對了" : "✗ 答錯了";
+    const ansStr="正解："+q.ans.join("、");
+    $("#exans").textContent=ansStr;
+    $("#exans2").textContent=ansStr + (q.type==="multi"?"（複選需全對）":"");
+    $("#extext").textContent=q.exp;
+    // turn submit into "next"
+    const bs=$("#btnSubmit"); bs.textContent="已作答"; bs.disabled=true; bs.classList.add("ghost");
+  }
+  function go(d){
+    const n=state.idx+d;
+    if(n<0) return;
+    if(n>=state.list.length){ finish(); return; }
+    state.idx=n; renderQ(); window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function toggleStar(q){
+    if(store.star[q.id]) delete store.star[q.id]; else store.star[q.id]=true;
+    save();
+    $("#star").classList.toggle("on",!!store.star[q.id]);
+  }
+  function finish(){
+    const total=state.list.length;
+    let done=0,ok=0;
+    state.list.forEach(q=>{ if(q._done){done++; if(same(q._sel,q.ans))ok++;} });
+    const rate= done? Math.round(ok/done*100):0;
+    $("#quiz").querySelector("#qcard").innerHTML=
+      '<div class="done"><h3>本回合完成 🎉</h3>'
+      +'<div class="big">'+rate+'%</div>'
+      +'<p>本回合作答 '+done+' 題，答對 '+ok+' 題，答錯 '+(done-ok)+' 題。</p>'
+      +'<div class="startbar" style="justify-content:center">'
+      +'<button class="btn gold" id="again">再練一回（重新洗題）</button>'
+      +'<button class="btn red" id="wrongOnly" '+(Object.keys(store.wrong).length?'':'disabled')+'>只練錯題</button>'
+      +'<button class="btn ghost" id="back">回設定</button></div></div>';
+    $("#again").addEventListener("click",()=>{ start(); });
+    $("#back").addEventListener("click",()=>{ $("#quiz").style.display="none"; $("#setup").style.display="block"; window.scrollTo({top:0,behavior:"smooth"}); });
+    const wo=$("#wrongOnly"); if(wo) wo.addEventListener("click",()=>{
+      // switch scope to wrong
+      state.scope="wrong";
+      document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle("on",x.dataset.scope==="wrong"));
+      start();
+    });
+    $("#pbar").style.width="100%";
+  }
+
+  function updatePBar(){ $("#pbar").style.width = ((state.idx)/state.list.length*100)+"%"; }
+  function renderStats(){
+    $("#st-done").textContent=store.stat.done;
+    $("#st-ok").textContent=store.stat.ok;
+    $("#st-no").textContent=store.stat.no;
+    $("#st-rate").textContent= store.stat.done? Math.round(store.stat.ok/store.stat.done*100)+"%":"—";
+    $("#st-pos").textContent = state.list.length? (state.idx+1)+"/"+state.list.length : "0/0";
+  }
+
+  // ---- keyboard ----
+  document.addEventListener("keydown",e=>{
+    if($("#quiz").style.display==="none") return;
+    const q=state.list[state.idx]; if(!q) return;
+    if(e.key>="1" && e.key<="5"){
+      const i=+e.key-1; const op=$("#opts")&&$("#opts").querySelectorAll(".opt")[i];
+      if(op && !q._done){ toggleSel(q,op); }
+    } else if(e.key==="Enter"){ e.preventDefault();
+      if(q._done) go(1); else submit(q);
+    } else if(e.key==="ArrowRight"){ go(1); }
+    else if(e.key==="ArrowLeft"){ go(-1); }
+    else if(e.key==="s"||e.key==="S"){ toggleStar(q); }
+  });
+
+  // ---- utils ----
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function same(a,b){ if(a.length!==b.length) return false; const s=[...a].sort().join(""); const t=[...b].sort().join(""); return s===t; }
+  function esc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+  renderStats();
+})();
+</script>
+</body>
+</html>

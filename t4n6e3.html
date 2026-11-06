@@ -1,0 +1,4995 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>數位金融業務 · 互動題庫練習（116 九升十）</title>
+<style>
+:root{
+  --navy:#1a3a5c; --navy2:#24507a; --red:#c53030; --gold:#c9a227;
+  --green:#2f855a; --cream:#faf7f2; --card:#ffffff; --line:#e3dccf;
+  --ink:#22303c; --muted:#6b7684;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Microsoft JhengHei","PingFang TC","Heiti TC",system-ui,sans-serif;
+  background:var(--cream); color:var(--ink); font-size:16.5px; line-height:1.7;
+  -webkit-text-size-adjust:100%;
+}
+header{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff; padding:22px 20px 18px; position:sticky; top:0; z-index:40;
+  box-shadow:0 2px 10px rgba(0,0,0,.18);
+}
+.h-wrap{max-width:920px;margin:0 auto}
+.badge{display:inline-block;background:var(--gold);color:#3a2c00;font-weight:700;
+  font-size:12.5px;letter-spacing:1px;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+h1{margin:0;font-size:23px;font-weight:800;letter-spacing:.5px}
+.sub{margin:4px 0 0;font-size:13.5px;color:#d9e4f0;opacity:.95}
+.stats{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;padding:6px 12px;font-size:13px;min-width:76px}
+.stat b{display:block;font-size:19px;font-weight:800;line-height:1.2}
+.stat.correct b{color:#9be6bd} .stat.wrong b{color:#ffb4b0} .stat.rate b{color:var(--gold)}
+
+main{max-width:920px;margin:0 auto;padding:16px 16px 60px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 16px 14px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.panel h2{margin:0 0 10px;font-size:15px;color:var(--navy);font-weight:800;
+  border-left:4px solid var(--gold);padding-left:9px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;align-items:center}
+.row .lbl{font-size:13px;color:var(--muted);min-width:56px}
+.chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);
+  padding:5px 12px;border-radius:20px;font-size:13.5px;cursor:pointer;user-select:none;
+  transition:.12s}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.sm{padding:4px 10px;font-size:12.5px}
+select,.btn{font-family:inherit}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:10px;
+  padding:9px 16px;font-size:14.5px;font-weight:700;cursor:pointer;transition:.12s}
+.btn:hover{background:var(--navy2)}
+.btn.gold{background:var(--gold);color:#3a2c00}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.red{background:var(--red)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.startbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+
+/* progress */
+.progress{height:8px;background:#eee4d4;border-radius:6px;overflow:hidden;margin:2px 0 14px}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#e0be47);width:0;transition:.3s}
+
+/* question card */
+.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.qmeta{font-size:12.5px;color:var(--muted)}
+.qtag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:12px;margin-right:6px}
+.qtag.single{background:#e7eff7;color:var(--navy)}
+.qtag.multi{background:#fbeaea;color:var(--red)}
+.qtag.sec{background:#f3ecd8;color:#7a5c00}
+.star{cursor:pointer;font-size:20px;color:#cfc6b3;line-height:1;user-select:none}
+.star.on{color:var(--gold)}
+.qstem{font-size:18px;font-weight:700;color:var(--navy);margin:6px 0 14px;line-height:1.6}
+.qstem .num{color:var(--gold);font-weight:800;margin-right:6px}
+
+.opt{display:flex;gap:11px;align-items:flex-start;border:1.6px solid var(--line);
+  background:#fff;border-radius:11px;padding:11px 13px;margin-bottom:9px;cursor:pointer;transition:.12s}
+.opt:hover{border-color:var(--gold);background:#fffdf6}
+.opt .mk{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid #c7bfae;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13.5px;color:var(--navy)}
+.opt.multi .mk{border-radius:7px}
+.opt.sel{border-color:var(--navy);background:#f2f7fc}
+.opt.sel .mk{background:var(--navy);color:#fff;border-color:var(--navy)}
+.opt .ot{flex:1;font-size:15.5px;line-height:1.6}
+.opt.correct{border-color:var(--green);background:#eefaf2}
+.opt.correct .mk{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.wrong{border-color:var(--red);background:#fdecec}
+.opt.wrong .mk{background:var(--red);color:#fff;border-color:var(--red)}
+.opt.locked{cursor:default}
+.opt.locked:hover{background:inherit}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.nav-spacer{flex:1}
+
+/* explanation */
+.explain{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--line);display:none}
+.explain.show{display:block}
+.explain .bar{padding:8px 14px;font-weight:800;font-size:14.5px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.explain.ok .bar{background:var(--green)}
+.explain.no .bar{background:var(--red)}
+.explain .body{background:#fbf8f1;padding:13px 15px;font-size:15px;line-height:1.75}
+.explain .ans{font-weight:800;color:var(--navy)}
+.explain .body .lead{display:inline-block;background:var(--navy);color:#fff;font-size:12px;
+  padding:1px 8px;border-radius:10px;margin-right:8px;font-weight:700}
+
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.done{text-align:center;padding:30px 12px}
+.done h3{color:var(--navy);font-size:22px;margin:.2em 0}
+.done .big{font-size:44px;font-weight:800;color:var(--gold)}
+.footnote{font-size:12px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.7}
+.kbd{background:#efe9dc;border:1px solid #ddd3bf;border-radius:5px;padding:0 6px;font-size:12px;font-family:monospace}
+@media (max-width:720px){
+  body{font-size:16px}
+  h1{font-size:19px}
+  .qstem{font-size:16.5px}
+  .opt .ot{font-size:15px}
+  .stat{min-width:64px;padding:5px 9px}
+  .hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="h-wrap">
+    <span class="badge">116 · 九升十職等 · 數位金融</span>
+    <h1>數位金融業務 — 互動題庫練習</h1>
+    <p class="sub">單選 104 題　複選 54 題　共 158 題　·　選項每次自動打亂，作答後即時附解說</p>
+    <div class="stats">
+      <div class="stat"><b id="st-done">0</b>已作答</div>
+      <div class="stat correct"><b id="st-ok">0</b>答對</div>
+      <div class="stat wrong"><b id="st-no">0</b>答錯</div>
+      <div class="stat rate"><b id="st-rate">—</b>正確率</div>
+      <div class="stat"><b id="st-pos">0/0</b>進度</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Setup panel -->
+  <div class="panel" id="setup">
+    <h2>練習設定</h2>
+    <div class="row">
+      <span class="lbl">題型</span>
+      <span class="chip on" data-type="all">全部</span>
+      <span class="chip" data-type="single">單選</span>
+      <span class="chip" data-type="multi">複選</span>
+    </div>
+    <div class="row">
+      <span class="lbl">範圍</span>
+      <span class="chip on" data-scope="all">全部題目</span>
+      <span class="chip" data-scope="wrong">只練錯題</span>
+      <span class="chip" data-scope="star">只練標記</span>
+    </div>
+    <div class="row">
+      <span class="lbl">出題</span>
+      <span class="chip on" data-order="shuffle">隨機洗題</span>
+      <span class="chip" data-order="seq">依序</span>
+      <span class="chip on" data-optshuffle="1" id="optShufChip">選項打亂：開</span>
+    </div>
+    <div class="row" id="secRow">
+      <span class="lbl">主題</span>
+      <span class="chip sm on" data-sec="__all">全部主題</span>
+    </div>
+    <div class="startbar">
+      <button class="btn gold" id="btnStart">開始練習 ▶</button>
+      <button class="btn ghost" id="btnResetStats">清除作答紀錄</button>
+    </div>
+    <div class="footnote" style="text-align:left;margin-top:12px">
+      快捷鍵：<span class="kbd">1</span>~<span class="kbd">5</span> 選項　<span class="kbd">Enter</span> 送出／下一題　<span class="kbd">←</span> <span class="kbd">→</span> 上下題　<span class="kbd">S</span> 標記
+    </div>
+  </div>
+
+  <!-- Quiz area -->
+  <div id="quiz" style="display:none">
+    <div class="progress"><i id="pbar"></i></div>
+    <div class="panel" id="qcard"></div>
+  </div>
+</main>
+
+<script>
+const QUESTIONS = [
+ {
+  "id": "S1",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網由櫃檯發給之使用者密碼單多久有效?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "永久"
+   },
+   {
+    "k": "B",
+    "t": "六個月"
+   },
+   {
+    "k": "C",
+    "t": "一年"
+   },
+   {
+    "k": "D",
+    "t": "一個月"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）一個月。"
+ },
+ {
+  "id": "S2",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "於全球金融網換匯累計結匯金額逾等值新臺幣五十萬元者,需使用何種安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "電子憑證"
+   },
+   {
+    "k": "B",
+    "t": "不用"
+   },
+   {
+    "k": "C",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "D",
+    "t": "金融卡"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）電子憑證。"
+ },
+ {
+  "id": "S3",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網涉及新臺幣換匯之交易,系統將自動併計臨櫃及電子化通路結匯交易金額,如逾?等值新臺幣,依規定全部交易皆須申報,需注意應依系統指示,向客戶徵提未申報交易之申報書。",
+  "opts": [
+   {
+    "k": "A",
+    "t": "五十萬元"
+   },
+   {
+    "k": "B",
+    "t": "六十萬元"
+   },
+   {
+    "k": "C",
+    "t": "七十萬元"
+   },
+   {
+    "k": "D",
+    "t": "八十萬元"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）五十萬元。"
+ },
+ {
+  "id": "S4",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網之管理主管及管理經辦原則上僅得於線上維護、設定內部使用者各項權限,若需增加交易權限該如何辦理?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "得於申請書上另外加蓋原留印鑑,聲明公司已審慎評估,並充分瞭解交易風險後,申請可兼具交易權限"
+   },
+   {
+    "k": "B",
+    "t": "口頭告知"
+   },
+   {
+    "k": "C",
+    "t": "簽切結書"
+   },
+   {
+    "k": "D",
+    "t": "無此功能"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）得於申請書上另外加蓋原留印鑑,聲明公司已審慎評估,並充分瞭解交易風險後,申請可兼具交易權限。"
+ },
+ {
+  "id": "S5",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網之登入密碼錯誤處理原則?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "累積連續錯誤三次即鎖住"
+   },
+   {
+    "k": "B",
+    "t": "累積錯誤十次即鎖住"
+   },
+   {
+    "k": "C",
+    "t": "沒控管"
+   },
+   {
+    "k": "D",
+    "t": "錯誤一次即鎖住"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）累積連續錯誤三次即鎖住。"
+ },
+ {
+  "id": "S6",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網使用者之登入密碼錯誤被鎖住,何者一定要由臨櫃重設?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "放行人員"
+   },
+   {
+    "k": "B",
+    "t": "編輯人員"
+   },
+   {
+    "k": "C",
+    "t": "核定人員"
+   },
+   {
+    "k": "D",
+    "t": "查詢人員"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）放行人員。"
+ },
+ {
+  "id": "S7",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網之XML電子憑證密碼確實已忘記者該如何處理?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "換晶片卡重新申請"
+   },
+   {
+    "k": "B",
+    "t": "自己重設密碼"
+   },
+   {
+    "k": "C",
+    "t": "請分行同仁查詢密碼"
+   },
+   {
+    "k": "D",
+    "t": "請分行同仁重設密碼"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）換晶片卡重新申請。"
+ },
+ {
+  "id": "S8",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "何者不是全球金融網的安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "SSL"
+   },
+   {
+    "k": "B",
+    "t": "電子憑證+ACS載具"
+   },
+   {
+    "k": "C",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "D",
+    "t": "行動安全碼"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）SSL。"
+ },
+ {
+  "id": "S9",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網申請時已同意可線上設定約定轉入帳號,客戶如欲自行完成新增約定轉入帳號需何種安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "電子憑證"
+   },
+   {
+    "k": "B",
+    "t": "簡訊驗證碼"
+   },
+   {
+    "k": "C",
+    "t": "金融卡"
+   },
+   {
+    "k": "D",
+    "t": "無此功能"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）電子憑證。"
+ },
+ {
+  "id": "S10",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "台灣地區分行客戶須透過全球金融網於線上向誰申請核發憑證?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "臺灣網路認證股份有限公司"
+   },
+   {
+    "k": "B",
+    "t": "中國金融認證中心"
+   },
+   {
+    "k": "C",
+    "t": "高雄市政府"
+   },
+   {
+    "k": "D",
+    "t": "台北市政府"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）臺灣網路認證股份有限公司。"
+ },
+ {
+  "id": "S11",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融網行動安全碼單筆/每日之臺幣非約定轉帳最高限額為多少?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "200萬/200萬"
+   },
+   {
+    "k": "B",
+    "t": "5萬/10萬"
+   },
+   {
+    "k": "C",
+    "t": "10萬/20萬"
+   },
+   {
+    "k": "D",
+    "t": "30萬/50萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）30萬/50萬。"
+ },
+ {
+  "id": "S12",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列授權關係,何者不得申請全球金融網交易授權戶?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "一般股東帳戶授權給公司"
+   },
+   {
+    "k": "B",
+    "t": "授權公司董事長與被授權公司董事長為夫妻"
+   },
+   {
+    "k": "C",
+    "t": "公司董事長帳戶授權給公司"
+   },
+   {
+    "k": "D",
+    "t": "授權公司與被授權公司董事有半數以上相同"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）一般股東帳戶授權給公司。"
+ },
+ {
+  "id": "S13",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者非全球金融網「行動安全碼非約定轉帳功能」需加強申請之管控對象?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "未申請管理中心"
+   },
+   {
+    "k": "B",
+    "t": "交易簽核流程不分層級"
+   },
+   {
+    "k": "C",
+    "t": "交易簽核流程分層級"
+   },
+   {
+    "k": "D",
+    "t": "交易簽核流程分層級且可獨自一人完成交易"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）交易簽核流程分層級。"
+ },
+ {
+  "id": "S14",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何種客戶的全球金融網非約定轉帳功能會被系統自動關閉?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "交易簽核流程不分層級之客戶,於同一行動裝置重新啟用行動安全碼時"
+   },
+   {
+    "k": "B",
+    "t": "交易簽核流程分層級之客戶,於同一行動裝置重新啟用行動安全碼時"
+   },
+   {
+    "k": "C",
+    "t": "交易簽核流程分層級之客戶,更換行動裝置啟用行動安全碼時"
+   },
+   {
+    "k": "D",
+    "t": "交易簽核流程不分層級之客戶,更換行動裝置啟用行動安全碼時"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）交易簽核流程不分層級之客戶,更換行動裝置啟用行動安全碼時。"
+ },
+ {
+  "id": "S15",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者身分之客戶不得申請全球金融網?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "自然人"
+   },
+   {
+    "k": "B",
+    "t": "法人"
+   },
+   {
+    "k": "C",
+    "t": "非法人團體"
+   },
+   {
+    "k": "D",
+    "t": "數金專員"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）自然人。"
+ },
+ {
+  "id": "S16",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者為啟用行動安全碼收不到簡訊驗證碼時,需向客戶確認之事項?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "向客戶確認臨櫃約定的手機門號及該手機門號區碼"
+   },
+   {
+    "k": "B",
+    "t": "請客戶向所屬電信公司確認門號可接收商業簡訊以及是否有設定黑名單"
+   },
+   {
+    "k": "C",
+    "t": "確認客戶手機是否有內建黑名單過濾功能、安裝過濾來電軟體,如whoscall、防毒軟體等,將本行簡訊發送號碼加入可正常接收名單"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S17",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全球金融行動網(行動版APP)不得使用以下何種安控機制進行交易放行?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "B",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "C",
+    "t": "電子憑證"
+   },
+   {
+    "k": "D",
+    "t": "以上皆可使用",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆可使用。"
+ },
+ {
+  "id": "S18",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之合作國家別為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "中國大陸"
+   },
+   {
+    "k": "B",
+    "t": "香港"
+   },
+   {
+    "k": "C",
+    "t": "新加坡"
+   },
+   {
+    "k": "D",
+    "t": "越南"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）中國大陸。"
+ },
+ {
+  "id": "S19",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之收款模式為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "線上與線下"
+   },
+   {
+    "k": "B",
+    "t": "只有線上"
+   },
+   {
+    "k": "C",
+    "t": "只有線下"
+   },
+   {
+    "k": "D",
+    "t": "只有匯款功能"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）線上與線下。"
+ },
+ {
+  "id": "S20",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之付款人身份別為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "具中國大陸身分之個人"
+   },
+   {
+    "k": "B",
+    "t": "已在中國大陸註冊之公司"
+   },
+   {
+    "k": "C",
+    "t": "已在中國大陸開立銀行帳戶之香港人"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）具中國大陸身分之個人。"
+ },
+ {
+  "id": "S21",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]在撥付新台幣下,匯率風險由誰承擔?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "店家"
+   },
+   {
+    "k": "B",
+    "t": "付款人"
+   },
+   {
+    "k": "C",
+    "t": "銀行"
+   },
+   {
+    "k": "D",
+    "t": "合作機構"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）銀行。"
+ },
+ {
+  "id": "S22",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之店家身份別,不包括下列何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "政府機關"
+   },
+   {
+    "k": "B",
+    "t": "公司"
+   },
+   {
+    "k": "C",
+    "t": "團體"
+   },
+   {
+    "k": "D",
+    "t": "個人"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）個人。"
+ },
+ {
+  "id": "S23",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "店家向本行申辦兆豐支付兩岸購[跨境代收業務],其須負擔何種費用?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "每筆交易手續費"
+   },
+   {
+    "k": "B",
+    "t": "月租費"
+   },
+   {
+    "k": "C",
+    "t": "系統使用費"
+   },
+   {
+    "k": "D",
+    "t": "免費"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）每筆交易手續費。"
+ },
+ {
+  "id": "S24",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "店家向本行申辦兆豐支付兩岸購[跨境代收業務] ,其相關的交易單據至少需保留多久?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "二年"
+   },
+   {
+    "k": "B",
+    "t": "五年"
+   },
+   {
+    "k": "C",
+    "t": "一年"
+   },
+   {
+    "k": "D",
+    "t": "六年"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）五年。"
+ },
+ {
+  "id": "S25",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之本行撥款予店家是採用何種方式?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "匯款至他行帳戶"
+   },
+   {
+    "k": "B",
+    "t": "以swift方式電匯至店家帳戶"
+   },
+   {
+    "k": "C",
+    "t": "開支票予店家"
+   },
+   {
+    "k": "D",
+    "t": "轉入店家在本行開立之帳戶"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）轉入店家在本行開立之帳戶。"
+ },
+ {
+  "id": "S26",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅平台核印作業依規定核印行須於多少個銀行營業日內回覆結果檔?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "五日"
+   },
+   {
+    "k": "B",
+    "t": "十五日"
+   },
+   {
+    "k": "C",
+    "t": "十日"
+   },
+   {
+    "k": "D",
+    "t": "七日"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）七日。"
+ },
+ {
+  "id": "S27",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "委託單位每日可於全國性繳費稅業務系統進行扣款次數為:",
+  "opts": [
+   {
+    "k": "A",
+    "t": "一次"
+   },
+   {
+    "k": "B",
+    "t": "二次"
+   },
+   {
+    "k": "C",
+    "t": "五次"
+   },
+   {
+    "k": "D",
+    "t": "沒有限制"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）沒有限制。"
+ },
+ {
+  "id": "S28",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列金融機構何者沒有加入全國性繳費稅約定授權扣款?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "中國信託"
+   },
+   {
+    "k": "B",
+    "t": "華南銀行"
+   },
+   {
+    "k": "C",
+    "t": "兆豐銀行"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）中國信託。"
+ },
+ {
+  "id": "S29",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者非為全國性繳費稅可承作之繳費類別?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "人力仲介費"
+   },
+   {
+    "k": "B",
+    "t": "物業管理費"
+   },
+   {
+    "k": "C",
+    "t": "政府規費"
+   },
+   {
+    "k": "D",
+    "t": "補習班學費"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）補習班學費。"
+ },
+ {
+  "id": "S30",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅非約定繳費(ID+ACCOUNT)限額為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "單筆200萬、每日300萬"
+   },
+   {
+    "k": "B",
+    "t": "單筆500萬、每日500萬"
+   },
+   {
+    "k": "C",
+    "t": "單筆500萬、每日1000萬"
+   },
+   {
+    "k": "D",
+    "t": "單筆10萬、每日20萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）單筆10萬、每日20萬。"
+ },
+ {
+  "id": "S31",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅核印費用依規定須向委託單位收多少元?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "20元"
+   },
+   {
+    "k": "B",
+    "t": "30元"
+   },
+   {
+    "k": "C",
+    "t": "40元"
+   },
+   {
+    "k": "D",
+    "t": "50元"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）50元。"
+ },
+ {
+  "id": "S32",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅委託單位之單筆授權扣款額度為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "100萬"
+   },
+   {
+    "k": "B",
+    "t": "300萬"
+   },
+   {
+    "k": "C",
+    "t": "400萬"
+   },
+   {
+    "k": "D",
+    "t": "500萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）500萬。"
+ },
+ {
+  "id": "S33",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅人力仲介業務單日扣款限額為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "100萬"
+   },
+   {
+    "k": "B",
+    "t": "300萬"
+   },
+   {
+    "k": "C",
+    "t": "400萬"
+   },
+   {
+    "k": "D",
+    "t": "500萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）500萬。"
+ },
+ {
+  "id": "S34",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅基金單日累計扣款限額為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "300萬"
+   },
+   {
+    "k": "B",
+    "t": "500萬"
+   },
+   {
+    "k": "C",
+    "t": "1000萬"
+   },
+   {
+    "k": "D",
+    "t": "3000萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）3000萬。"
+ },
+ {
+  "id": "S35",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "全國繳費稅何種業務僅限B2B,且僅能以授權扣款方式處理?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "信用卡"
+   },
+   {
+    "k": "B",
+    "t": "基金"
+   },
+   {
+    "k": "C",
+    "t": "貨款"
+   },
+   {
+    "k": "D",
+    "t": "保險"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）貨款。"
+ },
+ {
+  "id": "S36",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "委託單位申請虛擬帳號代收一定需在哪一分行開戶?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "無限制"
+   },
+   {
+    "k": "B",
+    "t": "國外部"
+   },
+   {
+    "k": "C",
+    "t": "金控總部分行"
+   },
+   {
+    "k": "D",
+    "t": "代理行(原開戶行)"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）代理行(原開戶行)。"
+ },
+ {
+  "id": "S37",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "目前兆豐銀行所提供的代收收款管道有以下何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "超商代收"
+   },
+   {
+    "k": "B",
+    "t": "全國性繳費稅"
+   },
+   {
+    "k": "C",
+    "t": "網路ATM"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S38",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "可以臨櫃匯款的虛擬帳號長度為幾碼?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "13碼"
+   },
+   {
+    "k": "B",
+    "t": "11碼"
+   },
+   {
+    "k": "C",
+    "t": "16碼"
+   },
+   {
+    "k": "D",
+    "t": "14碼"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）14碼。"
+ },
+ {
+  "id": "S39",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "委託單位申請網路代收平台,代理行於BTT交易0870建檔需注意事項為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "「下傳網路代收平台」選項要打勾"
+   },
+   {
+    "k": "B",
+    "t": "不用注意"
+   },
+   {
+    "k": "C",
+    "t": "「我要用網路代收平台」選項要打勾"
+   },
+   {
+    "k": "D",
+    "t": "要有檢查碼"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）「下傳網路代收平台」選項要打勾。"
+ },
+ {
+  "id": "S40",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "代理行應針對申請網路代收平台之委託單位採取下列事前管理措施?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "指派專人負責委託單位之申請及審核作業"
+   },
+   {
+    "k": "B",
+    "t": "不用任何措施"
+   },
+   {
+    "k": "C",
+    "t": "電話詢問"
+   },
+   {
+    "k": "D",
+    "t": "怕得罪客戶不敢調查"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）指派專人負責委託單位之申請及審核作業。"
+ },
+ {
+  "id": "S41",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "委託單位申請本行電子代收功能之網路代收平台,本行與委託單位往來相關文件及交易紀錄憑證,至少保存幾年?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "五"
+   },
+   {
+    "k": "B",
+    "t": "十"
+   },
+   {
+    "k": "C",
+    "t": "十一"
+   },
+   {
+    "k": "D",
+    "t": "十八"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）五。"
+ },
+ {
+  "id": "S42",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "有關網路代收平台,其帳單代收提供哪些繳款管道?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "虛擬帳號轉帳(匯款)"
+   },
+   {
+    "k": "B",
+    "t": "超商"
+   },
+   {
+    "k": "C",
+    "t": "台灣Pay QR Code"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S43",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "有關網路代收平台,其自動檢核疑似異常交易機制為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "單筆代收金額達新臺幣10萬元(含)以上"
+   },
+   {
+    "k": "B",
+    "t": "每日累計代收金額達新臺幣50萬元(含)以上"
+   },
+   {
+    "k": "C",
+    "t": "繳款人、委託單位及每筆交易金額相同且達新臺幣500元(含)以上,單日交易次數達5次(含)以上"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S44",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "現行紙本函證痛點為?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "回覆格式品質不一"
+   },
+   {
+    "k": "B",
+    "t": "人工填覆易資料錯誤"
+   },
+   {
+    "k": "C",
+    "t": "以上皆是",
+    "pin": true
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）以上皆是。"
+ },
+ {
+  "id": "S45",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "本行在「金融區塊鏈函證服務」業務中擔任何者角色?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "業務代理行"
+   },
+   {
+    "k": "B",
+    "t": "回覆銀行"
+   },
+   {
+    "k": "C",
+    "t": "以上皆是",
+    "pin": true
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）以上皆是。"
+ },
+ {
+  "id": "S46",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "會計師事務所使用「金融區塊鏈資訊查詢系統」的安控設備為?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "會計師之健保卡"
+   },
+   {
+    "k": "B",
+    "t": "會計師之自然人憑證"
+   },
+   {
+    "k": "C",
+    "t": "向臺網公司申請之企業金融資訊查詢系統憑證"
+   },
+   {
+    "k": "D",
+    "t": "兆豐銀行企業網銀憑證"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）向臺網公司申請之企業金融資訊查詢系統憑證。"
+ },
+ {
+  "id": "S47",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "「金融區塊鏈函證」企業電子簽章授權方式可使用下列何種憑證?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "工商憑證、證期共用憑證"
+   },
+   {
+    "k": "B",
+    "t": "負責人之健保卡"
+   },
+   {
+    "k": "C",
+    "t": "負責人之自然人憑證"
+   },
+   {
+    "k": "D",
+    "t": "負責人之金融卡"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）工商憑證、證期共用憑證。"
+ },
+ {
+  "id": "S48",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "會計師事務所於「金融區塊鏈資訊查詢系統」何時需使用臺網憑證放行?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "僅發送詢證函"
+   },
+   {
+    "k": "B",
+    "t": "僅接收詢證函"
+   },
+   {
+    "k": "C",
+    "t": "發送授權確認"
+   },
+   {
+    "k": "D",
+    "t": "發送及接收詢證函"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）發送及接收詢證函。"
+ },
+ {
+  "id": "S49",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "會計師事務所申辦「金融區塊鏈函證服務」業務優點",
+  "opts": [
+   {
+    "k": "A",
+    "t": "節省郵寄及函證費用"
+   },
+   {
+    "k": "B",
+    "t": "回覆行回函格式統一"
+   },
+   {
+    "k": "C",
+    "t": "以上皆是",
+    "pin": true
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）以上皆是。"
+ },
+ {
+  "id": "S50",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "「金融區塊鏈函證服務」之受查企業往來銀行如非本行帳戶時,應檢附哪些文件辦理企業約定授權申請呢?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "紙本企業授權書"
+   },
+   {
+    "k": "B",
+    "t": "受查企業上線清單"
+   },
+   {
+    "k": "C",
+    "t": "企業授權遞交清單(財金)"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S51",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "金融區塊鏈函證服務應用範圍包括下列哪些?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "會計師函證"
+   },
+   {
+    "k": "B",
+    "t": "企業查核函證"
+   },
+   {
+    "k": "C",
+    "t": "票券函證"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S52",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "會計師事務所申辦「金融區塊鏈函證服務」之憑證,需提供下列何者文件送交業務代理分行?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "憑證卡申請書"
+   },
+   {
+    "k": "B",
+    "t": "憑證費用匯款證明"
+   },
+   {
+    "k": "C",
+    "t": "統一編配通知書"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S53",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "「金融區塊鏈函證服務」之臺網憑證每年收取多少費用?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "200元"
+   },
+   {
+    "k": "B",
+    "t": "500元"
+   },
+   {
+    "k": "C",
+    "t": "1000元"
+   },
+   {
+    "k": "D",
+    "t": "2000元"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）200元。"
+ },
+ {
+  "id": "S54",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "以下哪些查核單位可向銀行申請金融區塊鏈函證服務?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "由受查企業委託辦理金融機構往來函證作業之會計師事務所及其查核會計師"
+   },
+   {
+    "k": "B",
+    "t": "經受查企業指定辦理內部查(稽)核之單位"
+   },
+   {
+    "k": "C",
+    "t": "以上皆可",
+    "pin": true
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）以上皆可。"
+ },
+ {
+  "id": "S55",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "哪些瀏覽器是經過本行測試,確定使用網路銀行各項服務都可正常操作?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "EDGE"
+   },
+   {
+    "k": "B",
+    "t": "Chrome"
+   },
+   {
+    "k": "C",
+    "t": "以上皆是",
+    "pin": true
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）以上皆是。"
+ },
+ {
+  "id": "S56",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "於臨櫃申請行動銀行約定轉入帳號要填寫何種申請書?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "行動銀行專屬申請書"
+   },
+   {
+    "k": "B",
+    "t": "電話銀行申請書"
+   },
+   {
+    "k": "C",
+    "t": "個人網路銀行/行動銀行業務申請書"
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）個人網路銀行/行動銀行業務申請書。"
+ },
+ {
+  "id": "S57",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "使用網路銀行及行動銀行的預約轉帳服務,其預約付款交易期限可長達多久?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "6個月"
+   },
+   {
+    "k": "B",
+    "t": "9個月"
+   },
+   {
+    "k": "C",
+    "t": "1年"
+   },
+   {
+    "k": "D",
+    "t": "2年"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）1年。"
+ },
+ {
+  "id": "S58",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "網路銀行多久未登入會強迫客戶密碼變更?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "6個月"
+   },
+   {
+    "k": "B",
+    "t": "9個月"
+   },
+   {
+    "k": "C",
+    "t": "1年"
+   },
+   {
+    "k": "D",
+    "t": "2年"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）1年。"
+ },
+ {
+  "id": "S59",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "本行網路銀行未提供下列哪些服務?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "申請開立信託帳戶"
+   },
+   {
+    "k": "B",
+    "t": "申請存款餘額證明"
+   },
+   {
+    "k": "C",
+    "t": "線上設定約定轉入帳號"
+   },
+   {
+    "k": "D",
+    "t": "申請財金公司國內消費扣款功能(Smart Pay)及金融卡跨國交易功能"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）申請存款餘額證明。"
+ },
+ {
+  "id": "S60",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "使用網路銀行的台幣服務線上設定約定轉入帳號功能,不能使用何種安控機制設定?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "動態密碼卡(e碼寶貝)"
+   },
+   {
+    "k": "B",
+    "t": "電子金融憑證(FXML)"
+   },
+   {
+    "k": "C",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "D",
+    "t": "晶片金融卡"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）晶片金融卡。"
+ },
+ {
+  "id": "S61",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "客戶申請信用卡時,忘記附上財力證明文件,可透過何種管道補件?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "網路ATM"
+   },
+   {
+    "k": "B",
+    "t": "行動銀行"
+   },
+   {
+    "k": "C",
+    "t": "網路銀行"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）行動銀行。"
+ },
+ {
+  "id": "S62",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "網路銀行非約定帳號功能之開啟管道及轉出額度,下列哪個配對是正確的?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "臨櫃申請,限額為每筆5萬/每日10萬/每月20萬"
+   },
+   {
+    "k": "B",
+    "t": "雲端櫃台申請,限額為每筆10萬/每日10萬/每月20萬"
+   },
+   {
+    "k": "C",
+    "t": "臨櫃申請,限額為每筆10萬/每日20萬/每月100萬"
+   },
+   {
+    "k": "D",
+    "t": "雲端櫃台申請,限額為每筆10萬/每日20萬/每月100萬"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）臨櫃申請,限額為每筆10萬/每日20萬/每月100萬。"
+ },
+ {
+  "id": "S63",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "客戶在臨櫃購買外幣,單筆結匯金額超過新台幣50萬需要申報,如果改使用網路銀行結匯,則需搭配哪種安控才可以交易?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "B",
+    "t": "電子金融憑證"
+   },
+   {
+    "k": "C",
+    "t": "晶片金融卡"
+   },
+   {
+    "k": "D",
+    "t": "行動安全碼"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）電子金融憑證。"
+ },
+ {
+  "id": "S64",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "透過網路銀行可以查詢到部份海外分行之帳戶餘額,不包含下列哪一個分行?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "阿姆斯特丹分行"
+   },
+   {
+    "k": "B",
+    "t": "紐約分行"
+   },
+   {
+    "k": "C",
+    "t": "新加坡分行"
+   },
+   {
+    "k": "D",
+    "t": "香港分行"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）阿姆斯特丹分行。"
+ },
+ {
+  "id": "S65",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "網銀客戶交易搭配行動安全碼,可執行下列何種交易?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "台幣非約定轉帳"
+   },
+   {
+    "k": "B",
+    "t": "線上設定約定轉入帳號"
+   },
+   {
+    "k": "C",
+    "t": "基本資料設定"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S66",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "關於網路ATM下列何者為非?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "網路ATM可基金下單"
+   },
+   {
+    "k": "B",
+    "t": "網路ATM可重設網路銀行密碼"
+   },
+   {
+    "k": "C",
+    "t": "網路ATM可辦理繳稅費"
+   },
+   {
+    "k": "D",
+    "t": "網路ATM可設定Email通知"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）網路ATM可基金下單。"
+ },
+ {
+  "id": "S67",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "關於網路ATM的描述下列何者為非?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "與實體ATM大部分功能相同"
+   },
+   {
+    "k": "B",
+    "t": "可與代收業務結合"
+   },
+   {
+    "k": "C",
+    "t": "交易時需使用XML憑證"
+   },
+   {
+    "k": "D",
+    "t": "與網路銀行部分功能相同"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）交易時需使用XML憑證。"
+ },
+ {
+  "id": "S68",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "使用網路ATM做非約定轉帳之預設單筆/每日預設限額為多少?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "10萬/20萬"
+   },
+   {
+    "k": "B",
+    "t": "100萬/200萬"
+   },
+   {
+    "k": "C",
+    "t": "3萬/3萬"
+   },
+   {
+    "k": "D",
+    "t": "10萬/12萬"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）3萬/3萬。"
+ },
+ {
+  "id": "S69",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "使用網路ATM做約定轉帳之單筆/每日限額為多少?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "10萬/20萬"
+   },
+   {
+    "k": "B",
+    "t": "12萬/20萬"
+   },
+   {
+    "k": "C",
+    "t": "200萬/300萬"
+   },
+   {
+    "k": "D",
+    "t": "10萬/10萬"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）200萬/300萬。"
+ },
+ {
+  "id": "S70",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "請問網路ATM沒有下列何種功能?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "繳費/繳稅"
+   },
+   {
+    "k": "B",
+    "t": "開立定存"
+   },
+   {
+    "k": "C",
+    "t": "外幣服務"
+   },
+   {
+    "k": "D",
+    "t": "修改留存於本行的手機號碼"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）外幣服務。"
+ },
+ {
+  "id": "S71",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台入口放置於何處?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "兆豐官方網站"
+   },
+   {
+    "k": "B",
+    "t": "行員網站"
+   },
+   {
+    "k": "C",
+    "t": "網路ATM"
+   },
+   {
+    "k": "D",
+    "t": "全球金融網"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）兆豐官方網站。"
+ },
+ {
+  "id": "S72",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台預填表單服務不包括以下何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "台幣存款"
+   },
+   {
+    "k": "B",
+    "t": "台幣提款"
+   },
+   {
+    "k": "C",
+    "t": "台幣匯款"
+   },
+   {
+    "k": "D",
+    "t": "印鑑驗印"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）印鑑驗印。"
+ },
+ {
+  "id": "S73",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何項服務無法於雲端櫃台上操作?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "預填開戶"
+   },
+   {
+    "k": "B",
+    "t": "結清台幣帳戶"
+   },
+   {
+    "k": "C",
+    "t": "線上申請信用卡"
+   },
+   {
+    "k": "D",
+    "t": "結清外幣帳戶"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）結清外幣帳戶。"
+ },
+ {
+  "id": "S74",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "欲辦理雲端櫃台內之線上結清台幣戶服務,新台幣活(儲)之餘額不能高於新台幣幾萬元?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "2萬"
+   },
+   {
+    "k": "B",
+    "t": "3萬"
+   },
+   {
+    "k": "C",
+    "t": "4萬"
+   },
+   {
+    "k": "D",
+    "t": "5萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）5萬。"
+ },
+ {
+  "id": "S75",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台內申請金融卡雲支付非約定轉帳功能,經申請後,其每筆最高轉帳金額為多少?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "2萬"
+   },
+   {
+    "k": "B",
+    "t": "3萬"
+   },
+   {
+    "k": "C",
+    "t": "4萬"
+   },
+   {
+    "k": "D",
+    "t": "5萬"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）3萬。"
+ },
+ {
+  "id": "S76",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "線上預填臺幣存款單的有效期限為幾個日曆日?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "3天"
+   },
+   {
+    "k": "B",
+    "t": "5天"
+   },
+   {
+    "k": "C",
+    "t": "7天"
+   },
+   {
+    "k": "D",
+    "t": "14天"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）7天。"
+ },
+ {
+  "id": "S77",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台線上預填表單無提供何種申請項目?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "臺幣存款單"
+   },
+   {
+    "k": "B",
+    "t": "自行臺幣轉帳單"
+   },
+   {
+    "k": "C",
+    "t": "國內跨行臺幣匯款單"
+   },
+   {
+    "k": "D",
+    "t": "開發信用狀申請書"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）開發信用狀申請書。"
+ },
+ {
+  "id": "S78",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "線上預填表單之功能建置於哪個網頁/網站中?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "繳費服務網"
+   },
+   {
+    "k": "B",
+    "t": "雲端櫃台"
+   },
+   {
+    "k": "C",
+    "t": "網路銀行"
+   },
+   {
+    "k": "D",
+    "t": "行動銀行"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）雲端櫃台。"
+ },
+ {
+  "id": "S79",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台「線上取號」功能,同一組手機號碼每日限取號幾次?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "1次"
+   },
+   {
+    "k": "B",
+    "t": "5次"
+   },
+   {
+    "k": "C",
+    "t": "10次"
+   },
+   {
+    "k": "D",
+    "t": "15次"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）5次。"
+ },
+ {
+  "id": "S80",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台線上預填表單,BTT執行的交易代號為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "0110"
+   },
+   {
+    "k": "B",
+    "t": "0024"
+   },
+   {
+    "k": "C",
+    "t": "1230"
+   },
+   {
+    "k": "D",
+    "t": "1111"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）0110。"
+ },
+ {
+  "id": "S81",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "目前MegaLite數位存款帳戶申請資格為下列何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "本國國籍自然人(年滿七歲以上)"
+   },
+   {
+    "k": "B",
+    "t": "未持有居留證之外國人"
+   },
+   {
+    "k": "C",
+    "t": "7歲以下未成年人"
+   },
+   {
+    "k": "D",
+    "t": "持有居留證之外國人"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）本國國籍自然人(年滿七歲以上)。"
+ },
+ {
+  "id": "S82",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "未提升權限之數位存款帳戶可在臨櫃做以下何種交易?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "匯款"
+   },
+   {
+    "k": "B",
+    "t": "提款"
+   },
+   {
+    "k": "C",
+    "t": "國外匯款"
+   },
+   {
+    "k": "D",
+    "t": "存入現金"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）存入現金。"
+ },
+ {
+  "id": "S83",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "如何啟用透過MegaLite數位存款帳戶所申辦之金融卡?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "分行臨櫃啟用"
+   },
+   {
+    "k": "B",
+    "t": "直接插入ATM不需啟用"
+   },
+   {
+    "k": "C",
+    "t": "網路銀行啟用"
+   },
+   {
+    "k": "D",
+    "t": "透過本行雲端櫃台或ATM啟用"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）透過本行雲端櫃台或ATM啟用。"
+ },
+ {
+  "id": "S84",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者申請數位存款帳戶被退件後仍能重新申請?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "客戶為「受監護或輔助宣告」狀態"
+   },
+   {
+    "k": "B",
+    "t": "黑名單客戶"
+   },
+   {
+    "k": "C",
+    "t": "客戶填寫開戶資料與身份證上戶籍地址不一致"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）客戶填寫開戶資料與身份證上戶籍地址不一致。"
+ },
+ {
+  "id": "S85",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "數位存款帳戶以電子化管道繳稅業務單筆交易額度為多少?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "10萬"
+   },
+   {
+    "k": "B",
+    "t": "100萬"
+   },
+   {
+    "k": "C",
+    "t": "50萬"
+   },
+   {
+    "k": "D",
+    "t": "200萬"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）200萬。"
+ },
+ {
+  "id": "S86",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "未提升權限之數位存款帳戶無法承作下列何項業務?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "啟用行動銀行"
+   },
+   {
+    "k": "B",
+    "t": "繳稅"
+   },
+   {
+    "k": "C",
+    "t": "繳費"
+   },
+   {
+    "k": "D",
+    "t": "臨櫃提款"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）臨櫃提款。"
+ },
+ {
+  "id": "S87",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何種線上交易於個人網路銀行限以電子金融憑證(FXML)執行?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "非約定轉入帳戶轉帳"
+   },
+   {
+    "k": "B",
+    "t": "申請線上設定約定轉入帳戶功能"
+   },
+   {
+    "k": "C",
+    "t": "線上信用狀開狀申請"
+   },
+   {
+    "k": "D",
+    "t": "等值新台幣50萬元以上外匯交易"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）等值新台幣50萬元以上外匯交易。"
+ },
+ {
+  "id": "S88",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何種安控機制無法執行網路銀行、行動銀行非約定轉帳交易?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "E碼寶貝"
+   },
+   {
+    "k": "B",
+    "t": "電子金融憑證"
+   },
+   {
+    "k": "C",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "D",
+    "t": "晶片金融卡"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）晶片金融卡。"
+ },
+ {
+  "id": "S89",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何種安控機制無法用來驗證交易為客戶本人所為?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "Email"
+   },
+   {
+    "k": "B",
+    "t": "電子金融憑證"
+   },
+   {
+    "k": "C",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "D",
+    "t": "晶片金融卡"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）Email。"
+ },
+ {
+  "id": "S90",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "電子金融憑證(FXML)重要之特點為?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "加密以確保交易訊息隱密"
+   },
+   {
+    "k": "B",
+    "t": "對交易內容做電子簽章具備不可否認性"
+   },
+   {
+    "k": "C",
+    "t": "保護密碼不易被竊"
+   },
+   {
+    "k": "D",
+    "t": "維護連線穩定"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）對交易內容做電子簽章具備不可否認性。"
+ },
+ {
+  "id": "S91",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "本行官網為https://www.megabank.com.tw/,其中“https”之“s”涵義為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "Secure"
+   },
+   {
+    "k": "B",
+    "t": "Service"
+   },
+   {
+    "k": "C",
+    "t": "High Speed"
+   },
+   {
+    "k": "D",
+    "t": "Super"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）Secure。"
+ },
+ {
+  "id": "S92",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者不是現行網路銀行、行動銀行之轉帳交易安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "B",
+    "t": "電子金融憑證"
+   },
+   {
+    "k": "C",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "D",
+    "t": "簡訊OTP"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）簡訊OTP。"
+ },
+ {
+  "id": "S93",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何種交易流程具備訊息不可否認性?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "電子金融憑證轉帳指示"
+   },
+   {
+    "k": "B",
+    "t": "客戶送交已加密之媒體檔"
+   },
+   {
+    "k": "C",
+    "t": "有客戶印鑑之傳真文件"
+   },
+   {
+    "k": "D",
+    "t": "經客戶Email確認之交易指示"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）電子金融憑證轉帳指示。"
+ },
+ {
+  "id": "S94",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "客戶使用安控機制執行交易後,交易程式會將客戶交易訊息(如轉入帳號金額等)加密後傳中心,請問目的為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "用以確定交易者為客戶本人"
+   },
+   {
+    "k": "B",
+    "t": "避免重複交易"
+   },
+   {
+    "k": "C",
+    "t": "避免交易者打錯帳號金額"
+   },
+   {
+    "k": "D",
+    "t": "檢驗交易內容真實性避免被變造"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）檢驗交易內容真實性避免被變造。"
+ },
+ {
+  "id": "S95",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "GEB及Web ATM非約定轉帳交易,需請客戶確認交易內容後,做插拔卡動作,其目的主要為?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "提示高風險交易請客戶三思而後行"
+   },
+   {
+    "k": "B",
+    "t": "讓系統確認安控存在"
+   },
+   {
+    "k": "C",
+    "t": "此動作無法以駭客方式模擬,可避免偽造交易"
+   },
+   {
+    "k": "D",
+    "t": "避免電腦病毒感染安控設備"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）此動作無法以駭客方式模擬,可避免偽造交易。"
+ },
+ {
+  "id": "S96",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "金融Fast-ID全名為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "金融行動支付"
+   },
+   {
+    "k": "B",
+    "t": "金融電子憑證"
+   },
+   {
+    "k": "C",
+    "t": "金融區塊鏈函證"
+   },
+   {
+    "k": "D",
+    "t": "金融行動身分識別標準化機制"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）金融行動身分識別標準化機制。"
+ },
+ {
+  "id": "S97",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "有關本行LINE個人化服務之敘述,下列敘述何者正確?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "本行存戶若有重複碼0、1問題,只限重複碼1項下之ID帳戶可完成綁定"
+   },
+   {
+    "k": "B",
+    "t": "本行信用卡正卡及附卡持有人皆可綁定"
+   },
+   {
+    "k": "C",
+    "t": "客戶進行LINE個人化服務綁定時,只需輸入身分證字號即可完成驗證"
+   },
+   {
+    "k": "D",
+    "t": "外籍客戶ID若為舊式統一證號也可完成LINE個人化服務綁定"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）本行信用卡正卡及附卡持有人皆可綁定。"
+ },
+ {
+  "id": "S98",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "本行所提供之LINE外幣到價通知共開放幾種外幣提供客戶訂閱?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "15種"
+   },
+   {
+    "k": "B",
+    "t": "20種"
+   },
+   {
+    "k": "C",
+    "t": "21種"
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）20種。"
+ },
+ {
+  "id": "S99",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "有關LINE個人化服務之綁定與帳務通知訂閱,下列敘述何者錯誤?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "本行卡戶與存戶之個人戶加入兆豐銀行LINE官方帳號好友後,不論本國或外籍客戶皆可完成LINE個人化服務綁定"
+   },
+   {
+    "k": "B",
+    "t": "本行卡友除了正卡持有人可進行綁定,附卡持有人也可綁定"
+   },
+   {
+    "k": "C",
+    "t": "本行目前未開放外籍客戶進行LINE個人化服務綁定"
+   },
+   {
+    "k": "D",
+    "t": "本行台外幣入扣帳通知只有活存會發送LINE通知,不包含定存與支存"
+   }
+  ],
+  "ans": [
+   "C"
+  ],
+  "exp": "正確答案：（C）本行目前未開放外籍客戶進行LINE個人化服務綁定。"
+ },
+ {
+  "id": "S100",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "瀏覽官網找尋不到銀行服務資訊,可透過下列哪種方式查詢:",
+  "opts": [
+   {
+    "k": "A",
+    "t": "使用網站右上方搜尋功能"
+   },
+   {
+    "k": "B",
+    "t": "使用網站導覽"
+   },
+   {
+    "k": "C",
+    "t": "打電話詢問銀行客服"
+   },
+   {
+    "k": "D",
+    "t": "以上皆是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）以上皆是。"
+ },
+ {
+  "id": "S101",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "想要使用本行提供的線上服務,在下列哪個單元可以找到:",
+  "opts": [
+   {
+    "k": "A",
+    "t": "雲端櫃台"
+   },
+   {
+    "k": "B",
+    "t": "兆豐理財刊物"
+   },
+   {
+    "k": "C",
+    "t": "洗錢防制專區"
+   },
+   {
+    "k": "D",
+    "t": "利害關係人專區"
+   }
+  ],
+  "ans": [
+   "A"
+  ],
+  "exp": "正確答案：（A）雲端櫃台。"
+ },
+ {
+  "id": "S102",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "金融機構於導入人工智慧系統前,應優先採取的作法為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "先全面上線,再視情況補強控管"
+   },
+   {
+    "k": "B",
+    "t": "僅依技術單位建議即可導入"
+   },
+   {
+    "k": "C",
+    "t": "僅參考國外金融機構案例"
+   },
+   {
+    "k": "D",
+    "t": "依內部訂定之風險評估基準進行評估"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）依內部訂定之風險評估基準進行評估。"
+ },
+ {
+  "id": "S103",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "下列何者「並非」金管會在金融業運用人工智慧(AI)指引中所關注的重點?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "落實透明性與可解釋性"
+   },
+   {
+    "k": "B",
+    "t": "確保系統穩健性與資訊安全"
+   },
+   {
+    "k": "C",
+    "t": "保障隱私權及客戶權益"
+   },
+   {
+    "k": "D",
+    "t": "規定所有人工智慧系統須完全自動化"
+   }
+  ],
+  "ans": [
+   "D"
+  ],
+  "exp": "正確答案：（D）規定所有人工智慧系統須完全自動化。"
+ },
+ {
+  "id": "S104",
+  "type": "single",
+  "sec": "數位金融業務",
+  "q": "如發生非服務應變計畫提及事件,應於發生幾日內完成人工智慧異常事件通報?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "一日內"
+   },
+   {
+    "k": "B",
+    "t": "五日內"
+   },
+   {
+    "k": "C",
+    "t": "十日內"
+   },
+   {
+    "k": "D",
+    "t": "十四日內"
+   }
+  ],
+  "ans": [
+   "B"
+  ],
+  "exp": "正確答案：（B）五日內。"
+ },
+ {
+  "id": "M1",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "客戶希望可於全球金融網線上自行新增約定轉入帳號,需具備什麼?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "書面申請書勾選「線上設定約定轉入/受款帳戶」功能"
+   },
+   {
+    "k": "B",
+    "t": "申請電子憑證"
+   },
+   {
+    "k": "C",
+    "t": "申請SSL"
+   },
+   {
+    "k": "D",
+    "t": "申請金融卡"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）書面申請書勾選「線上設定約定轉入/受款帳戶」功能；（B）申請電子憑證。"
+ },
+ {
+  "id": "M2",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "客戶透過電話議價欲於全球金融網換匯,分行同仁需進行之動作?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "確認客戶之交割日期"
+   },
+   {
+    "k": "B",
+    "t": "確認外匯交易性質"
+   },
+   {
+    "k": "C",
+    "t": "查詢該名客戶是否未逾臺灣地理資訊中心累計年度結匯金額"
+   },
+   {
+    "k": "D",
+    "t": "查詢累計同一營業日併計所有臨櫃及電子化通路之結匯金額是否達大額結匯"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）確認客戶之交割日期；（B）確認外匯交易性質。"
+ },
+ {
+  "id": "M3",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列授權關係可以申請全球金融網之授權戶?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "被授權公司與授權公司相互投資各達對方有表決權之股份總數或資本總額三分之一"
+   },
+   {
+    "k": "B",
+    "t": "被授權人與授權人互為配偶、二親等以內之血親"
+   },
+   {
+    "k": "C",
+    "t": "被授權公司與授權公司之負責人為本人或互為配偶"
+   },
+   {
+    "k": "D",
+    "t": "被授權公司與授權公司之執行業務股東或董事有半數以上相同者"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）被授權公司與授權公司相互投資各達對方有表決權之股份總數或資本總額三分之一；（B）被授權人與授權人互為配偶、二親等以內之血親；（C）被授權公司與授權公司之負責人為本人或互為配偶；（D）被授權公司與授權公司之執行業務股東或董事有半數以上相同者。"
+ },
+ {
+  "id": "M4",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "於全球金融網換匯累計結匯金額未逾等值新臺幣五十萬元者,可以使用何種安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "電子憑證"
+   },
+   {
+    "k": "B",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "C",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "D",
+    "t": "SSL"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）電子憑證；（B）e碼寶貝；（C）行動安全碼。"
+ },
+ {
+  "id": "M5",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全球金融網哪些使用者一定要臨櫃申請?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "放行者"
+   },
+   {
+    "k": "B",
+    "t": "管理者"
+   },
+   {
+    "k": "C",
+    "t": "查詢者"
+   },
+   {
+    "k": "D",
+    "t": "編輯者"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）放行者；（B）管理者。"
+ },
+ {
+  "id": "M6",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "客戶申請XML電子憑證之收費標準,下列何者正確?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "個人戶,智慧卡型XML電子憑證(2年),收NT$300"
+   },
+   {
+    "k": "B",
+    "t": "公司戶,智慧卡型XML電子憑證(2年),收NT$2,000"
+   },
+   {
+    "k": "C",
+    "t": "公司戶,智慧卡型XML電子憑證(2年),收NT$1,000"
+   },
+   {
+    "k": "D",
+    "t": "個人戶,智慧卡型XML電子憑證(2年),收NT$2,000"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）個人戶,智慧卡型XML電子憑證(2年),收NT$300；（B）公司戶,智慧卡型XML電子憑證(2年),收NT$2,000。"
+ },
+ {
+  "id": "M7",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列何者為GEB安控機制交付代理人領取時之要件?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "如為法人戶,代理人須為執行董事"
+   },
+   {
+    "k": "B",
+    "t": "代理人親簽並驗身份証明"
+   },
+   {
+    "k": "C",
+    "t": "立約人(客戶)親簽表明指定代理人領取"
+   },
+   {
+    "k": "D",
+    "t": "簽收人須為財務主管或同等層級以上"
+   }
+  ],
+  "ans": [
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（B）代理人親簽並驗身份証明；（C）立約人(客戶)親簽表明指定代理人領取。"
+ },
+ {
+  "id": "M8",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "「AIO全方位業務整合平台」運用的數位元素有哪些?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "OCR"
+   },
+   {
+    "k": "B",
+    "t": "API"
+   },
+   {
+    "k": "C",
+    "t": "RPA"
+   },
+   {
+    "k": "D",
+    "t": "人臉辨識"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）OCR；（B）API；（C）RPA。"
+ },
+ {
+  "id": "M9",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列何者是目前本行「AIO全方位業務整合平台」規劃整合內容?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "台、外幣存款開戶"
+   },
+   {
+    "k": "B",
+    "t": "臨櫃各類申請業務"
+   },
+   {
+    "k": "C",
+    "t": "黃金存摺及信託理財開戶"
+   },
+   {
+    "k": "D",
+    "t": "數存權限提升"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）台、外幣存款開戶；（B）臨櫃各類申請業務；（C）黃金存摺及信託理財開戶；（D）數存權限提升。"
+ },
+ {
+  "id": "M10",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "跨境代收業務店家合作契約書之立合約書人為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "總處"
+   },
+   {
+    "k": "B",
+    "t": "金管會"
+   },
+   {
+    "k": "C",
+    "t": "分行(店家代理行)"
+   },
+   {
+    "k": "D",
+    "t": "店家"
+   }
+  ],
+  "ans": [
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（C）分行(店家代理行)；（D）店家。"
+ },
+ {
+  "id": "M11",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "跨境代收業務作業手冊中,對店家的管理方式包括下列何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "事前"
+   },
+   {
+    "k": "B",
+    "t": "事中"
+   },
+   {
+    "k": "C",
+    "t": "事後"
+   },
+   {
+    "k": "D",
+    "t": "只有一種"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）事前；（B）事中；（C）事後。"
+ },
+ {
+  "id": "M12",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "兆豐支付兩岸購[跨境代收業務]之店家申請身分別可為下列何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "政府機關"
+   },
+   {
+    "k": "B",
+    "t": "公司"
+   },
+   {
+    "k": "C",
+    "t": "行號"
+   },
+   {
+    "k": "D",
+    "t": "團體"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）政府機關；（B）公司；（C）行號；（D）團體。"
+ },
+ {
+  "id": "M13",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅平台提供下列何種繳款管道?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "eBill全國繳費網"
+   },
+   {
+    "k": "B",
+    "t": "帳單業者繳費網站"
+   },
+   {
+    "k": "C",
+    "t": "超商"
+   },
+   {
+    "k": "D",
+    "t": "金融機構提供之電子化管道"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "D"
+  ],
+  "exp": "正確答案：（A）eBill全國繳費網；（B）帳單業者繳費網站；（D）金融機構提供之電子化管道。"
+ },
+ {
+  "id": "M14",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅平台的優點為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "即時入帳"
+   },
+   {
+    "k": "B",
+    "t": "所有金融機構皆加入此平台"
+   },
+   {
+    "k": "C",
+    "t": "24小時扣款"
+   },
+   {
+    "k": "D",
+    "t": "收款人僅須面對單一代理銀行"
+   }
+  ],
+  "ans": [
+   "A",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）即時入帳；（C）24小時扣款；（D）收款人僅須面對單一代理銀行。"
+ },
+ {
+  "id": "M15",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅如有介接代收系統,可以透過何種方式對帳及銷帳?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "XML即時通知"
+   },
+   {
+    "k": "B",
+    "t": "E-mail通知"
+   },
+   {
+    "k": "C",
+    "t": "全球金融網"
+   },
+   {
+    "k": "D",
+    "t": "致電分行詢問"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）XML即時通知；（B）E-mail通知；（C）全球金融網。"
+ },
+ {
+  "id": "M16",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅業務可透過那些繳款方式繳費?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "晶片金融卡"
+   },
+   {
+    "k": "B",
+    "t": "約定繳費"
+   },
+   {
+    "k": "C",
+    "t": "非約定繳費(繳本人帳單)"
+   },
+   {
+    "k": "D",
+    "t": "非約定繳費(繳他人帳單)"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）晶片金融卡；（B）約定繳費；（C）非約定繳費(繳本人帳單)。"
+ },
+ {
+  "id": "M17",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "全國性繳費稅業務非約定繳費(ID+Account)只能限繳下列那些項目?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "政府機構相關費用"
+   },
+   {
+    "k": "B",
+    "t": "公用事業費"
+   },
+   {
+    "k": "C",
+    "t": "第一類電信費"
+   },
+   {
+    "k": "D",
+    "t": "基金費"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）政府機構相關費用；（B）公用事業費；（C）第一類電信費。"
+ },
+ {
+  "id": "M18",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "以下委託單位為何者身分可申請本行網路代收平台?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "公司"
+   },
+   {
+    "k": "B",
+    "t": "行號"
+   },
+   {
+    "k": "C",
+    "t": "團體"
+   },
+   {
+    "k": "D",
+    "t": "個人"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）公司；（B）行號；（C）團體。"
+ },
+ {
+  "id": "M19",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "網路代收平台之相關功能服務,下列敘述何者為是?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "「網路代收平台」供代理行維護委託單位基本資料"
+   },
+   {
+    "k": "B",
+    "t": "「委託單位服務網」供委託單位維護帳單資料"
+   },
+   {
+    "k": "C",
+    "t": "「繳費服務網」供繳款人線上繳款"
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）「網路代收平台」供代理行維護委託單位基本資料；（B）「委託單位服務網」供委託單位維護帳單資料；（C）「繳費服務網」供繳款人線上繳款。"
+ },
+ {
+  "id": "M20",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "代理行針對申請網路代收平台之委託單位,其建檔流程下列敘述何者為是?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "BTT交易代號0870建檔"
+   },
+   {
+    "k": "B",
+    "t": "網路代收平台建檔"
+   },
+   {
+    "k": "C",
+    "t": "委託單位相關申請文件(電子檔)上傳至網路代收平台"
+   },
+   {
+    "k": "D",
+    "t": "以上皆非",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）BTT交易代號0870建檔；（B）網路代收平台建檔；（C）委託單位相關申請文件(電子檔)上傳至網路代收平台。"
+ },
+ {
+  "id": "M21",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "委託單位申請網路代收平台之有下列各款情形之一者,代理行應終止提供本項業務服務,並留存相關處理紀錄?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "違反我國法令"
+   },
+   {
+    "k": "B",
+    "t": "違反公序良俗"
+   },
+   {
+    "k": "C",
+    "t": "除法律或主管機關另有規定者外,違反個人資料保護法規定,不當洩漏因使用本平台服務所蒐集之資料"
+   },
+   {
+    "k": "D",
+    "t": "無權終止"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）違反我國法令；（B）違反公序良俗；（C）除法律或主管機關另有規定者外,違反個人資料保護法規定,不當洩漏因使用本平台服務所蒐集之資料。"
+ },
+ {
+  "id": "M22",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "委託單位申請網路代收平台需簽訂下列哪些文件?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "「兆豐國際商業銀行代收款項合約書」"
+   },
+   {
+    "k": "B",
+    "t": "「兆豐銀行電子收款業務合作契約書」"
+   },
+   {
+    "k": "C",
+    "t": "「高階管理人員、實質受益人暨無記名股票聲明書」"
+   },
+   {
+    "k": "D",
+    "t": "依各收款管道之權責單位規定辦理簽訂相關合約"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）「兆豐國際商業銀行代收款項合約書」；（B）「兆豐銀行電子收款業務合作契約書」；（C）「高階管理人員、實質受益人暨無記名股票聲明書」；（D）依各收款管道之權責單位規定辦理簽訂相關合約。"
+ },
+ {
+  "id": "M23",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "會計師事務所(查核單位)與本行簽定金融區塊鏈函證服務契約書時,業務代理行一定要徵提哪些表格文件作身分確認呢?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "扣繳單位設立(變更)登記申請書(統一編號編配通知書)"
+   },
+   {
+    "k": "B",
+    "t": "社團法人中華民國會計師公會全國聯合會函"
+   },
+   {
+    "k": "C",
+    "t": "申請人戶口名簿"
+   },
+   {
+    "k": "D",
+    "t": "會計師事務所職員名單"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）扣繳單位設立(變更)登記申請書(統一編號編配通知書)；（B）社團法人中華民國會計師公會全國聯合會函。"
+ },
+ {
+  "id": "M24",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "查核單位首次申請金融區塊鏈函證業務時,須先完成哪些作業方能進行線上發查詢證函作業?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "與業務代理行完成簽約"
+   },
+   {
+    "k": "B",
+    "t": "申請金融區塊鏈資訊查詢系統"
+   },
+   {
+    "k": "C",
+    "t": "取得受查企業授權"
+   },
+   {
+    "k": "D",
+    "t": "申請及安裝臺網憑證"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）與業務代理行完成簽約；（B）申請金融區塊鏈資訊查詢系統；（C）取得受查企業授權；（D）申請及安裝臺網憑證。"
+ },
+ {
+  "id": "M25",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "關於金融區塊鏈函證服務下列敘述何者為是?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "金融區塊鏈資訊查詢系統為財金公司建置並採用區塊鏈技術以分散式帳本記帳"
+   },
+   {
+    "k": "B",
+    "t": "查核單位與受查企業間的委任關係每次函查時需授權一次"
+   },
+   {
+    "k": "C",
+    "t": "回覆金融機構採總行制或分行制之回覆方式"
+   },
+   {
+    "k": "D",
+    "t": "企業約定授權得以電子簽章或書面方式授權"
+   }
+  ],
+  "ans": [
+   "A",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）金融區塊鏈資訊查詢系統為財金公司建置並採用區塊鏈技術以分散式帳本記帳；（C）回覆金融機構採總行制或分行制之回覆方式；（D）企業約定授權得以電子簽章或書面方式授權。"
+ },
+ {
+  "id": "M26",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列哪些為金融區塊鏈函證服務作業流程的角色?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "查核單位"
+   },
+   {
+    "k": "B",
+    "t": "受查企業"
+   },
+   {
+    "k": "C",
+    "t": "回覆銀行"
+   },
+   {
+    "k": "D",
+    "t": "業務代理行"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）查核單位；（B）受查企業；（C）回覆銀行；（D）業務代理行。"
+ },
+ {
+  "id": "M27",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "哪一類帳戶的晶片金融卡可以註冊金融Fast-ID?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "臨櫃開立的帳戶"
+   },
+   {
+    "k": "B",
+    "t": "第一類數位存款帳戶並已完成視訊核身"
+   },
+   {
+    "k": "C",
+    "t": "第二類數位存款帳戶"
+   },
+   {
+    "k": "D",
+    "t": "第三類數位存款帳戶"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）臨櫃開立的帳戶；（B）第一類數位存款帳戶並已完成視訊核身。"
+ },
+ {
+  "id": "M28",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "使用本行行動銀行的台幣服務進行非約定轉帳交易時,需要搭配什麼安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "Email驗證"
+   },
+   {
+    "k": "B",
+    "t": "E碼寶貝"
+   },
+   {
+    "k": "C",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "D",
+    "t": "電子金融憑證(IXML)"
+   }
+  ],
+  "ans": [
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（B）E碼寶貝；（C）行動安全碼。"
+ },
+ {
+  "id": "M29",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "網路銀行使用台幣服務線上設定約定轉入帳號功能,不能使用何種安控機制設定?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "e碼寶貝"
+   },
+   {
+    "k": "B",
+    "t": "簡訊驗證碼"
+   },
+   {
+    "k": "C",
+    "t": "電子金融憑證(FXML)"
+   },
+   {
+    "k": "D",
+    "t": "晶片金融卡"
+   }
+  ],
+  "ans": [
+   "B",
+   "D"
+  ],
+  "exp": "正確答案：（B）簡訊驗證碼；（D）晶片金融卡。"
+ },
+ {
+  "id": "M30",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "網路銀行密碼輸入錯誤三次遭鎖住,目前重設密碼的管道為何?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "於網路ATM重設"
+   },
+   {
+    "k": "B",
+    "t": "撥打0800客服電話"
+   },
+   {
+    "k": "C",
+    "t": "於網銀或行銀點選忘記密碼功能重新設定"
+   },
+   {
+    "k": "D",
+    "t": "於實體ATM重設"
+   }
+  ],
+  "ans": [
+   "A",
+   "C"
+  ],
+  "exp": "正確答案：（A）於網路ATM重設；（C）於網銀或行銀點選忘記密碼功能重新設定。"
+ },
+ {
+  "id": "M31",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "請問網路ATM有下列何種功能?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "繳稅、費"
+   },
+   {
+    "k": "B",
+    "t": "線上申請行動安全碼"
+   },
+   {
+    "k": "C",
+    "t": "查詢網路銀行使用者代號"
+   },
+   {
+    "k": "D",
+    "t": "轉帳"
+   }
+  ],
+  "ans": [
+   "A",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）繳稅、費；（C）查詢網路銀行使用者代號；（D）轉帳。"
+ },
+ {
+  "id": "M32",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "請問下列何者為網路ATM所使用之安全機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "轉帳時輸入轉入帳號後四碼"
+   },
+   {
+    "k": "B",
+    "t": "拔插晶片卡"
+   },
+   {
+    "k": "C",
+    "t": "轉帳時需使用XML憑證放行"
+   },
+   {
+    "k": "D",
+    "t": "晶片卡密碼"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "D"
+  ],
+  "exp": "正確答案：（A）轉帳時輸入轉入帳號後四碼；（B）拔插晶片卡；（D）晶片卡密碼。"
+ },
+ {
+  "id": "M33",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "關於網路ATM下列何者正確?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "需另外申請才能使用"
+   },
+   {
+    "k": "B",
+    "t": "可線上設定常用轉入帳號"
+   },
+   {
+    "k": "C",
+    "t": "可繳費及繳稅"
+   },
+   {
+    "k": "D",
+    "t": "可重設網路銀行密碼"
+   }
+  ],
+  "ans": [
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（B）可線上設定常用轉入帳號；（C）可繳費及繳稅；（D）可重設網路銀行密碼。"
+ },
+ {
+  "id": "M34",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台能提供下列何種服務?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "提供身心障礙優惠申請"
+   },
+   {
+    "k": "B",
+    "t": "簽署共同行銷條款"
+   },
+   {
+    "k": "C",
+    "t": "信用卡授權扣帳"
+   },
+   {
+    "k": "D",
+    "t": "關閉外幣帳戶"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）提供身心障礙優惠申請；（B）簽署共同行銷條款；（C）信用卡授權扣帳。"
+ },
+ {
+  "id": "M35",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台預填表單服務包括以下何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "台幣存款"
+   },
+   {
+    "k": "B",
+    "t": "台幣提款"
+   },
+   {
+    "k": "C",
+    "t": "台幣匯款"
+   },
+   {
+    "k": "D",
+    "t": "台幣定存"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）台幣存款；（B）台幣提款；（C）台幣匯款。"
+ },
+ {
+  "id": "M36",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "有關「公司薪轉整批開戶」之作業程序,下列何者為非?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "客戶需填寫紙本開戶申請書交付櫃員始可辦理"
+   },
+   {
+    "k": "B",
+    "t": "客戶於雲端櫃台登錄基本資料可立即完成開戶申請"
+   },
+   {
+    "k": "C",
+    "t": "可選擇由分行或集作處辦理審核作業"
+   },
+   {
+    "k": "D",
+    "t": "於核身註記完成後,由系統自動完成開戶相關交易"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）客戶需填寫紙本開戶申請書交付櫃員始可辦理；（B）客戶於雲端櫃台登錄基本資料可立即完成開戶申請。"
+ },
+ {
+  "id": "M37",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "綁定本行金融Fast-ID時,可以使用哪些生物辨識?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "指紋"
+   },
+   {
+    "k": "B",
+    "t": "臉部"
+   },
+   {
+    "k": "C",
+    "t": "聲音"
+   },
+   {
+    "k": "D",
+    "t": "虹膜"
+   }
+  ],
+  "ans": [
+   "A",
+   "B"
+  ],
+  "exp": "正確答案：（A）指紋；（B）臉部。"
+ },
+ {
+  "id": "M38",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "目前本行金融Fast-ID可以應用在哪些服務場景?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "兆豐信用卡線上刷卡3D驗證"
+   },
+   {
+    "k": "B",
+    "t": "兆豐保險官網會員登入"
+   },
+   {
+    "k": "C",
+    "t": "兆豐證券線上開戶"
+   },
+   {
+    "k": "D",
+    "t": "兆豐信用卡線上開卡"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）兆豐信用卡線上刷卡3D驗證；（B）兆豐保險官網會員登入；（C）兆豐證券線上開戶。"
+ },
+ {
+  "id": "M39",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "雲端櫃台目前有提供哪些身分驗證工具?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "兆豐網路銀行帳號密碼"
+   },
+   {
+    "k": "B",
+    "t": "兆豐晶片金融卡"
+   },
+   {
+    "k": "C",
+    "t": "兆豐金融Fast-ID"
+   },
+   {
+    "k": "D",
+    "t": "自然人憑證"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）兆豐網路銀行帳號密碼；（B）兆豐晶片金融卡；（C）兆豐金融Fast-ID；（D）自然人憑證。"
+ },
+ {
+  "id": "M40",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "數位存款帳戶可承作下列何項業務?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "辦理信託開戶與線上申購基金"
+   },
+   {
+    "k": "B",
+    "t": "繳費"
+   },
+   {
+    "k": "C",
+    "t": "繳稅"
+   },
+   {
+    "k": "D",
+    "t": "於網路銀行/行動銀行執行非約定轉帳交易"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）辦理信託開戶與線上申購基金；（B）繳費；（C）繳稅；（D）於網路銀行/行動銀行執行非約定轉帳交易。"
+ },
+ {
+  "id": "M41",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "開立數位存款帳戶時,所上傳之第二證件可為下列何者?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "護照"
+   },
+   {
+    "k": "B",
+    "t": "健保卡"
+   },
+   {
+    "k": "C",
+    "t": "駕照"
+   },
+   {
+    "k": "D",
+    "t": "自然人憑證"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）護照；（B）健保卡；（C）駕照。"
+ },
+ {
+  "id": "M42",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "未符合申請數位存款帳戶之身份,有下列何種可能?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "警示帳戶、已被設定拒絕開戶"
+   },
+   {
+    "k": "B",
+    "t": "非持有本國身分證外國自然人"
+   },
+   {
+    "k": "C",
+    "t": "未滿七歲之未成年人"
+   },
+   {
+    "k": "D",
+    "t": "未成年外國自然人"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）警示帳戶、已被設定拒絕開戶；（B）非持有本國身分證外國自然人；（C）未滿七歲之未成年人；（D）未成年外國自然人。"
+ },
+ {
+  "id": "M43",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "以下何種身份驗證機制可用於申請兆豐MegaLite數位帳戶?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "本行金融Fast-ID"
+   },
+   {
+    "k": "B",
+    "t": "本行晶片金融卡/網路銀行+SMS OTP"
+   },
+   {
+    "k": "C",
+    "t": "本行信用卡,且持卡人需持有該卡半年以上"
+   },
+   {
+    "k": "D",
+    "t": "部分他行帳戶(有參與財金公司跨行金融帳戶資訊核驗服務之發卡機構)"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）本行金融Fast-ID；（B）本行晶片金融卡/網路銀行+SMS OTP；（C）本行信用卡,且持卡人需持有該卡半年以上；（D）部分他行帳戶(有參與財金公司跨行金融帳戶資訊核驗服務之發卡機構)。"
+ },
+ {
+  "id": "M44",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列何者為本行線上轉帳交易安控機制?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "B",
+    "t": "檔案型電子金融憑證"
+   },
+   {
+    "k": "C",
+    "t": "e碼寶貝(實體動態密碼卡)"
+   },
+   {
+    "k": "D",
+    "t": "簡訊動態密碼(SMS OTP)"
+   }
+  ],
+  "ans": [
+   "A",
+   "C"
+  ],
+  "exp": "正確答案：（A）行動安全碼；（C）e碼寶貝(實體動態密碼卡)。"
+ },
+ {
+  "id": "M45",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "個人網銀客戶要執行約定轉帳帳戶設定,可使用?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "自然人憑證"
+   },
+   {
+    "k": "B",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "C",
+    "t": "e碼寶貝(實體動態密碼卡)"
+   },
+   {
+    "k": "D",
+    "t": "金融卡"
+   }
+  ],
+  "ans": [
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（B）行動安全碼；（C）e碼寶貝(實體動態密碼卡)。"
+ },
+ {
+  "id": "M46",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "以下對行動安全碼之說明,何者為正確?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "為附屬於行動銀行內之安控機制"
+   },
+   {
+    "k": "B",
+    "t": "客戶免赴臨櫃即可於行動銀行申請"
+   },
+   {
+    "k": "C",
+    "t": "簡訊驗證碼是發送到客戶留存於本行之手機號碼"
+   },
+   {
+    "k": "D",
+    "t": "僅限iPhone使用者得使用行動安全碼"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）為附屬於行動銀行內之安控機制；（B）客戶免赴臨櫃即可於行動銀行申請；（C）簡訊驗證碼是發送到客戶留存於本行之手機號碼。"
+ },
+ {
+  "id": "M47",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "客戶於網路銀行修改通訊地址及電話,可使用以下哪些方式進行驗證修改?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "E碼寶貝"
+   },
+   {
+    "k": "B",
+    "t": "行動安全碼"
+   },
+   {
+    "k": "C",
+    "t": "電子金融憑證(FXML)"
+   },
+   {
+    "k": "D",
+    "t": "簡訊驗證碼"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）E碼寶貝；（B）行動安全碼；（C）電子金融憑證(FXML)。"
+ },
+ {
+  "id": "M48",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "網路銀行如未申請任何安控機制,能辦理何種交易?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "非約定轉帳"
+   },
+   {
+    "k": "B",
+    "t": "開立定存"
+   },
+   {
+    "k": "C",
+    "t": "約定帳戶轉帳"
+   },
+   {
+    "k": "D",
+    "t": "以上均是",
+    "pin": true
+   }
+  ],
+  "ans": [
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（B）開立定存；（C）約定帳戶轉帳。"
+ },
+ {
+  "id": "M49",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "行員如有創新發想欲提案申請專利,可採下列何種做法?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "下載並填妥專利申請提案表並將相關電子檔案加密寄予數金處承辦人員"
+   },
+   {
+    "k": "B",
+    "t": "僅以電話告知數金處承辦人員"
+   },
+   {
+    "k": "C",
+    "t": "至智慧財產權管理系統新增創新提案"
+   },
+   {
+    "k": "D",
+    "t": "逕洽委外事務所洽談構想內容"
+   }
+  ],
+  "ans": [
+   "A",
+   "C"
+  ],
+  "exp": "正確答案：（A）下載並填妥專利申請提案表並將相關電子檔案加密寄予數金處承辦人員；（C）至智慧財產權管理系統新增創新提案。"
+ },
+ {
+  "id": "M50",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "依我國現行專利法規定,專利分為下列哪三項?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "發明專利"
+   },
+   {
+    "k": "B",
+    "t": "新型專利"
+   },
+   {
+    "k": "C",
+    "t": "設計專利"
+   },
+   {
+    "k": "D",
+    "t": "著作專利"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）發明專利；（B）新型專利；（C）設計專利。"
+ },
+ {
+  "id": "M51",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "本行現已導入台灣智慧財產管理規範(簡稱TIPS),下列何者為是?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "智慧財產是指具有經濟或精神價值之人類心智活動成果,包含專利權、商標權、著作權、營業秘密等"
+   },
+   {
+    "k": "B",
+    "t": "導入TIPS的目的係為保護本行智慧財產權"
+   },
+   {
+    "k": "C",
+    "t": "本行TIPS (A級)驗證之智財管理標的為「專利」"
+   },
+   {
+    "k": "D",
+    "t": "如採購之系統是由外部廠商開發,亦受本行TIPS智慧財產管理制度規範"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）智慧財產是指具有經濟或精神價值之人類心智活動成果,包含專利權、商標權、著作權、營業秘密等；（B）導入TIPS的目的係為保護本行智慧財產權；（C）本行TIPS (A級)驗證之智財管理標的為「專利」；（D）如採購之系統是由外部廠商開發,亦受本行TIPS智慧財產管理制度規範。"
+ },
+ {
+  "id": "M52",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "下列何者為本行人工智慧治理規範?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "人工智慧開發生命週期管理手冊"
+   },
+   {
+    "k": "B",
+    "t": "運用人工智慧管理規則"
+   },
+   {
+    "k": "C",
+    "t": "人工智慧審議小組設置須知"
+   },
+   {
+    "k": "D",
+    "t": "金融機構運用人工智慧技術作業規範"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）人工智慧開發生命週期管理手冊；（B）運用人工智慧管理規則；（C）人工智慧審議小組設置須知。"
+ },
+ {
+  "id": "M53",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "人工智慧系統於開發與導入過程中各生命週期包含哪些階段?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "系統規劃及設計"
+   },
+   {
+    "k": "B",
+    "t": "資料蒐集及輸入"
+   },
+   {
+    "k": "C",
+    "t": "模型建立及驗證"
+   },
+   {
+    "k": "D",
+    "t": "系統部署"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C",
+   "D"
+  ],
+  "exp": "正確答案：（A）系統規劃及設計；（B）資料蒐集及輸入；（C）模型建立及驗證；（D）系統部署。"
+ },
+ {
+  "id": "M54",
+  "type": "multi",
+  "sec": "數位金融業務",
+  "q": "人工智慧異常事件符合下列情形之一者,應認定為重大事件?",
+  "opts": [
+   {
+    "k": "A",
+    "t": "人工智慧系統符合本行「人工智慧開發生命週期管理手冊」第三條所定中或高風險方案,致無法於短期內復原者"
+   },
+   {
+    "k": "B",
+    "t": "該事件已受媒體報導或關注者"
+   },
+   {
+    "k": "C",
+    "t": "其他足以危及本行正常營運或大量當事人權益者"
+   },
+   {
+    "k": "D",
+    "t": "服務應變計畫所預期之行為,已預先擬定處置計畫"
+   }
+  ],
+  "ans": [
+   "A",
+   "B",
+   "C"
+  ],
+  "exp": "正確答案：（A）人工智慧系統符合本行「人工智慧開發生命週期管理手冊」第三條所定中或高風險方案,致無法於短期內復原者；（B）該事件已受媒體報導或關注者；（C）其他足以危及本行正常營運或大量當事人權益者。"
+ }
+];
+
+</script>
+<script>
+(function(){
+  "use strict";
+  const LS_KEY="mega_digital_quiz_v1";
+  const $=s=>document.querySelector(s);
+  const state={
+    type:"all", scope:"all", order:"shuffle", optshuffle:true, sec:"__all",
+    list:[], idx:0, answered:{}, // answered[id]=true
+  };
+  // persistent store
+  let store=load();
+  function load(){ try{return JSON.parse(localStorage.getItem(LS_KEY))||{}}catch(e){return {}} }
+  function save(){ localStorage.setItem(LS_KEY, JSON.stringify(store)); }
+  store.wrong = store.wrong||{};   // id: true
+  store.star  = store.star ||{};   // id: true
+  store.stat  = store.stat ||{done:0,ok:0,no:0};
+
+  // ---- build section chips ----
+  const secs=[...new Set(QUESTIONS.map(q=>q.sec))];
+  const secRow=$("#secRow");
+  secs.forEach(sc=>{
+    const c=document.createElement("span");
+    c.className="chip sm"; c.dataset.sec=sc;
+    c.textContent=sc+"("+QUESTIONS.filter(q=>q.sec===sc).length+")";
+    secRow.appendChild(c);
+  });
+
+  // ---- chip handlers ----
+  document.addEventListener("click",e=>{
+    const c=e.target.closest(".chip"); if(!c) return;
+    if(c.dataset.type){ setGroup(c,"type"); state.type=c.dataset.type; }
+    else if(c.dataset.scope){ setGroup(c,"scope"); state.scope=c.dataset.scope; }
+    else if(c.dataset.order){ setGroup(c,"order"); state.order=c.dataset.order; }
+    else if(c.dataset.optshuffle!==undefined){
+      state.optshuffle=!state.optshuffle;
+      c.classList.toggle("on",state.optshuffle);
+      c.textContent="選項打亂："+(state.optshuffle?"開":"關");
+    }
+    else if(c.dataset.sec){
+      if(c.dataset.sec==="__all"){
+        state.sec="__all";
+        secRow.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x.dataset.sec==="__all"));
+      }else{
+        secRow.querySelector('[data-sec="__all"]').classList.remove("on");
+        c.classList.toggle("on");
+        // collect selected
+        const sel=[...secRow.querySelectorAll(".chip.on")].map(x=>x.dataset.sec).filter(x=>x!=="__all");
+        state.sec = sel.length? sel : "__all";
+        if(!sel.length) secRow.querySelector('[data-sec="__all"]').classList.add("on");
+      }
+    }
+  });
+  function setGroup(chip,attr){
+    chip.parentElement.querySelectorAll(".chip[data-"+attr+"]").forEach(x=>x.classList.remove("on"));
+    chip.classList.add("on");
+  }
+
+  // ---- start ----
+  $("#btnStart").addEventListener("click",start);
+  $("#btnResetStats").addEventListener("click",()=>{
+    if(!confirm("確定清除所有作答紀錄（含錯題、標記、統計）？")) return;
+    store={wrong:{},star:{},stat:{done:0,ok:0,no:0}}; save(); renderStats();
+    alert("已清除。");
+  });
+
+  function pickList(){
+    let arr=QUESTIONS.slice();
+    if(state.type!=="all") arr=arr.filter(q=>q.type===state.type);
+    if(state.sec!=="__all") arr=arr.filter(q=>state.sec.includes(q.sec));
+    if(state.scope==="wrong") arr=arr.filter(q=>store.wrong[q.id]);
+    if(state.scope==="star")  arr=arr.filter(q=>store.star[q.id]);
+    if(state.order==="shuffle") shuffle(arr);
+    return arr;
+  }
+  function start(){
+    const arr=pickList();
+    if(!arr.length){ alert("此範圍沒有題目，請調整設定。"); return; }
+    state.list=arr; state.idx=0; state.answered={};
+    // prepare display options per question (shuffle once per session)
+    arr.forEach(q=>{ q._disp = dispOpts(q); q._done=false; q._sel=[]; });
+    $("#setup").style.display="none";
+    $("#quiz").style.display="block";
+    renderQ();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function dispOpts(q){
+    let normal=q.opts.filter(o=>!o.pin);
+    let pinned=q.opts.filter(o=>o.pin);
+    if(state.optshuffle) shuffle(normal);
+    return normal.concat(pinned);
+  }
+
+  // ---- render current question ----
+  function renderQ(){
+    const q=state.list[state.idx];
+    const card=$("#qcard");
+    const isMulti=q.type==="multi";
+    const starOn=store.star[q.id]?"on":"";
+    let html="";
+    html+='<div class="qhead"><div class="qmeta">'
+      +'<span class="qtag '+q.type+'">'+(isMulti?'複選':'單選')+'</span>'
+      +'<span class="qtag sec">'+q.sec+'</span>'
+      +'第 '+(state.idx+1)+' / '+state.list.length+' 題'
+      +'</div><span class="star '+starOn+'" id="star" title="標記待複習 (S)">★</span></div>';
+    html+='<div class="qstem"><span class="num">'+niceId(q.id)+'</span>'+esc(q.q)
+      + (isMulti?' <span style="font-size:13px;color:var(--red)">（複選）</span>':'') +'</div>';
+    html+='<div id="opts">';
+    q._disp.forEach((o,i)=>{
+      html+='<div class="opt '+(isMulti?'multi':'')+'" data-k="'+o.k+'">'
+        +'<div class="mk">'+(i+1)+'</div><div class="ot">'+esc(o.t)+'</div></div>';
+    });
+    html+='</div>';
+    html+='<div class="actions">'
+      +'<button class="btn ghost" id="btnPrev">← 上一題</button>'
+      +'<button class="btn" id="btnSubmit">送出作答</button>'
+      +'<span class="nav-spacer"></span>'
+      +'<button class="btn gold" id="btnNext">下一題 →</button>'
+      +'</div>';
+    html+='<div class="explain" id="explain"><div class="bar"><span id="exres"></span>'
+      +'<span id="exans" class="hide-sm" style="font-size:13px;font-weight:700"></span></div>'
+      +'<div class="body"><div style="margin-bottom:7px"><span class="ans" id="exans2"></span></div>'
+      +'<div><span class="lead">解說</span><span id="extext"></span></div></div></div>';
+    card.innerHTML=html;
+
+    // restore prior answer if any
+    if(q._done){ lockAndShow(q); }
+    else {
+      $("#opts").querySelectorAll(".opt").forEach(op=>{
+        op.addEventListener("click",()=>toggleSel(q,op));
+      });
+    }
+    $("#btnSubmit").addEventListener("click",()=>submit(q));
+    $("#btnPrev").addEventListener("click",()=>go(-1));
+    $("#btnNext").addEventListener("click",()=>go(1));
+    $("#star").addEventListener("click",()=>toggleStar(q));
+    updatePBar();
+    $("#btnPrev").disabled = state.idx===0;
+  }
+  function niceId(id){ return id.replace('S','單').replace('M','複'); }
+
+  function toggleSel(q,op){
+    if(q._done) return;
+    const k=op.dataset.k;
+    if(q.type==="single"){
+      q._sel=[k];
+      $("#opts").querySelectorAll(".opt").forEach(x=>x.classList.toggle("sel",x.dataset.k===k));
+    }else{
+      const i=q._sel.indexOf(k);
+      if(i>=0){ q._sel.splice(i,1); op.classList.remove("sel"); }
+      else { q._sel.push(k); op.classList.add("sel"); }
+    }
+  }
+  function submit(q){
+    if(q._done){ go(1); return; }
+    if(!q._sel.length){ alert("請先選擇答案。"); return; }
+    q._done=true;
+    const correct = same(q._sel,q.ans);
+    // stats (count once per id)
+    if(!state.answered[q.id]){
+      state.answered[q.id]=true;
+      store.stat.done++;
+      if(correct){ store.stat.ok++; delete store.wrong[q.id]; }
+      else { store.stat.no++; store.wrong[q.id]=true; }
+      save(); renderStats();
+    }
+    lockAndShow(q);
+  }
+  function lockAndShow(q){
+    const correct=same(q._sel,q.ans);
+    $("#opts").querySelectorAll(".opt").forEach(op=>{
+      op.classList.add("locked");
+      const k=op.dataset.k;
+      const isAns=q.ans.includes(k), isSel=q._sel.includes(k);
+      op.classList.remove("sel");
+      if(isAns) op.classList.add("correct");
+      else if(isSel) op.classList.add("wrong");
+    });
+    const ex=$("#explain"); ex.classList.add("show");
+    ex.classList.toggle("ok",correct); ex.classList.toggle("no",!correct);
+    $("#exres").textContent = correct? "✓ 答對了" : "✗ 答錯了";
+    const ansStr="正解："+q.ans.join("、");
+    $("#exans").textContent=ansStr;
+    $("#exans2").textContent=ansStr + (q.type==="multi"?"（複選需全對）":"");
+    $("#extext").textContent=q.exp;
+    // turn submit into "next"
+    const bs=$("#btnSubmit"); bs.textContent="已作答"; bs.disabled=true; bs.classList.add("ghost");
+  }
+  function go(d){
+    const n=state.idx+d;
+    if(n<0) return;
+    if(n>=state.list.length){ finish(); return; }
+    state.idx=n; renderQ(); window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function toggleStar(q){
+    if(store.star[q.id]) delete store.star[q.id]; else store.star[q.id]=true;
+    save();
+    $("#star").classList.toggle("on",!!store.star[q.id]);
+  }
+  function finish(){
+    const total=state.list.length;
+    let done=0,ok=0;
+    state.list.forEach(q=>{ if(q._done){done++; if(same(q._sel,q.ans))ok++;} });
+    const rate= done? Math.round(ok/done*100):0;
+    $("#quiz").querySelector("#qcard").innerHTML=
+      '<div class="done"><h3>本回合完成 🎉</h3>'
+      +'<div class="big">'+rate+'%</div>'
+      +'<p>本回合作答 '+done+' 題，答對 '+ok+' 題，答錯 '+(done-ok)+' 題。</p>'
+      +'<div class="startbar" style="justify-content:center">'
+      +'<button class="btn gold" id="again">再練一回（重新洗題）</button>'
+      +'<button class="btn red" id="wrongOnly" '+(Object.keys(store.wrong).length?'':'disabled')+'>只練錯題</button>'
+      +'<button class="btn ghost" id="back">回設定</button></div></div>';
+    $("#again").addEventListener("click",()=>{ start(); });
+    $("#back").addEventListener("click",()=>{ $("#quiz").style.display="none"; $("#setup").style.display="block"; window.scrollTo({top:0,behavior:"smooth"}); });
+    const wo=$("#wrongOnly"); if(wo) wo.addEventListener("click",()=>{
+      // switch scope to wrong
+      state.scope="wrong";
+      document.querySelectorAll('[data-scope]').forEach(x=>x.classList.toggle("on",x.dataset.scope==="wrong"));
+      start();
+    });
+    $("#pbar").style.width="100%";
+  }
+
+  function updatePBar(){ $("#pbar").style.width = ((state.idx)/state.list.length*100)+"%"; }
+  function renderStats(){
+    $("#st-done").textContent=store.stat.done;
+    $("#st-ok").textContent=store.stat.ok;
+    $("#st-no").textContent=store.stat.no;
+    $("#st-rate").textContent= store.stat.done? Math.round(store.stat.ok/store.stat.done*100)+"%":"—";
+    $("#st-pos").textContent = state.list.length? (state.idx+1)+"/"+state.list.length : "0/0";
+  }
+
+  // ---- keyboard ----
+  document.addEventListener("keydown",e=>{
+    if($("#quiz").style.display==="none") return;
+    const q=state.list[state.idx]; if(!q) return;
+    if(e.key>="1" && e.key<="5"){
+      const i=+e.key-1; const op=$("#opts")&&$("#opts").querySelectorAll(".opt")[i];
+      if(op && !q._done){ toggleSel(q,op); }
+    } else if(e.key==="Enter"){ e.preventDefault();
+      if(q._done) go(1); else submit(q);
+    } else if(e.key==="ArrowRight"){ go(1); }
+    else if(e.key==="ArrowLeft"){ go(-1); }
+    else if(e.key==="s"||e.key==="S"){ toggleStar(q); }
+  });
+
+  // ---- utils ----
+  function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function same(a,b){ if(a.length!==b.length) return false; const s=[...a].sort().join(""); const t=[...b].sort().join(""); return s===t; }
+  function esc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+  renderStats();
+})();
+</script>
+</body>
+</html>
